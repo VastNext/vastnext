@@ -21,60 +21,61 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
 
   <div class="products__list">
     {products.map((product, index) => (
-      <article
-        id={`product-${product.id}`}
-        class={`product product--${product.id}`}
-        data-product={product.id}
-        data-reveal
-      >
-        <div class="product__copy">
-          <p class="product__number">0{index + 1}</p>
-          <h3>{product.name}</h3>
-          <p>{copy.products[product.id].description}</p>
-          <a href={product.url} target="_blank" rel="noreferrer">
-            {product.name}
-            <ExternalIcon />
-            <span class="sr-only">{newWindowLabel}</span>
-          </a>
-        </div>
+      <div class={`product-reveal product-reveal--${product.id}`} data-reveal>
+        <article
+          id={`product-${product.id}`}
+          class={`product product--${product.id}`}
+          data-product={product.id}
+        >
+          <div class="product__copy">
+            <p class="product__number">0{index + 1}</p>
+            <h3>{product.name}</h3>
+            <p>{copy.products[product.id].description}</p>
+            <a href={product.url} target="_blank" rel="noreferrer">
+              {product.name}
+              <ExternalIcon />
+              <span class="sr-only">{newWindowLabel}</span>
+            </a>
+          </div>
 
-        <div class="product__demo" aria-hidden="true">
-          {product.id === 'findry-ai' && (
-            <div class="findry-demo">
-              <div class="findry-demo__search">Search AI tools</div>
-              <div class="findry-demo__graph">
-                <span class="findry-demo__node">Writing</span>
-                <span class="findry-demo__node findry-demo__node--active">Research</span>
-                <span class="findry-demo__node">Design</span>
-                <span class="findry-demo__node">Code</span>
+          <div class="product__demo" aria-hidden="true">
+            {product.id === 'findry-ai' && (
+              <div class="findry-demo">
+                <div class="findry-demo__search">Search AI tools</div>
+                <div class="findry-demo__graph">
+                  <span class="findry-demo__node">Writing</span>
+                  <span class="findry-demo__node findry-demo__node--active">Research</span>
+                  <span class="findry-demo__node">Design</span>
+                  <span class="findry-demo__node">Code</span>
+                </div>
               </div>
-            </div>
-          )}
-          {product.id === 'password-generator' && (
-            <div class="password-demo">
-              <code class="password-demo__value">G7!vQ2#nL9</code>
-              <div class="password-demo__characters">
-                <span>A-Z</span><span>a-z</span><span>0-9</span><span>!@#</span>
+            )}
+            {product.id === 'password-generator' && (
+              <div class="password-demo">
+                <code class="password-demo__value">G7!vQ2#nL9</code>
+                <div class="password-demo__characters">
+                  <span>A-Z</span><span>a-z</span><span>0-9</span><span>!@#</span>
+                </div>
+                <div class="password-demo__strength">
+                  <span></span><span></span><span></span><span></span>
+                </div>
               </div>
-              <div class="password-demo__strength">
-                <span></span><span></span><span></span><span></span>
+            )}
+            {product.id === 'vast-translator' && (
+              <div class="translator-demo">
+                <div class="translator-demo__source">
+                  <span>EN</span>
+                  <p>Open horizons</p>
+                </div>
+                <div class="translator-demo__results">
+                  <div><span>Engine 01</span><p>辽阔视野</p></div>
+                  <div><span>Engine 02</span><p>开放的地平线</p></div>
+                </div>
               </div>
-            </div>
-          )}
-          {product.id === 'vast-translator' && (
-            <div class="translator-demo">
-              <div class="translator-demo__source">
-                <span>EN</span>
-                <p>Open horizons</p>
-              </div>
-              <div class="translator-demo__results">
-                <div><span>Engine 01</span><p>辽阔视野</p></div>
-                <div><span>Engine 02</span><p>开放的地平线</p></div>
-              </div>
-            </div>
-          )}
-        </div>
-      </article>
+            )}
+          </div>
+        </article>
+      </div>
     ))}
   </div>
 </section>

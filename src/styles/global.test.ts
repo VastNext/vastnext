@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
@@ -13,6 +13,27 @@ describe('明亮新界视觉系统', () => {
     expect(layout).toContain("import '../styles/global.css'");
     expect(css).toContain('Space Grotesk');
     expect(css).toContain('Noto Sans SC');
+  });
+
+  it('从本站 WOFF2 文件加载字体且不发起第三方字体请求', () => {
+    const css = source('./global.css');
+    const fontPaths = [
+      '../../public/fonts/SpaceGrotesk-Variable.woff2',
+      '../../public/fonts/NotoSansSC-VastNext.woff2',
+    ];
+
+    expect(css).not.toMatch(/@import|fonts\.googleapis\.com|fonts\.gstatic\.com/);
+    expect(css).toMatch(/@font-face[\s\S]*font-family:\s*["']Space Grotesk["']/);
+    expect(css).toMatch(/@font-face[\s\S]*font-family:\s*["']Noto Sans SC["']/);
+    expect(css.match(/font-display:\s*swap/g)).toHaveLength(2);
+
+    for (const fontPath of fontPaths) {
+      const fontUrl = new URL(fontPath, import.meta.url);
+      expect(existsSync(fontUrl), `${fontPath} 应存在`).toBe(true);
+      if (existsSync(fontUrl)) {
+        expect(readFileSync(fontUrl).subarray(0, 4).toString('ascii')).toBe('wOF2');
+      }
+    }
   });
 
   it('定义品牌画布、文字与四种功能色 token', () => {
@@ -60,5 +81,20 @@ describe('明亮新界视觉系统', () => {
     expect(components).toContain('data-reveal');
     expect(css).toMatch(/\.js\s+\[data-reveal\]/);
     expect(css).toMatch(/\.js\s+\[data-reveal\]\.is-visible/);
+  });
+
+  it('将产品 reveal 位移与展台 hover 位移隔离到两层元素', () => {
+    const component = source('../components/ProductShowcase.astro');
+    const css = source('./global.css');
+    const productOpeningTag = component.match(/<article\s+[\s\S]*?class=\{`product product--\$\{product\.id\}`\}[\s\S]*?>/)?.[0];
+
+    expect(component).toMatch(/class=\{`product-reveal product-reveal--\$\{product\.id\}`\}[\s\S]*?data-reveal/);
+    expect(productOpeningTag).toBeDefined();
+    expect(productOpeningTag).not.toContain('data-reveal');
+    expect(css).toMatch(/\.product-reveal--findry-ai\s*\{[^}]*grid-row:\s*span 2/);
+    expect(css).toMatch(/\.product-reveal--vast-translator\s*\{[^}]*grid-column:\s*1 \/ -1/);
+    expect(css).toMatch(/\.product-reveal\s*>\s*\.product\s*\{[^}]*height:\s*100%/);
+    expect(css).toMatch(/\.product:hover\s*\{[^}]*transform:/);
+    expect(css).not.toMatch(/\.js\s+\.product\[data-reveal\]/);
   });
 });

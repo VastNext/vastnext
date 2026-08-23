@@ -1,4 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/NotoSansSC-VastNext.woff2') format('woff2');
+}
 
 :root {
   --color-canvas: #F7F8F3;
@@ -379,6 +393,22 @@ h3 {
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
+.product-reveal {
+  min-width: 0;
+}
+
+.product-reveal--findry-ai {
+  grid-row: span 2;
+}
+
+.product-reveal--vast-translator {
+  grid-column: 1 / -1;
+}
+
+.product-reveal > .product {
+  height: 100%;
+}
+
 .product {
   position: relative;
   display: grid;
@@ -395,7 +425,6 @@ h3 {
 }
 
 .product--findry-ai {
-  grid-row: span 2;
   grid-template-rows: auto 1fr;
   background: #E6E0FB;
 }
@@ -406,7 +435,6 @@ h3 {
 }
 
 .product--vast-translator {
-  grid-column: 1 / -1;
   min-height: 25rem;
   grid-template-columns: minmax(15rem, 0.65fr) minmax(0, 1.35fr);
   background: #DCE8FF;
@@ -849,7 +877,7 @@ h3 {
   transform: translateY(0);
 }
 
-.js .product[data-reveal]:nth-child(2),
+.js .product-reveal[data-reveal]:nth-child(2),
 .js .future-track[data-reveal]:nth-child(2) {
   transition-delay: 110ms;
 }
@@ -1049,12 +1077,16 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .product-reveal--findry-ai,
+  .product-reveal--vast-translator {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
   .product,
   .product--password-generator,
   .product--vast-translator {
     min-height: 0;
-    grid-column: auto;
-    grid-row: auto;
     grid-template-columns: 1fr;
   }
 
