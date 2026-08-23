@@ -14,7 +14,7 @@ export interface OpenSourceProject {
   name: string;
   url: string;
   platform: string;
-  technology: string;
+  stack: string;
   license: string;
 }
 
@@ -62,7 +62,6 @@ export interface SiteCopy {
     eyebrow: string;
     title: string;
     description: string;
-    detailsLabel: string;
     cta: string;
   };
   future: {
@@ -79,9 +78,8 @@ export interface SiteCopy {
     description: string;
   };
   footer: {
-    email: string;
+    emailLabel: string;
     githubLabel: string;
-    githubUrl: string;
     privacy: string;
     copyright: string;
   };
@@ -109,9 +107,14 @@ export const openSourceProject = {
   name: 'GlanceMD',
   url: 'https://github.com/VastNext/GlanceMD',
   platform: 'Windows',
-  technology: 'Rust + WebView2',
+  stack: 'Rust + WebView2',
   license: 'MIT',
 } as const satisfies OpenSourceProject;
+
+export const contactFacts = {
+  email: 'hello@vastnext.com',
+  githubUrl: 'https://github.com/VastNext',
+} as const;
 
 export const futureTracks = [
   { id: 'games', name: 'Games' },
@@ -162,8 +165,7 @@ export const siteCopy = {
       eyebrow: 'Open by default',
       title: 'GlanceMD',
       description:
-        'A fast, open-source Markdown viewer for Windows, built with Rust and WebView2 under the MIT license.',
-      detailsLabel: 'Windows · Rust + WebView2 · MIT',
+        'Open Markdown files in a focused viewer built to make reading quick and distraction-free.',
       cta: 'Explore GlanceMD on GitHub',
     },
     future: {
@@ -192,9 +194,8 @@ export const siteCopy = {
         'Vast stands for an open horizon, the boundless sea of possibilities. Next points to the next step and the future. Together, VastNext means “瀚海·未来”: a long-term commitment to building useful products for everyone.',
     },
     footer: {
-      email: 'hello@vastnext.com',
+      emailLabel: 'Email us',
       githubLabel: 'VastNext on GitHub',
-      githubUrl: 'https://github.com/VastNext',
       privacy: 'Privacy',
       copyright: '© VastNext',
     },
@@ -243,8 +244,7 @@ export const siteCopy = {
     openSource: {
       eyebrow: '默认开放',
       title: 'GlanceMD',
-      description: '一款快速的 Windows 开源 Markdown 查看器，使用 Rust 与 WebView2 构建，采用 MIT 许可证。',
-      detailsLabel: 'Windows · Rust + WebView2 · MIT',
+      description: '在专注的查看器中打开 Markdown 文件，快速阅读，不受干扰。',
       cta: '在 GitHub 探索 GlanceMD',
     },
     future: {
@@ -273,9 +273,8 @@ export const siteCopy = {
         'Vast 代表辽阔、开放与充满可能的瀚海，Next 代表下一步、下一代与未来。VastNext 即“瀚海·未来”，表达我们长期为每个人创造实用产品的方向。',
     },
     footer: {
-      email: 'hello@vastnext.com',
+      emailLabel: '联系我们',
       githubLabel: 'VastNext 的 GitHub',
-      githubUrl: 'https://github.com/VastNext',
       privacy: '隐私政策',
       copyright: '© VastNext',
     },
