@@ -187,6 +187,7 @@ h3 {
 }
 
 .site-header__brand {
+  min-height: 44px;
   font-size: 1.35rem;
   text-decoration: none;
 }
