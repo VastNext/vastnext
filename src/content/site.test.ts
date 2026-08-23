@@ -96,6 +96,13 @@ describe('站点内容模型', () => {
     expect(siteCopy.zh.about.equationLabel).toBe('Vast 加上 Next，寓意瀚海与未来。');
   });
 
+  it('保持英文品牌故事为纯英文', () => {
+    expect(siteCopy.en.about.description).toBe(
+      'Vast stands for an open horizon, the boundless sea of possibilities. Next points to the next step and the future. Together, VastNext evokes a boundless horizon and the future ahead: a long-term commitment to building useful products for everyone.',
+    );
+    expect(siteCopy.en.about.description).not.toMatch(/[\u3400-\u9fff]/);
+  });
+
   it('为隐私页面提供完整且独立的双语文案', () => {
     for (const locale of locales) {
       expectStringsToBeNonEmpty(siteCopy[locale].privacy, `${locale}.privacy`);

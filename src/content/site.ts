@@ -226,7 +226,7 @@ export const siteCopy = {
       eyebrow: 'About VastNext',
       title: 'Open horizons. Practical next steps.',
       description:
-        'Vast stands for an open horizon, the boundless sea of possibilities. Next points to the next step and the future. Together, VastNext means “瀚海·未来”: a long-term commitment to building useful products for everyone.',
+        'Vast stands for an open horizon, the boundless sea of possibilities. Next points to the next step and the future. Together, VastNext evokes a boundless horizon and the future ahead: a long-term commitment to building useful products for everyone.',
       equationLabel: 'Vast plus Next: an open horizon for what comes next.',
     },
     footer: {
