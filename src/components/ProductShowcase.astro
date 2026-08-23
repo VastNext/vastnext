@@ -12,7 +12,7 @@ const copy = siteCopy[locale];
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
 ---
 
-<section id="products" class="products" aria-labelledby="products-title">
+<section id="products" class="products" aria-labelledby="products-title" data-reveal>
   <header class="section-heading">
     <p class="eyebrow">{copy.productsSection.eyebrow}</p>
     <h2 id="products-title">{copy.productsSection.title}</h2>
@@ -25,6 +25,7 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
         id={`product-${product.id}`}
         class={`product product--${product.id}`}
         data-product={product.id}
+        data-reveal
       >
         <div class="product__copy">
           <p class="product__number">0{index + 1}</p>

@@ -10,7 +10,7 @@ const { locale } = Astro.props;
 const copy = siteCopy[locale].future;
 ---
 
-<section class="future" aria-labelledby="future-title" data-date-commitment={String(futureFacts.dateCommitment)}>
+<section class="future" aria-labelledby="future-title" data-date-commitment={String(futureFacts.dateCommitment)} data-reveal>
   <header class="section-heading">
     <p class="eyebrow">{copy.eyebrow}</p>
     <h2 id="future-title">{copy.title}</h2>
@@ -18,7 +18,7 @@ const copy = siteCopy[locale].future;
   </header>
   <div class="future__tracks">
     {futureTracks.map((trackId) => (
-      <article class={`future-track future-track--${trackId}`} data-track={trackId}>
+      <article class={`future-track future-track--${trackId}`} data-track={trackId} data-reveal>
         <h3>{copy.tracks[trackId].title}</h3>
         <p>{copy.tracks[trackId].description}</p>
         <p class="future-track__status">{copy.tracks[trackId].status}</p>

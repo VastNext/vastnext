@@ -12,7 +12,7 @@ const copy = siteCopy[locale].openSource;
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
 ---
 
-<section id="open-source" class="open-source" aria-labelledby="open-source-title">
+<section id="open-source" class="open-source" aria-labelledby="open-source-title" data-reveal>
   <div class="open-source__copy">
     <p class="eyebrow">{copy.eyebrow}</p>
     <h2 id="open-source-title">{openSourceProject.name}</h2>

@@ -28,27 +28,19 @@ const { locale } = Astro.props;
 </main>
 <SiteFooter locale={locale} />
 
-<style is:global>
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  .skip-link {
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-    transform: translateY(-200%);
-  }
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
 
-  .skip-link:focus {
-    transform: translateY(0);
+    document.querySelectorAll('[data-reveal]').forEach((element) => revealObserver.observe(element));
   }
-</style>
+</script>

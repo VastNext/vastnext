@@ -10,7 +10,7 @@ const { locale } = Astro.props;
 const copy = siteCopy[locale].about;
 ---
 
-<section id="about" class="about" aria-labelledby="about-title">
+<section id="about" class="about" aria-labelledby="about-title" data-reveal>
   <p class="eyebrow">{copy.eyebrow}</p>
   <h2 id="about-title">{copy.title}</h2>
   <p>{copy.description}</p>
