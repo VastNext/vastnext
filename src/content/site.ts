@@ -16,10 +16,6 @@ interface NamedLink {
   url: string;
 }
 
-interface NamedFact {
-  name: string;
-}
-
 export const productFacts = {
   'findry-ai': { name: 'Findry AI', url: 'https://findryai.com' },
   'password-generator': {
@@ -33,9 +29,9 @@ export const productFacts = {
 } as const satisfies Record<string, NamedLink>;
 
 export const futureTrackFacts = {
-  games: { name: 'Games' },
-  utilities: { name: 'Utilities' },
-} as const satisfies Record<string, NamedFact>;
+  games: {},
+  utilities: {},
+} as const;
 
 export const futureFacts = {
   dateCommitment: false,
@@ -56,11 +52,6 @@ export interface OpenSourceProject {
   platform: string;
   stack: string;
   license: string;
-}
-
-export interface FutureTrack {
-  id: FutureTrackId;
-  name: string;
 }
 
 interface ProductCopy {
@@ -149,10 +140,7 @@ export const contactFacts = {
   githubUrl: 'https://github.com/VastNext',
 } as const;
 
-export const futureTracks: FutureTrack[] = Object.entries(futureTrackFacts).map(([id, track]) => ({
-  id: id as FutureTrackId,
-  ...track,
-}));
+export const futureTracks = Object.keys(futureTrackFacts) as FutureTrackId[];
 
 export const siteCopy = {
   en: {

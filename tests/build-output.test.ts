@@ -17,30 +17,34 @@ function expectLink(html: string, href: string): void {
   expect(html).toMatch(new RegExp(`<a[^>]+href=["']${href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*>`));
 }
 
-function expectExternalLink(html: string, href: string): void {
+function expectEveryExternalLink(html: string, href: string): void {
   const escapedHref = href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  expect(html).toMatch(
-    new RegExp(`<a(?=[^>]+href=["']${escapedHref}["'])(?=[^>]+target=["']_blank["'])(?=[^>]+rel=["']noreferrer["'])[^>]*>`),
-  );
-}
+  const links = html.match(
+    new RegExp(`<a\\b(?=[^>]*href=["']${escapedHref}["'])[^>]*>[\\s\\S]*?<\\/a>`, 'g'),
+  ) ?? [];
 
-function expectEveryNewWindowLinkToHaveHint(html: string): void {
-  const links = html.match(/<a\b(?=[^>]*target=["']_blank["'])[^>]*>[\s\S]*?<\/a>/g) ?? [];
-
-  expect(links.length).toBeGreaterThan(0);
+  expect(links.length, `应至少输出一个指向 ${href} 的链接`).toBeGreaterThan(0);
   for (const link of links) {
-    expect(link).toMatch(/<span class=["']sr-only["']>.+?<\/span>/);
+    const openingTag = link.match(/^<a\b[^>]*>/)?.[0] ?? '';
+
+    expect(openingTag, `${href} 的每个链接都应在新窗口打开`).toMatch(/\btarget=["']_blank["']/);
+    expect(openingTag, `${href} 的每个链接都应包含 noreferrer`).toMatch(
+      /\brel=["'][^"']*\bnoreferrer\b[^"']*["']/,
+    );
+    expect(link, `${href} 的每个链接都应包含屏幕阅读器新窗口提示`).toMatch(
+      /<span class=["']sr-only["']>.+?<\/span>/,
+    );
   }
 }
 
-function getFutureTrack(html: string, trackId: string): string {
-  const escapedTrackId = trackId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const article = html.match(
-    new RegExp(`<article(?=[^>]*data-track=["']${escapedTrackId}["'])[^>]*>[\\s\\S]*?<\\/article>`),
-  );
-
-  expect(article, `应输出 data-track="${trackId}" 的未来方向条目`).not.toBeNull();
-  return article![0];
+function expectEveryExpectedExternalLink(html: string): void {
+  for (const href of [
+    ...Object.values(productFacts).map((product) => product.url),
+    openSourceProject.url,
+    contactFacts.githubUrl,
+  ]) {
+    expectEveryExternalLink(html, href);
+  }
 }
 
 function expectLocalizedMetadata(
@@ -55,6 +59,16 @@ function expectLocalizedMetadata(
   expect(html).toContain(`<link rel="alternate" hreflang="en" href="${enHref}">`);
   expect(html).toContain(`<link rel="alternate" hreflang="zh-CN" href="${zhHref}">`);
   expect(html).toContain(`<link rel="alternate" hreflang="x-default" href="${enHref}">`);
+}
+
+function getFutureTrack(html: string, trackId: string): string {
+  const escapedTrackId = trackId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const article = html.match(
+    new RegExp(`<article(?=[^>]*data-track=["']${escapedTrackId}["'])[^>]*>[\\s\\S]*?<\\/article>`),
+  );
+
+  expect(article, `应输出 data-track="${trackId}" 的未来方向条目`).not.toBeNull();
+  return article![0];
 }
 
 beforeAll(() => {
@@ -89,27 +103,23 @@ describe('品牌页构建产物', () => {
   ])('%s 页面包含所有产品、开源项目、联系入口及语言切换', (_locale, getHtml, languageHref) => {
     const html = getHtml();
 
-    for (const product of Object.values(productFacts)) {
-      expectExternalLink(html, product.url);
-    }
-    expectExternalLink(html, openSourceProject.url);
-    expectExternalLink(html, contactFacts.githubUrl);
+    expectEveryExpectedExternalLink(html);
     expectLink(html, `mailto:${contactFacts.email}`);
     expectLink(html, languageHref);
-    expectEveryNewWindowLinkToHaveHint(html);
   });
 
   it('英文未来方向中每个共享事实只渲染一个可见标题', () => {
-    for (const [trackId, track] of Object.entries(futureTrackFacts)) {
+    for (const trackId of Object.keys(futureTrackFacts) as Array<keyof typeof futureTrackFacts>) {
       const article = getFutureTrack(englishPage, trackId);
+      const title = siteCopy.en.future.tracks[trackId].title;
       const visibleText = article
         .replace(/<[^>]+>/g, ' ')
         .replace(/\s+/g, ' ')
         .trim();
-      const titleOccurrences = visibleText.match(new RegExp(`\\b${track.name}\\b`, 'g')) ?? [];
+      const titleOccurrences = visibleText.match(new RegExp(`\\b${title}\\b`, 'g')) ?? [];
 
-      expect(article).toContain(`<h3>${track.name}</h3>`);
-      expect(titleOccurrences, `${track.name} 在对应 future item 中应只显示一次`).toHaveLength(1);
+      expect(article).toContain(`<h3>${title}</h3>`);
+      expect(titleOccurrences, `${title} 在对应 future item 中应只显示一次`).toHaveLength(1);
     }
   });
 

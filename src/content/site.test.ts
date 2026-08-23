@@ -142,14 +142,16 @@ describe('站点内容模型', () => {
 
   it('将未来方向标记为探索中且不承诺日期', () => {
     expect(futureTrackFacts).toEqual({
-      games: { name: 'Games' },
-      utilities: { name: 'Utilities' },
+      games: {},
+      utilities: {},
     });
     expect(futureFacts).toEqual({ dateCommitment: false });
 
     for (const locale of locales) {
       expect(siteCopy[locale].future.explorationNote).toBeTruthy();
       expect(siteCopy[locale].future).not.toHaveProperty('dateCommitment');
+      expect(siteCopy[locale].future.tracks.games.title).toBeTruthy();
+      expect(siteCopy[locale].future.tracks.utilities.title).toBeTruthy();
     }
   });
 

@@ -17,11 +17,11 @@ const copy = siteCopy[locale].future;
     <p>{copy.description}</p>
   </header>
   <div class="future__tracks">
-    {futureTracks.map((track) => (
-      <article class={`future-track future-track--${track.id}`} data-track={track.id}>
-        <h3>{copy.tracks[track.id].title}</h3>
-        <p>{copy.tracks[track.id].description}</p>
-        <p class="future-track__status">{copy.tracks[track.id].status}</p>
+    {futureTracks.map((trackId) => (
+      <article class={`future-track future-track--${trackId}`} data-track={trackId}>
+        <h3>{copy.tracks[trackId].title}</h3>
+        <p>{copy.tracks[trackId].description}</p>
+        <p class="future-track__status">{copy.tracks[trackId].status}</p>
       </article>
     ))}
   </div>
