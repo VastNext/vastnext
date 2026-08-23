@@ -109,6 +109,7 @@ export interface SiteCopy {
     eyebrow: string;
     title: string;
     description: string;
+    equationLabel: string;
   };
   footer: {
     emailLabel: string;
@@ -213,6 +214,7 @@ export const siteCopy = {
       title: 'Open horizons. Practical next steps.',
       description:
         'Vast stands for an open horizon, the boundless sea of possibilities. Next points to the next step and the future. Together, VastNext means “瀚海·未来”: a long-term commitment to building useful products for everyone.',
+      equationLabel: 'Vast plus Next: an open horizon for what comes next.',
     },
     footer: {
       emailLabel: 'Email us',
@@ -292,6 +294,7 @@ export const siteCopy = {
       title: '辽阔视野，迈向下一步。',
       description:
         'Vast 代表辽阔、开放与充满可能的瀚海，Next 代表下一步、下一代与未来。VastNext 即“瀚海·未来”，表达我们长期为每个人创造实用产品的方向。',
+      equationLabel: 'Vast 加上 Next，寓意瀚海与未来。',
     },
     footer: {
       emailLabel: '联系我们',

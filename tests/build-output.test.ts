@@ -71,6 +71,17 @@ function getFutureTrack(html: string, trackId: string): string {
   return article![0];
 }
 
+function expectAccessibleBrandEquation(html: string, equationLabel: string): void {
+  const escapedLabel = equationLabel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  expect(html).toMatch(
+    new RegExp(
+      `<div(?=[^>]*data-brand-equation)(?=[^>]*aria-hidden=["']true["'])[^>]*>[\\s\\S]*?<\\/div>\\s*` +
+        `<p class=["']sr-only["']>${escapedLabel}<\\/p>`,
+    ),
+  );
+}
+
 beforeAll(() => {
   buildSite();
   englishPage = readBuiltPage('index.html');
@@ -121,6 +132,13 @@ describe('品牌页构建产物', () => {
       expect(article).toContain(`<h3>${title}</h3>`);
       expect(titleOccurrences, `${title} 在对应 future item 中应只显示一次`).toHaveLength(1);
     }
+  });
+
+  it.each([
+    ['en', () => englishPage, 'Vast plus Next: an open horizon for what comes next.'],
+    ['zh', () => chinesePage, 'Vast 加上 Next，寓意瀚海与未来。'],
+  ])('%s 页面隐藏视觉品牌等式并提供单一辅助说明', (_locale, getHtml, equationLabel) => {
+    expectAccessibleBrandEquation(getHtml(), equationLabel);
   });
 
   it.each([

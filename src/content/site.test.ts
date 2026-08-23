@@ -91,6 +91,10 @@ describe('站点内容模型', () => {
 
     expect(siteCopy.en.tagline).toBe("Useful ideas, built for what's next.");
     expect(siteCopy.zh.tagline).toBe('把有用的想法，带到下一个未来。');
+    expect(siteCopy.en.about.equationLabel).toBe(
+      'Vast plus Next: an open horizon for what comes next.',
+    );
+    expect(siteCopy.zh.about.equationLabel).toBe('Vast 加上 Next，寓意瀚海与未来。');
   });
 
   it('为关键可翻译叶子字段提供独立的中英文内容', () => {
@@ -129,6 +133,7 @@ describe('站点内容模型', () => {
       [en.about.eyebrow, zh.about.eyebrow, 'about.eyebrow'],
       [en.about.title, zh.about.title, 'about.title'],
       [en.about.description, zh.about.description, 'about.description'],
+      [en.about.equationLabel, zh.about.equationLabel, 'about.equationLabel'],
       [en.footer.emailLabel, zh.footer.emailLabel, 'footer.emailLabel'],
       [en.footer.githubLabel, zh.footer.githubLabel, 'footer.githubLabel'],
       [en.footer.privacy, zh.footer.privacy, 'footer.privacy'],
