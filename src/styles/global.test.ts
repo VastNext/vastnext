@@ -35,11 +35,12 @@ describe('明亮新界视觉系统', () => {
     expect(css).toMatch(/\.products__list[\s\S]*grid-template-columns/);
   });
 
-  it('为品牌首页链接提供至少 44px 的触控高度', () => {
+  it('为品牌首页链接应用至少 44px 的触控高度', () => {
     const css = source('./global.css');
     const brandRule = css.match(/\.site-header__brand\s*\{([^}]*)\}/)?.[1];
 
     expect(brandRule, '应定义 .site-header__brand 样式规则').toBeDefined();
+    expect(brandRule).toMatch(/display:\s*inline-flex/);
     expect(brandRule).toMatch(/min-height:\s*44px/);
   });
 
