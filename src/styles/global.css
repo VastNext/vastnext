@@ -180,6 +180,8 @@ h3 {
 }
 
 .site-header,
+.privacy-header,
+.privacy-main,
 .hero,
 .products,
 .open-source,
@@ -188,6 +190,87 @@ h3 {
 .site-footer {
   width: min(calc(100% - (2 * var(--gutter))), var(--container));
   margin-inline: auto;
+}
+
+.privacy-header {
+  display: flex;
+  min-height: 6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.privacy-header a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  text-decoration: none;
+}
+
+.privacy-header__brand {
+  font-size: 1.35rem;
+}
+
+.privacy-main {
+  padding-block: clamp(3rem, 8vw, 7rem) var(--section-space);
+}
+
+.privacy-article {
+  max-width: 48rem;
+}
+
+.privacy-article h1 {
+  max-width: none;
+  font-size: clamp(3rem, 7vw, 6rem);
+}
+
+.privacy-article__header {
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.privacy-article__updated,
+.privacy-article__introduction,
+.privacy-article section p {
+  color: var(--color-ink-soft);
+}
+
+.privacy-article__updated {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.privacy-article__introduction {
+  max-width: 42rem;
+  margin-bottom: 0;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+
+.privacy-article section {
+  padding-block: 2.25rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.privacy-article section h2 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+}
+
+.privacy-article section p {
+  margin-bottom: 0;
+}
+
+.privacy-article__home {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  margin-top: 2.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
 }
 
 .site-header {
@@ -1039,6 +1122,10 @@ h3 {
   }
 
   .site-header {
+    min-height: 4.75rem;
+  }
+
+  .privacy-header {
     min-height: 4.75rem;
   }
 

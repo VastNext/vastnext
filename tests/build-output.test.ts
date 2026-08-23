@@ -1,4 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 import {
   contactFacts,
@@ -12,6 +14,10 @@ import { buildSite, readBuiltPage } from './helpers/build';
 
 let englishPage: string;
 let chinesePage: string;
+let englishPrivacyPage: string;
+let chinesePrivacyPage: string;
+
+const projectRoot = resolve(import.meta.dirname, '..');
 
 function expectLink(html: string, href: string): void {
   expect(html).toMatch(new RegExp(`<a[^>]+href=["']${href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*>`));
@@ -86,6 +92,8 @@ beforeAll(() => {
   buildSite();
   englishPage = readBuiltPage('index.html');
   chinesePage = readBuiltPage('zh/index.html');
+  englishPrivacyPage = readBuiltPage('privacy/index.html');
+  chinesePrivacyPage = readBuiltPage('zh/privacy/index.html');
 }, 30_000);
 
 describe('品牌页构建产物', () => {
@@ -167,5 +175,45 @@ describe('品牌页构建产物', () => {
       url: siteFacts.siteUrl,
       sameAs: [contactFacts.githubUrl],
     });
+  });
+
+  it('为英文和中文隐私页面输出正确的语言及本地化链接元数据', () => {
+    const enUrl = `${siteFacts.siteUrl}/privacy/`;
+    const zhUrl = `${siteFacts.siteUrl}/zh/privacy/`;
+
+    expectLocalizedMetadata(englishPrivacyPage, 'en', enUrl, enUrl, zhUrl);
+    expectLocalizedMetadata(chinesePrivacyPage, 'zh-CN', zhUrl, enUrl, zhUrl);
+  });
+
+  it.each([
+    ['en', () => englishPrivacyPage, siteCopy.en.privacy, '/'],
+    ['zh', () => chinesePrivacyPage, siteCopy.zh.privacy, '/zh/'],
+  ])('%s 隐私页面包含核心说明、联系邮箱和返回首页链接', (_locale, getHtml, privacy, homeHref) => {
+    const html = getHtml();
+
+    expect(html).toContain(privacy.noCollection);
+    expect(html).toContain(privacy.technicalData);
+    expect(html).toContain(privacy.externalLinks);
+    expectLink(html, `mailto:${contactFacts.email}`);
+    expectLink(html, homeHref);
+  });
+
+  it('构建产物包含 Cloudflare 安全头、robots 和 sitemap', () => {
+    const headers = readFileSync(resolve(projectRoot, 'dist/_headers'), 'utf8');
+
+    expect(headers).toContain('/*');
+    expect(headers).toContain('X-Content-Type-Options: nosniff');
+    expect(headers).toContain('Referrer-Policy: strict-origin-when-cross-origin');
+    expect(headers).toContain('Permissions-Policy:');
+    expect(headers).toContain('X-Frame-Options: DENY');
+    expect(existsSync(resolve(projectRoot, 'dist/robots.txt'))).toBe(true);
+    expect(existsSync(resolve(projectRoot, 'dist/sitemap-index.xml'))).toBe(true);
+  });
+
+  it('首页隐私链接与生成页面闭合', () => {
+    expectLink(englishPage, '/privacy/');
+    expectLink(chinesePage, '/zh/privacy/');
+    expect(englishPrivacyPage).toContain(siteCopy.en.privacy.title);
+    expect(chinesePrivacyPage).toContain(siteCopy.zh.privacy.title);
   });
 });

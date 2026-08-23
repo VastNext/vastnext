@@ -64,6 +64,22 @@ interface FutureTrackCopy {
   status: string;
 }
 
+interface PrivacyCopy {
+  title: string;
+  description: string;
+  updatedLabel: string;
+  updatedDate: string;
+  introduction: string;
+  sections: readonly [string, string, string];
+  noCollection: string;
+  technicalData: string;
+  externalLinks: string;
+  contactTitle: string;
+  contact: string;
+  homeLabel: string;
+  homeHref: string;
+}
+
 export interface SiteCopy {
   title: string;
   description: string;
@@ -117,6 +133,7 @@ export interface SiteCopy {
     privacy: string;
     copyright: string;
   };
+  privacy: PrivacyCopy;
   languageSwitch: {
     label: string;
     href: string;
@@ -222,6 +239,25 @@ export const siteCopy = {
       privacy: 'Privacy',
       copyright: '© VastNext',
     },
+    privacy: {
+      title: 'Privacy',
+      description: 'How the VastNext brand site handles privacy and technical information.',
+      updatedLabel: 'Last updated',
+      updatedDate: 'August 23, 2026',
+      introduction:
+        'This short notice explains privacy practices for the VastNext brand site. It is general information, not legal advice.',
+      sections: ['Information we collect', 'Technical delivery', 'External links'],
+      noCollection:
+        'This site does not actively collect personal information through accounts, forms, analytics, or advertising.',
+      technicalData:
+        'Our server and CDN provider, such as Cloudflare, may process necessary technical information and basic request logs to deliver and protect the site. This site does not set analytics or advertising cookies.',
+      externalLinks:
+        'Links to VastNext products and other external services are governed by each product or service’s own privacy policy.',
+      contactTitle: 'Contact',
+      contact: 'For privacy questions, email',
+      homeLabel: 'Back to home',
+      homeHref: '/',
+    },
     languageSwitch: {
       label: '中文',
       href: '/zh/',
@@ -301,6 +337,22 @@ export const siteCopy = {
       githubLabel: 'VastNext 的 GitHub',
       privacy: '隐私政策',
       copyright: '© VastNext',
+    },
+    privacy: {
+      title: '隐私政策',
+      description: 'VastNext 品牌站如何处理隐私与必要技术信息。',
+      updatedLabel: '更新时间',
+      updatedDate: '2026 年 8 月 23 日',
+      introduction: '这份简短说明介绍 VastNext 品牌站的隐私做法，仅供一般参考，不构成法律意见。',
+      sections: ['我们收集的信息', '技术服务信息', '外部链接'],
+      noCollection: '本站不通过账户、表单、分析或广告主动收集个人信息。',
+      technicalData:
+        '为交付和保护本站，服务器及 Cloudflare 等 CDN 服务商可能处理必要技术信息和基础请求日志。本站不设置分析或广告 Cookie。',
+      externalLinks: '本站链接到的 VastNext 产品及其他外部服务，适用各产品或服务自身的隐私政策。',
+      contactTitle: '联系我们',
+      contact: '如有隐私相关问题，请发送邮件至',
+      homeLabel: '返回首页',
+      homeHref: '/zh/',
     },
     languageSwitch: {
       label: 'English',

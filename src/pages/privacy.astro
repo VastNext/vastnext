@@ -1,0 +1,16 @@
+---
+import PrivacyPage from '../components/PrivacyPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteCopy } from '../content/site';
+
+const copy = siteCopy.en.privacy;
+---
+
+<BaseLayout
+  locale="en"
+  title={`${copy.title} — VastNext`}
+  description={copy.description}
+  canonicalPath="/privacy/"
+>
+  <PrivacyPage locale="en" />
+</BaseLayout>

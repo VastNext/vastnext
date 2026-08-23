@@ -97,6 +97,18 @@ describe('站点内容模型', () => {
     expect(siteCopy.zh.about.equationLabel).toBe('Vast 加上 Next，寓意瀚海与未来。');
   });
 
+  it('为隐私页面提供完整且独立的双语文案', () => {
+    for (const locale of locales) {
+      expectStringsToBeNonEmpty(siteCopy[locale].privacy, `${locale}.privacy`);
+    }
+
+    expect(siteCopy.en.privacy.title).not.toBe(siteCopy.zh.privacy.title);
+    expect(siteCopy.en.privacy.sections).toHaveLength(3);
+    expect(siteCopy.zh.privacy.sections).toHaveLength(3);
+    expect(siteCopy.en.privacy.homeHref).toBe('/');
+    expect(siteCopy.zh.privacy.homeHref).toBe('/zh/');
+  });
+
   it('为关键可翻译叶子字段提供独立的中英文内容', () => {
     const en = siteCopy.en;
     const zh = siteCopy.zh;
@@ -137,6 +149,10 @@ describe('站点内容模型', () => {
       [en.footer.emailLabel, zh.footer.emailLabel, 'footer.emailLabel'],
       [en.footer.githubLabel, zh.footer.githubLabel, 'footer.githubLabel'],
       [en.footer.privacy, zh.footer.privacy, 'footer.privacy'],
+      [en.privacy.title, zh.privacy.title, 'privacy.title'],
+      [en.privacy.introduction, zh.privacy.introduction, 'privacy.introduction'],
+      [en.privacy.updatedLabel, zh.privacy.updatedLabel, 'privacy.updatedLabel'],
+      [en.privacy.homeLabel, zh.privacy.homeLabel, 'privacy.homeLabel'],
       [en.languageSwitch.label, zh.languageSwitch.label, 'languageSwitch.label'],
     ];
 
