@@ -1,6 +1,6 @@
 # VastNext 品牌站
 
-VastNext 的双语静态品牌网站，用于介绍品牌、产品、开源项目和未来探索方向。本仓库只包含网站源码与部署配置，不代表网站已经部署。
+VastNext 的双语静态品牌网站，用于介绍品牌、产品、开源项目和未来探索方向。生产站点：<https://vastnext.com>。
 
 ## 技术栈
 
@@ -38,6 +38,8 @@ npm run preview
 页面会输出对应的 canonical、hreflang 和 `x-default` 元数据。
 
 ## Cloudflare Pages
+
+生产站点部署在 Cloudflare Pages，由 GitHub Actions 在 `main` 分支更新后自动发布。
 
 Cloudflare Pages 项目可使用以下构建设置：
 
