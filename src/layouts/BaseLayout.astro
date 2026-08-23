@@ -25,6 +25,7 @@ const enUrl = new URL(enPath, siteFacts.siteUrl);
 const zhUrl = new URL(zhPath, siteFacts.siteUrl);
 const ogImageUrl = new URL(siteFacts.ogImage, siteFacts.siteUrl);
 const metadata = siteCopy[locale].metadata;
+const ogImageAlt = `${siteFacts.brandName}: ${siteCopy[locale].tagline}`;
 const organizationJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -55,12 +56,17 @@ const organizationJsonLd = JSON.stringify({
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={String(siteFacts.ogImageWidth)} />
+    <meta property="og:image:height" content={String(siteFacts.ogImageHeight)} />
+    <meta property="og:image:type" content={siteFacts.ogImageType} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={metadata.ogLocale} />
     <meta property="og:locale:alternate" content={metadata.alternateLocale} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <script type="application/ld+json" set:html={organizationJsonLd} is:inline />
   </head>
   <body>

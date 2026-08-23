@@ -4,7 +4,10 @@ export type Locale = (typeof locales)[number];
 
 export const siteFacts = {
   siteUrl: 'https://vastnext.com',
-  ogImage: '/og-cover.svg',
+  ogImage: '/og-cover.png',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: 'image/png',
   brandName: 'VastNext',
 } as const;
 

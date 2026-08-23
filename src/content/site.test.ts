@@ -38,7 +38,10 @@ describe('站点内容模型', () => {
   it('提供共享站点事实和每种语言的页面元数据', () => {
     expect(siteFacts).toEqual({
       siteUrl: 'https://vastnext.com',
-      ogImage: '/og-cover.svg',
+      ogImage: '/og-cover.png',
+      ogImageWidth: 1200,
+      ogImageHeight: 630,
+      ogImageType: 'image/png',
       brandName: 'VastNext',
     });
     expect(siteCopy.en.metadata).toEqual({
