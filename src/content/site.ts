@@ -33,10 +33,6 @@ export const futureTrackFacts = {
   utilities: {},
 } as const;
 
-export const futureFacts = {
-  dateCommitment: false,
-} as const;
-
 export type ProductId = keyof typeof productFacts;
 export type FutureTrackId = keyof typeof futureTrackFacts;
 

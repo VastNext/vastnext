@@ -8,17 +8,12 @@ interface Props {
   title: string;
   description: string;
   canonicalPath: string;
-  alternatePath?: string;
+  alternatePath: string;
 }
 
 const { locale, title, description, canonicalPath, alternatePath } = Astro.props;
 const normalizedPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
-const inferredAlternatePath = locale === 'en'
-  ? normalizedPath === '/' ? '/zh/' : `/zh${normalizedPath}`
-  : normalizedPath === '/zh/' ? '/' : normalizedPath.replace(/^\/zh(?=\/)/, '');
-const normalizedAlternatePath = alternatePath
-  ? alternatePath.startsWith('/') ? alternatePath : `/${alternatePath}`
-  : inferredAlternatePath;
+const normalizedAlternatePath = alternatePath.startsWith('/') ? alternatePath : `/${alternatePath}`;
 const enPath = locale === 'en' ? normalizedPath : normalizedAlternatePath;
 const zhPath = locale === 'zh' ? normalizedPath : normalizedAlternatePath;
 const canonicalUrl = new URL(normalizedPath, siteFacts.siteUrl);

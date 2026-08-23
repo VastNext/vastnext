@@ -143,6 +143,16 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
+    ['en', () => englishPage, siteCopy.en.future.explorationNote],
+    ['zh', () => chinesePage, siteCopy.zh.future.explorationNote],
+  ])('%s 页面始终显示未来方向探索说明且不输出日期承诺属性', (_locale, getHtml, explorationNote) => {
+    const html = getHtml();
+
+    expect(html).toContain(explorationNote);
+    expect(html).not.toContain('data-date-commitment');
+  });
+
+  it.each([
     ['en', () => englishPage, 'Vast plus Next: an open horizon for what comes next.'],
     ['zh', () => chinesePage, 'Vast 加上 Next，寓意瀚海与未来。'],
   ])('%s 页面隐藏视觉品牌等式并提供单一辅助说明', (_locale, getHtml, equationLabel) => {

@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '../content/site';
-import { futureFacts, futureTracks, siteCopy } from '../content/site';
+import { futureTracks, siteCopy } from '../content/site';
 
 interface Props {
   locale: Locale;
@@ -10,7 +10,7 @@ const { locale } = Astro.props;
 const copy = siteCopy[locale].future;
 ---
 
-<section class="future" aria-labelledby="future-title" data-date-commitment={String(futureFacts.dateCommitment)} data-reveal>
+<section class="future" aria-labelledby="future-title" data-reveal>
   <header class="section-heading">
     <p class="eyebrow">{copy.eyebrow}</p>
     <h2 id="future-title">{copy.title}</h2>
@@ -25,5 +25,5 @@ const copy = siteCopy[locale].future;
       </article>
     ))}
   </div>
-  {!futureFacts.dateCommitment && <p class="future__note">{copy.explorationNote}</p>}
+  <p class="future__note">{copy.explorationNote}</p>
 </section>

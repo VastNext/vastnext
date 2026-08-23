@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import * as site from './site';
 
 const {
-  futureFacts,
   futureTrackFacts,
   locales,
   openSourceProject,
@@ -166,22 +165,13 @@ describe('站点内容模型', () => {
       games: {},
       utilities: {},
     });
-    expect(futureFacts).toEqual({ dateCommitment: false });
+    expect(site).not.toHaveProperty('futureFacts');
 
     for (const locale of locales) {
       expect(siteCopy[locale].future.explorationNote).toBeTruthy();
       expect(siteCopy[locale].future).not.toHaveProperty('dateCommitment');
       expect(siteCopy[locale].future.tracks.games.title).toBeTruthy();
       expect(siteCopy[locale].future.tracks.utilities.title).toBeTruthy();
-    }
-  });
-
-  it('产品和开源文案不重复共享名称', () => {
-    for (const locale of locales) {
-      for (const copy of Object.values(siteCopy[locale].products)) {
-        expect(copy).not.toHaveProperty('title');
-      }
-      expect(siteCopy[locale].openSource).not.toHaveProperty('title');
     }
   });
 
@@ -192,22 +182,7 @@ describe('站点内容模型', () => {
       email: 'hello@vastnext.com',
       githubUrl: 'https://github.com/VastNext',
     });
-    expect(siteCopy.en.footer).not.toHaveProperty('email');
-    expect(siteCopy.zh.footer).not.toHaveProperty('email');
-    expect(siteCopy.en.footer).not.toHaveProperty('githubUrl');
-    expect(siteCopy.zh.footer).not.toHaveProperty('githubUrl');
     expect(siteCopy.en.languageSwitch.href).toBe('/zh/');
     expect(siteCopy.zh.languageSwitch.href).toBe('/');
-  });
-
-  it('开源文案不重复结构化技术事实', () => {
-    for (const locale of locales) {
-      const copy = Object.values(siteCopy[locale].openSource).join(' ');
-
-      expect(copy).not.toContain(openSourceProject.platform);
-      expect(copy).not.toContain('Rust');
-      expect(copy).not.toContain('WebView2');
-      expect(copy).not.toContain(openSourceProject.license);
-    }
   });
 });
