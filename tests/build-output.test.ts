@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import {
   contactFacts,
+  futureTrackFacts,
   openSourceProject,
   productFacts,
   siteCopy,
@@ -21,6 +22,25 @@ function expectExternalLink(html: string, href: string): void {
   expect(html).toMatch(
     new RegExp(`<a(?=[^>]+href=["']${escapedHref}["'])(?=[^>]+target=["']_blank["'])(?=[^>]+rel=["']noreferrer["'])[^>]*>`),
   );
+}
+
+function expectEveryNewWindowLinkToHaveHint(html: string): void {
+  const links = html.match(/<a\b(?=[^>]*target=["']_blank["'])[^>]*>[\s\S]*?<\/a>/g) ?? [];
+
+  expect(links.length).toBeGreaterThan(0);
+  for (const link of links) {
+    expect(link).toMatch(/<span class=["']sr-only["']>.+?<\/span>/);
+  }
+}
+
+function getFutureTrack(html: string, trackId: string): string {
+  const escapedTrackId = trackId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const article = html.match(
+    new RegExp(`<article(?=[^>]*data-track=["']${escapedTrackId}["'])[^>]*>[\\s\\S]*?<\\/article>`),
+  );
+
+  expect(article, `应输出 data-track="${trackId}" 的未来方向条目`).not.toBeNull();
+  return article![0];
 }
 
 function expectLocalizedMetadata(
@@ -76,19 +96,33 @@ describe('品牌页构建产物', () => {
     expectExternalLink(html, contactFacts.githubUrl);
     expectLink(html, `mailto:${contactFacts.email}`);
     expectLink(html, languageHref);
+    expectEveryNewWindowLinkToHaveHint(html);
+  });
+
+  it('英文未来方向中每个共享事实只渲染一个可见标题', () => {
+    for (const [trackId, track] of Object.entries(futureTrackFacts)) {
+      const article = getFutureTrack(englishPage, trackId);
+      const visibleText = article
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const titleOccurrences = visibleText.match(new RegExp(`\\b${track.name}\\b`, 'g')) ?? [];
+
+      expect(article).toContain(`<h3>${track.name}</h3>`);
+      expect(titleOccurrences, `${track.name} 在对应 future item 中应只显示一次`).toHaveLength(1);
+    }
   });
 
   it.each([
     ['en', () => englishPage, '/privacy/'],
     ['zh', () => chinesePage, '/zh/privacy/'],
-  ])('%s 页面包含站内导航、隐私链接和新窗口辅助提示', (_locale, getHtml, privacyHref) => {
+  ])('%s 页面包含站内导航和隐私链接', (_locale, getHtml, privacyHref) => {
     const html = getHtml();
 
     expectLink(html, '#products');
     expectLink(html, '#open-source');
     expectLink(html, '#about');
     expectLink(html, privacyHref);
-    expect(html).toContain('class="sr-only"');
   });
 
   it.each([

@@ -19,7 +19,6 @@ const copy = siteCopy[locale].future;
   <div class="future__tracks">
     {futureTracks.map((track) => (
       <article class={`future-track future-track--${track.id}`} data-track={track.id}>
-        <p class="future-track__fact">{track.name}</p>
         <h3>{copy.tracks[track.id].title}</h3>
         <p>{copy.tracks[track.id].description}</p>
         <p class="future-track__status">{copy.tracks[track.id].status}</p>
