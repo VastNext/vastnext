@@ -63,4 +63,4 @@ tests/              构建产物测试
 
 双语内容集中在 `src/content/site.ts`。新增或修改页面时，应同步检查两种语言、站内链接、canonical 和 hreflang。
 
-中文字体使用站点所需字符的子集文件。中文文案变化后，应重新生成 `public/fonts/NotoSansSC-VastNext.woff2` 字体子集，并参考 `public/fonts/README.md` 核对来源、授权和更新步骤，避免新增字符回退到系统字体。
+中文字体使用站点所需字符的子集文件。中文文案变化后，应重新生成 `public/fonts/NotoSansSC-VastNext.woff2` 字体子集，并参考 `public/fonts/README.md` 核对来源、授权和更新步骤，避免新增字符回退到系统字体。字体使用固定文件名，因此缓存策略会在每次使用前重新验证，确保新部署的字形及时生效。

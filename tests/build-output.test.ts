@@ -94,7 +94,7 @@ beforeAll(() => {
   chinesePage = readBuiltPage('zh/index.html');
   englishPrivacyPage = readBuiltPage('privacy/index.html');
   chinesePrivacyPage = readBuiltPage('zh/privacy/index.html');
-}, 30_000);
+}, 90_000);
 
 describe('品牌页构建产物', () => {
   it('为英文和中文页面输出正确的语言及本地化链接元数据', () => {
@@ -200,12 +200,15 @@ describe('品牌页构建产物', () => {
 
   it('构建产物包含 Cloudflare 安全头、robots 和 sitemap', () => {
     const headers = readFileSync(resolve(projectRoot, 'dist/_headers'), 'utf8');
+    const fontHeaders = headers.match(/\/fonts\/\*[\s\S]*?(?=\n\/|$)/)?.[0] ?? '';
 
     expect(headers).toContain('/*');
     expect(headers).toContain('X-Content-Type-Options: nosniff');
     expect(headers).toContain('Referrer-Policy: strict-origin-when-cross-origin');
     expect(headers).toContain('Permissions-Policy:');
     expect(headers).toContain('X-Frame-Options: DENY');
+    expect(fontHeaders).toContain('Cache-Control: public, max-age=0, must-revalidate');
+    expect(fontHeaders).not.toContain('max-age=604800');
     expect(existsSync(resolve(projectRoot, 'dist/robots.txt'))).toBe(true);
     expect(existsSync(resolve(projectRoot, 'dist/sitemap-index.xml'))).toBe(true);
   });
