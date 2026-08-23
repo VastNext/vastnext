@@ -1,0 +1,57 @@
+---
+interface Props {
+  wordmark?: boolean;
+  label?: string;
+}
+
+const { wordmark = true, label = 'VastNext' } = Astro.props;
+---
+
+<span class="brand-mark">
+  <svg
+    class="brand-mark__symbol"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    role={wordmark ? undefined : 'img'}
+    aria-hidden={wordmark ? 'true' : undefined}
+    aria-label={wordmark ? undefined : label}
+  >
+    <path class="brand-mark__horizon" d="M5 35.5C15 39.5 29 39.5 43 34" />
+    <path class="brand-mark__route" d="M8 11L20.5 32L27 20L40 8V31" />
+    <circle class="brand-mark__beacon" cx="40" cy="8" r="3" />
+  </svg>
+  {wordmark && <span class="brand-mark__wordmark">VastNext</span>}
+</span>
+
+<style>
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    color: currentColor;
+  }
+
+  .brand-mark__symbol {
+    width: 2.25em;
+    height: 2.25em;
+    overflow: visible;
+  }
+
+  .brand-mark__horizon,
+  .brand-mark__route {
+    stroke: currentColor;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .brand-mark__beacon {
+    fill: #f06f52;
+  }
+
+  .brand-mark__wordmark {
+    font: 700 1em/1 "Space Grotesk", sans-serif;
+    letter-spacing: -0.035em;
+  }
+</style>

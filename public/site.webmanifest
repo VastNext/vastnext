@@ -1,0 +1,17 @@
+{
+  "name": "VastNext",
+  "short_name": "VastNext",
+  "description": "Useful ideas, built for what's next.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F8F3",
+  "theme_color": "#18235C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

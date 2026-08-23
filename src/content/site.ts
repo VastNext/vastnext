@@ -2,6 +2,12 @@ export const locales = ['en', 'zh'] as const;
 
 export type Locale = (typeof locales)[number];
 
+export const siteFacts = {
+  siteUrl: 'https://vastnext.com',
+  ogImage: '/og-cover.svg',
+  brandName: 'VastNext',
+} as const;
+
 interface NamedLink {
   name: string;
   url: string;
@@ -68,6 +74,11 @@ export interface SiteCopy {
   title: string;
   description: string;
   tagline: string;
+  metadata: {
+    canonicalPath: string;
+    ogLocale: string;
+    alternateLocale: string;
+  };
   nav: {
     products: string;
     openSource: string;
@@ -146,6 +157,11 @@ export const siteCopy = {
     description:
       'VastNext is an independent future product lab creating practical digital products for everyone.',
     tagline: "Useful ideas, built for what's next.",
+    metadata: {
+      canonicalPath: '/',
+      ogLocale: 'en_US',
+      alternateLocale: 'zh_CN',
+    },
     nav: {
       products: 'Products',
       openSource: 'Open Source',
@@ -222,6 +238,11 @@ export const siteCopy = {
     title: 'VastNext — 为下一个未来创造实用产品',
     description: 'VastNext 是一个独立未来产品实验室，为每个人创造实用的数字产品。',
     tagline: '把有用的想法，带到下一个未来。',
+    metadata: {
+      canonicalPath: '/zh/',
+      ogLocale: 'zh_CN',
+      alternateLocale: 'en_US',
+    },
     nav: {
       products: '产品',
       openSource: '开源',

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#F7F8F3"/>
+  <path d="M-80 520C180 384 338 564 566 430C770 310 908 154 1280 208" stroke="#6C63E8" stroke-width="22" stroke-linecap="round" opacity="0.9"/>
+  <path d="M-55 577C192 469 381 610 615 493C845 378 1010 259 1260 294" stroke="#55C6B3" stroke-width="13" stroke-linecap="round"/>
+  <path d="M697 95C826 122 895 185 977 169C1054 154 1098 94 1245 103" stroke="#F06F52" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="978" cy="169" r="17" fill="#F6BD48"/>
+  <g transform="translate(82 82)">
+    <path d="M0 37L35 99L53 60L91 23V94" stroke="#18235C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M-4 111C27 124 66 122 101 107" stroke="#18235C" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="91" cy="23" r="10" fill="#F06F52"/>
+  </g>
+  <text x="222" y="176" fill="#18235C" font-family="Space Grotesk, Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-3">VastNext</text>
+  <text x="84" y="328" fill="#18235C" font-family="Space Grotesk, Arial, sans-serif" font-size="68" font-weight="650" letter-spacing="-2">Useful ideas, built for what's next.</text>
+  <text x="88" y="386" fill="#4E567D" font-family="Arial, sans-serif" font-size="25" letter-spacing="1">AN INDEPENDENT FUTURE PRODUCT LAB</text>
+</svg>

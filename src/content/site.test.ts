@@ -9,6 +9,7 @@ const {
   openSourceProject,
   productFacts,
   siteCopy,
+  siteFacts,
 } = site;
 
 function expectStringsToBeNonEmpty(value: unknown, path = 'copy'): void {
@@ -32,6 +33,24 @@ describe('站点内容模型', () => {
   it('支持英文和简体中文', () => {
     expect(locales).toEqual(['en', 'zh']);
     expect(Object.keys(siteCopy).sort()).toEqual([...locales].sort());
+  });
+
+  it('提供共享站点事实和每种语言的页面元数据', () => {
+    expect(siteFacts).toEqual({
+      siteUrl: 'https://vastnext.com',
+      ogImage: '/og-cover.svg',
+      brandName: 'VastNext',
+    });
+    expect(siteCopy.en.metadata).toEqual({
+      canonicalPath: '/',
+      ogLocale: 'en_US',
+      alternateLocale: 'zh_CN',
+    });
+    expect(siteCopy.zh.metadata).toEqual({
+      canonicalPath: '/zh/',
+      ogLocale: 'zh_CN',
+      alternateLocale: 'en_US',
+    });
   });
 
   it('只保存一份准确的产品事实', () => {
