@@ -56,6 +56,14 @@ describe('明亮新界视觉系统', () => {
     expect(css).toMatch(/\.products__list[\s\S]*grid-template-columns/);
   });
 
+  it('在页面滚动根裁切装饰元素产生的横向溢出', () => {
+    const css = source('./global.css');
+    const htmlRule = css.match(/^html\s*\{([^}]*)\}/m)?.[1];
+
+    expect(htmlRule, '应定义基础 html 样式规则').toBeDefined();
+    expect(htmlRule).toMatch(/overflow-x:\s*clip/);
+  });
+
   it('为品牌首页链接应用至少 44px 的触控高度', () => {
     const css = source('./global.css');
     const brandRule = css.match(/\.site-header__brand\s*\{([^}]*)\}/)?.[1];
