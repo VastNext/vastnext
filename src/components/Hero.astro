@@ -1,0 +1,50 @@
+---
+import ExternalIcon from './ExternalIcon.astro';
+import type { Locale } from '../content/site';
+import { contactFacts, siteCopy } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__content">
+    <p class="eyebrow">{copy.hero.eyebrow}</p>
+    <h1 id="hero-title">{copy.tagline}</h1>
+    <p class="hero__introduction">{copy.hero.introduction}</p>
+    <div class="hero__actions">
+      <a href="#products">{copy.hero.cta.products}</a>
+      <a href={contactFacts.githubUrl} target="_blank" rel="noreferrer">
+        {copy.hero.cta.github}
+        <ExternalIcon />
+        <span class="sr-only">{newWindowLabel}</span>
+      </a>
+    </div>
+  </div>
+
+  <svg class="hero__orbit" viewBox="0 0 560 480" role="img" aria-labelledby="orbit-title orbit-description">
+    <title id="orbit-title">{locale === 'zh' ? '通向未来的航标轨道' : 'A beacon route toward what comes next'}</title>
+    <desc id="orbit-description">
+      {locale === 'zh'
+        ? '多条轨道从开放的地平线汇聚到一座航标。'
+        : 'Several routes rise from an open horizon and converge at a beacon.'}
+    </desc>
+    <path class="hero__horizon hero__horizon--far" d="M24 350C132 310 218 402 338 350S488 298 544 330" />
+    <path class="hero__horizon hero__horizon--near" d="M12 392C154 346 244 438 382 388S504 350 552 370" />
+    <path class="hero__route hero__route--primary" d="M72 404C188 320 258 326 330 238S411 103 476 72" />
+    <path class="hero__route hero__route--secondary" d="M152 421C250 352 335 362 476 72" />
+    <path class="hero__route hero__route--tertiary" d="M42 332C176 274 280 282 476 72" />
+    <circle class="hero__waypoint" cx="330" cy="238" r="8" />
+    <circle class="hero__waypoint" cx="232" cy="348" r="6" />
+    <g class="hero__beacon" transform="translate(476 72)">
+      <circle class="hero__beacon-pulse" r="34" />
+      <circle class="hero__beacon-core" r="10" />
+      <path class="hero__beacon-ray" d="M0-22V-48M22 0h26M0 22v26M-22 0h-26" />
+    </g>
+  </svg>
+</section>

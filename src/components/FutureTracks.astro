@@ -1,0 +1,30 @@
+---
+import type { Locale } from '../content/site';
+import { futureFacts, futureTracks, siteCopy } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale].future;
+---
+
+<section class="future" aria-labelledby="future-title" data-date-commitment={String(futureFacts.dateCommitment)}>
+  <header class="section-heading">
+    <p class="eyebrow">{copy.eyebrow}</p>
+    <h2 id="future-title">{copy.title}</h2>
+    <p>{copy.description}</p>
+  </header>
+  <div class="future__tracks">
+    {futureTracks.map((track) => (
+      <article class={`future-track future-track--${track.id}`} data-track={track.id}>
+        <p class="future-track__fact">{track.name}</p>
+        <h3>{copy.tracks[track.id].title}</h3>
+        <p>{copy.tracks[track.id].description}</p>
+        <p class="future-track__status">{copy.tracks[track.id].status}</p>
+      </article>
+    ))}
+  </div>
+  {!futureFacts.dateCommitment && <p class="future__note">{copy.explorationNote}</p>}
+</section>

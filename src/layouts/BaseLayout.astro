@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '../content/site';
-import { siteCopy, siteFacts } from '../content/site';
+import { contactFacts, siteCopy, siteFacts } from '../content/site';
 
 interface Props {
   locale: Locale;
@@ -32,7 +32,7 @@ const organizationJsonLd = JSON.stringify({
   name: siteFacts.brandName,
   url: siteFacts.siteUrl,
   logo: new URL('/favicon.svg', siteFacts.siteUrl).href,
-  sameAs: ['https://github.com/VastNext'],
+  sameAs: [contactFacts.githubUrl],
 }).replace(/</g, '\\u003c');
 ---
 

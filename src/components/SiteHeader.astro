@@ -1,0 +1,51 @@
+---
+import BrandMark from './BrandMark.astro';
+import ExternalIcon from './ExternalIcon.astro';
+import type { Locale } from '../content/site';
+import { contactFacts, siteCopy } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
+---
+
+<header class="site-header">
+  <a class="site-header__brand" href={locale === 'zh' ? '/zh/' : '/'} aria-label="VastNext">
+    <BrandMark />
+  </a>
+
+  <nav class="site-header__nav" aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
+    <a href="#products">{copy.nav.products}</a>
+    <a href="#open-source">{copy.nav.openSource}</a>
+    <a href="#about">{copy.nav.about}</a>
+    <a href={contactFacts.githubUrl} target="_blank" rel="noreferrer">
+      {copy.nav.github}
+      <ExternalIcon />
+      <span class="sr-only">{newWindowLabel}</span>
+    </a>
+    <a href={copy.languageSwitch.href} hreflang={locale === 'zh' ? 'en' : 'zh-CN'}>
+      {copy.languageSwitch.label}
+    </a>
+  </nav>
+
+  <details class="site-header__menu">
+    <summary>{locale === 'zh' ? '菜单' : 'Menu'}</summary>
+    <nav aria-label={locale === 'zh' ? '移动端导航' : 'Mobile navigation'}>
+      <a href="#products">{copy.nav.products}</a>
+      <a href="#open-source">{copy.nav.openSource}</a>
+      <a href="#about">{copy.nav.about}</a>
+      <a href={contactFacts.githubUrl} target="_blank" rel="noreferrer">
+        {copy.nav.github}
+        <ExternalIcon />
+        <span class="sr-only">{newWindowLabel}</span>
+      </a>
+      <a href={copy.languageSwitch.href} hreflang={locale === 'zh' ? 'en' : 'zh-CN'}>
+        {copy.languageSwitch.label}
+      </a>
+    </nav>
+  </details>
+</header>

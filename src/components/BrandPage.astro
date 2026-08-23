@@ -1,0 +1,54 @@
+---
+import AboutSection from './AboutSection.astro';
+import FutureTracks from './FutureTracks.astro';
+import Hero from './Hero.astro';
+import OpenSourceFeature from './OpenSourceFeature.astro';
+import ProductShowcase from './ProductShowcase.astro';
+import SiteFooter from './SiteFooter.astro';
+import SiteHeader from './SiteHeader.astro';
+import type { Locale } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<a class="skip-link" href="#main-content">
+  {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
+</a>
+<SiteHeader locale={locale} />
+<main id="main-content">
+  <Hero locale={locale} />
+  <ProductShowcase locale={locale} />
+  <OpenSourceFeature locale={locale} />
+  <FutureTracks locale={locale} />
+  <AboutSection locale={locale} />
+</main>
+<SiteFooter locale={locale} />
+
+<style is:global>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+</style>

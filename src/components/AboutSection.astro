@@ -1,0 +1,21 @@
+---
+import type { Locale } from '../content/site';
+import { siteCopy, siteFacts } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale].about;
+---
+
+<section id="about" class="about" aria-labelledby="about-title">
+  <p class="eyebrow">{copy.eyebrow}</p>
+  <h2 id="about-title">{copy.title}</h2>
+  <p>{copy.description}</p>
+  <p class="about__equation" aria-label={`${siteFacts.brandName}: Vast plus Next`}>
+    <span>Vast</span><span aria-hidden="true"> + </span><span>Next</span>
+    <strong>{locale === 'zh' ? '瀚海·未来' : 'Vast horizons · What comes next'}</strong>
+  </p>
+</section>

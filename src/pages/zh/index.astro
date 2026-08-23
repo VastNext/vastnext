@@ -1,0 +1,18 @@
+---
+import BrandPage from '../../components/BrandPage.astro';
+import { siteCopy } from '../../content/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const locale = 'zh';
+const copy = siteCopy[locale];
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.title}
+  description={copy.description}
+  canonicalPath={copy.metadata.canonicalPath}
+  alternatePath="/"
+>
+  <BrandPage locale={locale} />
+</BaseLayout>

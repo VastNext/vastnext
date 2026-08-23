@@ -1,0 +1,35 @@
+---
+import BrandMark from './BrandMark.astro';
+import ExternalIcon from './ExternalIcon.astro';
+import type { Locale } from '../content/site';
+import { contactFacts, siteCopy } from '../content/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = siteCopy[locale];
+const privacyHref = locale === 'zh' ? '/zh/privacy/' : '/privacy/';
+const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__brand">
+    <BrandMark />
+    <p>{copy.tagline}</p>
+  </div>
+  <nav class="site-footer__links" aria-label={locale === 'zh' ? '页脚导航' : 'Footer navigation'}>
+    <a href={`mailto:${contactFacts.email}`}>{copy.footer.emailLabel}</a>
+    <a href={contactFacts.githubUrl} target="_blank" rel="noreferrer">
+      {copy.footer.githubLabel}
+      <ExternalIcon />
+      <span class="sr-only">{newWindowLabel}</span>
+    </a>
+    <a href={privacyHref}>{copy.footer.privacy}</a>
+    <a href={copy.languageSwitch.href} hreflang={locale === 'zh' ? 'en' : 'zh-CN'}>
+      {copy.languageSwitch.label}
+    </a>
+  </nav>
+  <p>{copy.footer.copyright}</p>
+</footer>
