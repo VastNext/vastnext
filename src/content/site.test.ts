@@ -2,7 +2,14 @@ import { describe, expect, it } from 'vitest';
 
 import * as site from './site';
 
-const { futureTracks, locales, openSourceProject, products, siteCopy } = site;
+const {
+  futureFacts,
+  futureTrackFacts,
+  locales,
+  openSourceProject,
+  productFacts,
+  siteCopy,
+} = site;
 
 function expectStringsToBeNonEmpty(value: unknown, path = 'copy'): void {
   if (typeof value === 'string') {
@@ -17,8 +24,8 @@ function expectStringsToBeNonEmpty(value: unknown, path = 'copy'): void {
   }
 }
 
-function expectTranslationsToDiffer(en: unknown, zh: unknown): void {
-  expect(en).not.toEqual(zh);
+function expectTranslationToDiffer(en: string, zh: string, path: string): void {
+  expect(en, `${path} 应提供独立的中英文文案`).not.toBe(zh);
 }
 
 describe('站点内容模型', () => {
@@ -28,19 +35,17 @@ describe('站点内容模型', () => {
   });
 
   it('只保存一份准确的产品事实', () => {
-    expect(products).toEqual([
-      { id: 'findry-ai', name: 'Findry AI', url: 'https://findryai.com' },
-      {
-        id: 'password-generator',
+    expect(productFacts).toEqual({
+      'findry-ai': { name: 'Findry AI', url: 'https://findryai.com' },
+      'password-generator': {
         name: 'Password Generator',
         url: 'https://pg.vastnext.com',
       },
-      {
-        id: 'vast-translator',
+      'vast-translator': {
         name: 'Vast Translator',
         url: 'https://vast-translator.vercel.app',
       },
-    ]);
+    });
   });
 
   it('保存准确的 GlanceMD 开源事实', () => {
@@ -58,40 +63,78 @@ describe('站点内容模型', () => {
       const copy = siteCopy[locale];
 
       expectStringsToBeNonEmpty(copy, locale);
-      expect(Object.keys(copy.products)).toEqual(products.map(({ id }) => id));
-      expect(Object.keys(copy.future.tracks)).toEqual(futureTracks.map(({ id }) => id));
+      expect(Object.keys(copy.products)).toEqual(Object.keys(productFacts));
+      expect(Object.keys(copy.future.tracks)).toEqual(Object.keys(futureTrackFacts));
     }
 
     expect(siteCopy.en.tagline).toBe("Useful ideas, built for what's next.");
     expect(siteCopy.zh.tagline).toBe('把有用的想法，带到下一个未来。');
   });
 
-  it('为主要可翻译文案组提供独立的中英文内容', () => {
-    expectTranslationsToDiffer(siteCopy.en.title, siteCopy.zh.title);
-    expectTranslationsToDiffer(siteCopy.en.description, siteCopy.zh.description);
-    expectTranslationsToDiffer(siteCopy.en.tagline, siteCopy.zh.tagline);
-    expectTranslationsToDiffer(siteCopy.en.hero, siteCopy.zh.hero);
-    expectTranslationsToDiffer(siteCopy.en.productsSection, siteCopy.zh.productsSection);
-    expectTranslationsToDiffer(
-      Object.values(siteCopy.en.products).map(({ description }) => description),
-      Object.values(siteCopy.zh.products).map(({ description }) => description),
-    );
-    expectTranslationsToDiffer(siteCopy.en.openSource, siteCopy.zh.openSource);
-    expectTranslationsToDiffer(siteCopy.en.future, siteCopy.zh.future);
-    expectTranslationsToDiffer(siteCopy.en.about, siteCopy.zh.about);
-    expectTranslationsToDiffer(siteCopy.en.footer, siteCopy.zh.footer);
-    expectTranslationsToDiffer(siteCopy.en.languageSwitch.label, siteCopy.zh.languageSwitch.label);
+  it('为关键可翻译叶子字段提供独立的中英文内容', () => {
+    const en = siteCopy.en;
+    const zh = siteCopy.zh;
+    const fields: Array<[string, string, string]> = [
+      [en.title, zh.title, 'title'],
+      [en.description, zh.description, 'description'],
+      [en.tagline, zh.tagline, 'tagline'],
+      [en.nav.products, zh.nav.products, 'nav.products'],
+      [en.nav.openSource, zh.nav.openSource, 'nav.openSource'],
+      [en.nav.about, zh.nav.about, 'nav.about'],
+      [en.hero.eyebrow, zh.hero.eyebrow, 'hero.eyebrow'],
+      [en.hero.introduction, zh.hero.introduction, 'hero.introduction'],
+      [en.hero.cta.products, zh.hero.cta.products, 'hero.cta.products'],
+      [en.hero.cta.github, zh.hero.cta.github, 'hero.cta.github'],
+      [en.productsSection.eyebrow, zh.productsSection.eyebrow, 'productsSection.eyebrow'],
+      [en.productsSection.title, zh.productsSection.title, 'productsSection.title'],
+      [en.productsSection.description, zh.productsSection.description, 'productsSection.description'],
+      [en.products['findry-ai'].description, zh.products['findry-ai'].description, 'products.findry-ai.description'],
+      [en.products['password-generator'].description, zh.products['password-generator'].description, 'products.password-generator.description'],
+      [en.products['vast-translator'].description, zh.products['vast-translator'].description, 'products.vast-translator.description'],
+      [en.openSource.eyebrow, zh.openSource.eyebrow, 'openSource.eyebrow'],
+      [en.openSource.description, zh.openSource.description, 'openSource.description'],
+      [en.openSource.cta, zh.openSource.cta, 'openSource.cta'],
+      [en.future.eyebrow, zh.future.eyebrow, 'future.eyebrow'],
+      [en.future.title, zh.future.title, 'future.title'],
+      [en.future.description, zh.future.description, 'future.description'],
+      [en.future.explorationNote, zh.future.explorationNote, 'future.explorationNote'],
+      [en.future.tracks.games.description, zh.future.tracks.games.description, 'future.tracks.games.description'],
+      [en.future.tracks.games.status, zh.future.tracks.games.status, 'future.tracks.games.status'],
+      [en.future.tracks.utilities.description, zh.future.tracks.utilities.description, 'future.tracks.utilities.description'],
+      [en.future.tracks.utilities.status, zh.future.tracks.utilities.status, 'future.tracks.utilities.status'],
+      [en.about.eyebrow, zh.about.eyebrow, 'about.eyebrow'],
+      [en.about.title, zh.about.title, 'about.title'],
+      [en.about.description, zh.about.description, 'about.description'],
+      [en.footer.emailLabel, zh.footer.emailLabel, 'footer.emailLabel'],
+      [en.footer.githubLabel, zh.footer.githubLabel, 'footer.githubLabel'],
+      [en.footer.privacy, zh.footer.privacy, 'footer.privacy'],
+      [en.languageSwitch.label, zh.languageSwitch.label, 'languageSwitch.label'],
+    ];
+
+    for (const [english, chinese, path] of fields) {
+      expectTranslationToDiffer(english, chinese, path);
+    }
   });
 
   it('将未来方向标记为探索中且不承诺日期', () => {
-    expect(futureTracks).toEqual([
-      { id: 'games', name: 'Games' },
-      { id: 'utilities', name: 'Utilities' },
-    ]);
+    expect(futureTrackFacts).toEqual({
+      games: { name: 'Games' },
+      utilities: { name: 'Utilities' },
+    });
+    expect(futureFacts).toEqual({ dateCommitment: false });
 
     for (const locale of locales) {
       expect(siteCopy[locale].future.explorationNote).toBeTruthy();
-      expect(siteCopy[locale].future.dateCommitment).toBe(false);
+      expect(siteCopy[locale].future).not.toHaveProperty('dateCommitment');
+    }
+  });
+
+  it('产品和开源文案不重复共享名称', () => {
+    for (const locale of locales) {
+      for (const copy of Object.values(siteCopy[locale].products)) {
+        expect(copy).not.toHaveProperty('title');
+      }
+      expect(siteCopy[locale].openSource).not.toHaveProperty('title');
     }
   });
 

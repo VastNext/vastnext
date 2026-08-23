@@ -1,8 +1,39 @@
 export const locales = ['en', 'zh'] as const;
 
 export type Locale = (typeof locales)[number];
-export type ProductId = 'findry-ai' | 'password-generator' | 'vast-translator';
-export type FutureTrackId = 'games' | 'utilities';
+
+interface NamedLink {
+  name: string;
+  url: string;
+}
+
+interface NamedFact {
+  name: string;
+}
+
+export const productFacts = {
+  'findry-ai': { name: 'Findry AI', url: 'https://findryai.com' },
+  'password-generator': {
+    name: 'Password Generator',
+    url: 'https://pg.vastnext.com',
+  },
+  'vast-translator': {
+    name: 'Vast Translator',
+    url: 'https://vast-translator.vercel.app',
+  },
+} as const satisfies Record<string, NamedLink>;
+
+export const futureTrackFacts = {
+  games: { name: 'Games' },
+  utilities: { name: 'Utilities' },
+} as const satisfies Record<string, NamedFact>;
+
+export const futureFacts = {
+  dateCommitment: false,
+} as const;
+
+export type ProductId = keyof typeof productFacts;
+export type FutureTrackId = keyof typeof futureTrackFacts;
 
 export interface Product {
   id: ProductId;
@@ -24,7 +55,6 @@ export interface FutureTrack {
 }
 
 interface ProductCopy {
-  title: string;
   description: string;
 }
 
@@ -60,7 +90,6 @@ export interface SiteCopy {
   products: Record<ProductId, ProductCopy>;
   openSource: {
     eyebrow: string;
-    title: string;
     description: string;
     cta: string;
   };
@@ -69,7 +98,6 @@ export interface SiteCopy {
     title: string;
     description: string;
     explorationNote: string;
-    dateCommitment: false;
     tracks: Record<FutureTrackId, FutureTrackCopy>;
   };
   about: {
@@ -89,19 +117,10 @@ export interface SiteCopy {
   };
 }
 
-export const products = [
-  { id: 'findry-ai', name: 'Findry AI', url: 'https://findryai.com' },
-  {
-    id: 'password-generator',
-    name: 'Password Generator',
-    url: 'https://pg.vastnext.com',
-  },
-  {
-    id: 'vast-translator',
-    name: 'Vast Translator',
-    url: 'https://vast-translator.vercel.app',
-  },
-] as const satisfies readonly Product[];
+export const products: Product[] = Object.entries(productFacts).map(([id, product]) => ({
+  id: id as ProductId,
+  ...product,
+}));
 
 export const openSourceProject = {
   name: 'GlanceMD',
@@ -116,10 +135,10 @@ export const contactFacts = {
   githubUrl: 'https://github.com/VastNext',
 } as const;
 
-export const futureTracks = [
-  { id: 'games', name: 'Games' },
-  { id: 'utilities', name: 'Utilities' },
-] as const satisfies readonly FutureTrack[];
+export const futureTracks: FutureTrack[] = Object.entries(futureTrackFacts).map(([id, track]) => ({
+  id: id as FutureTrackId,
+  ...track,
+}));
 
 export const siteCopy = {
   en: {
@@ -149,21 +168,17 @@ export const siteCopy = {
     },
     products: {
       'findry-ai': {
-        title: 'Findry AI',
         description: 'Discover curated AI tools that fit the task at hand.',
       },
       'password-generator': {
-        title: 'Password Generator',
         description: 'Generate random passwords, memorable passwords, and PINs.',
       },
       'vast-translator': {
-        title: 'Vast Translator',
         description: 'Compare results from multiple translation engines side by side.',
       },
     },
     openSource: {
       eyebrow: 'Open by default',
-      title: 'GlanceMD',
       description:
         'Open Markdown files in a focused viewer built to make reading quick and distraction-free.',
       cta: 'Explore GlanceMD on GitHub',
@@ -173,7 +188,6 @@ export const siteCopy = {
       title: 'Exploring what could be useful next',
       description: 'We are experimenting in two broad directions while ideas take shape.',
       explorationNote: 'These are areas of exploration, not product or release announcements.',
-      dateCommitment: false,
       tracks: {
         games: {
           title: 'Games',
@@ -229,21 +243,17 @@ export const siteCopy = {
     },
     products: {
       'findry-ai': {
-        title: 'Findry AI',
         description: '发现经过精选、适合当前任务的 AI 工具。',
       },
       'password-generator': {
-        title: 'Password Generator',
         description: '生成随机密码、易记密码和 PIN。',
       },
       'vast-translator': {
-        title: 'Vast Translator',
         description: '并排比较多个翻译引擎的结果。',
       },
     },
     openSource: {
       eyebrow: '默认开放',
-      title: 'GlanceMD',
       description: '在专注的查看器中打开 Markdown 文件，快速阅读，不受干扰。',
       cta: '在 GitHub 探索 GlanceMD',
     },
@@ -252,7 +262,6 @@ export const siteCopy = {
       title: '探索下一个有用的可能',
       description: '当想法逐渐成形，我们正在两个宽泛方向上持续实验。',
       explorationNote: '这些内容仅代表探索方向，不是产品或发布日期承诺。',
-      dateCommitment: false,
       tracks: {
         games: {
           title: '游戏',
