@@ -45,6 +45,11 @@ Cloudflare Pages 项目可使用以下构建设置：
 - 输出目录：`dist`
 - Node.js 版本：22.19 或更高
 
+仓库包含 `.github/workflows/deploy-pages.yml`。向 `main` 推送后，GitHub Actions 会先运行测试、类型检查和构建，再通过 Wrangler Direct Upload 发布 `dist`。仓库需要配置以下 Secrets：
+
+- `CLOUDFLARE_API_TOKEN`：具有 `Account / Cloudflare Pages / Edit` 权限。
+- `CLOUDFLARE_ACCOUNT_ID`：Cloudflare Account ID。
+
 绑定 `vastnext.com` 自定义域名时，应在同一个 Cloudflare 账户中完成域名关联，并检查现有 DNS 记录，避免与 Pages 自动创建的记录冲突。切换 DNS 或删除旧记录前，应先确认当前线上服务和子域名依赖。仓库中的 `public/_headers` 会随构建复制到 `dist/_headers`。
 
 ## 项目结构
