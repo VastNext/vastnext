@@ -64,7 +64,7 @@ describe('站点内容模型', () => {
       },
       'vast-translator': {
         name: 'Vast Translator',
-        url: 'https://vast-translator.vercel.app',
+        url: 'https://tr.vastnext.com',
       },
     });
   });

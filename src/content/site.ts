@@ -24,7 +24,7 @@ export const productFacts = {
   },
   'vast-translator': {
     name: 'Vast Translator',
-    url: 'https://vast-translator.vercel.app',
+    url: 'https://tr.vastnext.com',
   },
 } as const satisfies Record<string, NamedLink>;
 
