@@ -102,7 +102,9 @@ describe('明亮新界视觉系统', () => {
     expect(css).toMatch(/\.product-reveal--findry-ai\s*\{[^}]*grid-row:\s*span 2/);
     expect(css).toMatch(/\.product-reveal--vast-translator\s*\{[^}]*grid-column:\s*1 \/ -1/);
     expect(css).toMatch(/\.product-reveal\s*>\s*\.product\s*\{[^}]*height:\s*100%/);
-    expect(css).toMatch(/\.product:hover\s*\{[^}]*transform:/);
+    expect(css).not.toMatch(/\.product:\s*hover\s*\{[^}]*transform/);
+    expect(css).toMatch(/\.product__copy\s*>\s*a:hover/);
+    expect(css).toMatch(/transform:\s*translate\(-2px,\s*-2px\)/);
     expect(css).not.toMatch(/\.js\s+\.product\[data-reveal\]/);
   });
 });
