@@ -184,7 +184,9 @@ describe('品牌页构建产物', () => {
       name: siteFacts.brandName,
       url: siteFacts.siteUrl,
       sameAs: [contactFacts.githubUrl],
+      logo: `${siteFacts.siteUrl}/favicon-01.svg`,
     });
+    expect(getHtml()).toContain('<link rel="icon" href="/favicon-01.svg" type="image/svg+xml">');
   });
 
   it('为英文和中文隐私页面输出正确的语言及本地化链接元数据', () => {

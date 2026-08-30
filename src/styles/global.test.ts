@@ -125,7 +125,7 @@ describe('明亮新界视觉系统', () => {
       }
     }
 
-    expect(source('../../public/favicon.svg')).toContain('data-concept="01"');
+    expect(source('../../public/favicon-01.svg')).toContain('data-concept="01"');
     expect(source('../components/BrandMark.astro')).toContain('data-concept="01"');
   });
 });
