@@ -12,14 +12,17 @@ const { wordmark = true, label = 'VastNext' } = Astro.props;
     class="brand-mark__symbol"
     viewBox="0 0 48 48"
     fill="none"
+    data-concept="01"
     xmlns="http://www.w3.org/2000/svg"
     role={wordmark ? undefined : 'img'}
     aria-hidden={wordmark ? 'true' : undefined}
     aria-label={wordmark ? undefined : label}
   >
-    <path class="brand-mark__horizon" d="M5 35.5C15 39.5 29 39.5 43 34" />
-    <path class="brand-mark__route" d="M8 11L20.5 32L27 20L40 8V31" />
-    <circle class="brand-mark__beacon" cx="40" cy="8" r="3" />
+    <path class="brand-mark__horizon" d="M4 38C14 33.5 31 33.5 44 38" />
+    <path class="brand-mark__valley" d="M9 18L20 34L35 17" />
+    <path class="brand-mark__next" d="M20 34L41 10" />
+    <path class="brand-mark__arrow" d="M38.5 11L43 7L42.5 13" />
+    <circle class="brand-mark__beacon" cx="41" cy="5.5" r="3.5" />
   </svg>
   {wordmark && <span class="brand-mark__wordmark">VastNext</span>}
 </span>
@@ -39,10 +42,29 @@ const { wordmark = true, label = 'VastNext' } = Astro.props;
   }
 
   .brand-mark__horizon,
-  .brand-mark__route {
-    stroke: currentColor;
+  .brand-mark__valley,
+  .brand-mark__next {
     stroke-width: 3.5;
     stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .brand-mark__horizon {
+    stroke: #78dfc4;
+  }
+
+  .brand-mark__valley {
+    stroke: currentColor;
+  }
+
+  .brand-mark__next {
+    stroke: #246bfd;
+  }
+
+  .brand-mark__arrow {
+    fill: #246bfd;
+    stroke: #246bfd;
+    stroke-width: 1.5;
     stroke-linejoin: round;
   }
 

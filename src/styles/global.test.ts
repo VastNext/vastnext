@@ -107,4 +107,25 @@ describe('明亮新界视觉系统', () => {
     expect(css).toMatch(/transform:\s*translate\(-2px,\s*-2px\)/);
     expect(css).not.toMatch(/\.js\s+\.product\[data-reveal\]/);
   });
+
+  it('保存十套独立图标资产并采用方案 01', () => {
+    for (let index = 1; index <= 10; index += 1) {
+      const name = String(index).padStart(2, '0');
+      const svgUrl = new URL(`../../icon-concepts/${name}.svg`, import.meta.url);
+      const pngUrl = new URL(`../../icon-concepts/${name}.png`, import.meta.url);
+
+      expect(existsSync(svgUrl), `${name}.svg 应存在`).toBe(true);
+      expect(existsSync(pngUrl), `${name}.png 应存在`).toBe(true);
+
+      if (existsSync(svgUrl)) {
+        expect(readFileSync(svgUrl, 'utf8')).toContain(`data-concept="${name}"`);
+      }
+      if (existsSync(pngUrl)) {
+        expect(readFileSync(pngUrl).subarray(1, 4).toString('ascii')).toBe('PNG');
+      }
+    }
+
+    expect(source('../../public/favicon.svg')).toContain('data-concept="01"');
+    expect(source('../components/BrandMark.astro')).toContain('data-concept="01"');
+  });
 });

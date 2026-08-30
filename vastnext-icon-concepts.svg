@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#F7F8F3"/>
+  <text x="800" y="76" fill="#18235C" font-family="Arial, sans-serif" font-size="42" font-weight="700" text-anchor="middle">VastNext Icon Explorations</text>
+
+  <g stroke="#D9DCD4" stroke-width="1">
+    <path d="M30 110H1570V940H30Z"/>
+    <path d="M338 110V940M646 110V940M954 110V940M1262 110V940M30 525H1570"/>
+  </g>
+
+  <!-- 01: route, horizon, beacon -->
+  <g transform="translate(54 148)">
+    <path d="M28 260C90 232 184 232 248 260" stroke="#78DFC4" stroke-width="13" stroke-linecap="round"/>
+    <path d="M54 125L117 205L205 114" stroke="#18235C" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M117 205L221 87" stroke="#246BFD" stroke-width="20" stroke-linecap="round"/>
+    <path d="M213 92L229 77L226 101" fill="#246BFD" stroke="#246BFD" stroke-width="8" stroke-linejoin="round"/>
+    <circle cx="220" cy="68" r="16" stroke="#F06F52" stroke-width="8"/>
+    <path d="M220 35V48M220 88V101M187 68H200M240 68H253" stroke="#F06F52" stroke-width="6" stroke-linecap="round"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">01</text>
+  </g>
+
+  <!-- 02: crossing future routes -->
+  <g transform="translate(362 148)">
+    <path d="M43 252C100 196 178 196 235 252" stroke="#78DFC4" stroke-width="13" stroke-linecap="round"/>
+    <path d="M57 73L137 213L217 73" stroke="#18235C" stroke-width="22" stroke-linecap="square" stroke-linejoin="round"/>
+    <path d="M82 252L137 213L192 252" stroke="#246BFD" stroke-width="16" stroke-linecap="square" stroke-linejoin="round"/>
+    <circle cx="137" cy="213" r="23" fill="#F7F8F3" stroke="#B6A7F2" stroke-width="9"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">02</text>
+  </g>
+
+  <!-- 03: orbit and N route -->
+  <g transform="translate(670 148)">
+    <path d="M221 94A104 104 0 1 0 230 243" stroke="#18235C" stroke-width="14" stroke-linecap="round"/>
+    <path d="M76 238L128 164L174 218L219 126" stroke="#246BFD" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="76" cy="238" r="18" fill="#B6A7F2" stroke="#F7F8F3" stroke-width="8"/>
+    <circle cx="219" cy="126" r="18" fill="#F06F52" stroke="#F7F8F3" stroke-width="8"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">03</text>
+  </g>
+
+  <!-- 04: negative space V -->
+  <g transform="translate(978 148)">
+    <rect x="34" y="40" width="208" height="242" rx="48" fill="#18235C"/>
+    <path d="M49 119L138 234L228 119" stroke="#F7F8F3" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M138 82V166" stroke="#246BFD" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 22"/>
+    <path d="M138 58L146 74L162 82L146 90L138 106L130 90L114 82L130 74Z" fill="#F06F52"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">04</text>
+  </g>
+
+  <!-- 05: layered waves and arrow -->
+  <g transform="translate(1286 148)">
+    <path d="M27 115C93 138 172 82 249 110" stroke="#246BFD" stroke-width="17" stroke-linecap="round"/>
+    <path d="M27 177C93 200 172 144 249 172" stroke="#78DFC4" stroke-width="17" stroke-linecap="round"/>
+    <path d="M27 239C93 262 172 206 249 234" stroke="#B6A7F2" stroke-width="17" stroke-linecap="round"/>
+    <path d="M216 80L254 107L211 118" fill="#246BFD" stroke="#246BFD" stroke-width="7" stroke-linejoin="round"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">05</text>
+  </g>
+
+  <!-- 06: continuous VN monogram -->
+  <g transform="translate(54 563)">
+    <path d="M39 72C57 43 82 43 102 72L141 217L188 116C206 76 237 89 237 121V224" stroke="#18235C" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M102 72L141 217L188 116" stroke="url(#route06)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <defs>
+      <linearGradient id="route06" x1="102" y1="70" x2="192" y2="216" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#18235C"/>
+        <stop offset="0.52" stop-color="#246BFD"/>
+        <stop offset="1" stop-color="#78DFC4"/>
+      </linearGradient>
+    </defs>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">06</text>
+  </g>
+
+  <!-- 07: future portal -->
+  <g transform="translate(362 563)">
+    <path d="M46 262V104C46 59 82 26 138 26C194 26 230 59 230 104V262" stroke="#18235C" stroke-width="17" stroke-linecap="round"/>
+    <path d="M59 262C88 212 105 199 141 176C173 155 199 153 218 157" stroke="#246BFD" stroke-width="22" stroke-linecap="round"/>
+    <path d="M71 262C119 218 154 195 218 175" stroke="#78DFC4" stroke-width="21" stroke-linecap="round"/>
+    <path d="M106 124A32 32 0 0 1 170 124" fill="#F06F52"/>
+    <path d="M138 76V91M102 90L113 101M174 90L163 101M87 124H102M174 124H189" stroke="#F06F52" stroke-width="6" stroke-linecap="round"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">07</text>
+  </g>
+
+  <!-- 08: playful constellation -->
+  <g transform="translate(670 563)">
+    <path d="M62 93L138 223L218 75" stroke="#18235C" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M138 223L218 75" stroke="#B6A7F2" stroke-width="16" stroke-linecap="round"/>
+    <circle cx="62" cy="93" r="22" fill="#18235C"/>
+    <circle cx="138" cy="223" r="22" fill="#78DFC4"/>
+    <circle cx="218" cy="75" r="22" fill="#246BFD"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">08</text>
+  </g>
+
+  <!-- 09: interlocking VN ribbons -->
+  <g transform="translate(978 563)">
+    <path d="M40 80V226L138 126L236 226V80" stroke="#246BFD" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40 80L138 183L236 80" stroke="#18235C" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M77 118L138 183L197 122" stroke="#B6A7F2" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+    <path d="M138 183L195 221" stroke="#78DFC4" stroke-width="18" stroke-linecap="round"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">09</text>
+  </g>
+
+  <!-- 10: sail, wave, next -->
+  <g transform="translate(1286 563)">
+    <path d="M83 232L137 58L137 230Z" fill="#18235C"/>
+    <path d="M147 78L231 156L147 212Z" fill="#246BFD"/>
+    <path d="M51 248C101 222 153 268 231 231" stroke="#78DFC4" stroke-width="13" stroke-linecap="round"/>
+    <path d="M74 275C127 249 171 291 218 266" stroke="#B6A7F2" stroke-width="10" stroke-linecap="round"/>
+    <path d="M214 146L244 157L218 175" fill="#246BFD"/>
+    <text x="138" y="350" fill="#18235C" font-family="Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle">10</text>
+  </g>
+</svg>
