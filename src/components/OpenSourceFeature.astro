@@ -1,7 +1,7 @@
 ---
 import ExternalIcon from './ExternalIcon.astro';
 import type { Locale } from '../content/site';
-import { openSourceProject, siteCopy } from '../content/site';
+import { openSourceProjects, siteCopy } from '../content/site';
 
 interface Props {
   locale: Locale;
@@ -13,27 +13,74 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
 ---
 
 <section id="open-source" class="open-source" aria-labelledby="open-source-title" data-reveal>
-  <div class="open-source__copy">
+  <header class="section-heading open-source__heading">
     <p class="eyebrow">{copy.eyebrow}</p>
-    <h2 id="open-source-title">{openSourceProject.name}</h2>
+    <h2 id="open-source-title">{copy.title}</h2>
     <p>{copy.description}</p>
-    <ul class="open-source__facts" aria-label={locale === 'zh' ? '项目技术信息' : 'Project facts'}>
-      <li>{openSourceProject.platform}</li>
-      <li>{openSourceProject.stack}</li>
-      <li>{openSourceProject.license}</li>
-    </ul>
-    <a href={openSourceProject.url} target="_blank" rel="noreferrer">
-      {copy.cta}
-      <ExternalIcon />
-      <span class="sr-only">{newWindowLabel}</span>
-    </a>
-  </div>
-  <div class="open-source__demo" aria-hidden="true">
-    <div class="open-source__window-bar"><span></span><span></span><span></span></div>
-    <div class="open-source__markdown">
-      <span># Open quickly</span>
-      <span>Read with focus.</span>
-      <span>**Markdown**, at a glance.</span>
-    </div>
+  </header>
+
+  <div class="open-source__projects">
+    {openSourceProjects.map((project) => {
+      const projectCopy = copy.projects[project.id];
+
+      return (
+        <article
+          class={`open-source-project open-source-project--${project.id}`}
+          data-project={project.id}
+          data-reveal
+        >
+          <div class="open-source-project__copy">
+            <p class="open-source-project__type">{projectCopy.typeLabel}</p>
+            <h3>{project.name}</h3>
+            <p>{projectCopy.description}</p>
+            <ul
+              class="open-source-project__facts"
+              aria-label={locale === 'zh' ? '项目技术信息' : 'Project facts'}
+            >
+              {project.facts.map((fact) => <li>{fact}</li>)}
+            </ul>
+            <a href={project.url} target="_blank" rel="noreferrer">
+              {projectCopy.cta}
+              <ExternalIcon />
+              <span class="sr-only">{newWindowLabel}</span>
+            </a>
+          </div>
+
+          {project.id === 'glancemd' ? (
+            <div class="open-source-project__demo glancemd-demo" aria-hidden="true">
+              <div class="glancemd-demo__bar">
+                <span>Windows</span><span>macOS</span><span>Linux</span>
+              </div>
+              <div class="glancemd-demo__workspace">
+                <div class="glancemd-demo__editor">
+                  <span># Open quickly</span>
+                  <span>**Markdown**,</span>
+                  <span>at a glance.</span>
+                </div>
+                <div class="glancemd-demo__preview">
+                  <strong>Open quickly</strong>
+                  <span>Markdown, at a glance.</span>
+                  <i></i><i></i><i></i>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div class="open-source-project__demo agent-team-demo" aria-hidden="true">
+              <div class="agent-team-demo__modes">
+                <span>FAST</span><span>STANDARD</span><span>STRICT</span>
+              </div>
+              <div class="agent-team-demo__graph">
+                <strong>rapid-dev-team</strong>
+                <span class="agent-node agent-node--scout">Scout</span>
+                <span class="agent-node agent-node--glm">GLM</span>
+                <span class="agent-node agent-node--deepseek">DeepSeek</span>
+                <span class="agent-node agent-node--reviewer">Reviewer</span>
+                <span class="agent-node agent-node--architect">Architect</span>
+              </div>
+            </div>
+          )}
+        </article>
+      );
+    })}
   </div>
 </section>

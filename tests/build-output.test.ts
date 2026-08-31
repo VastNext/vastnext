@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import {
   contactFacts,
   futureTrackFacts,
-  openSourceProject,
+  openSourceProjectFacts,
   productFacts,
   siteCopy,
   siteFacts,
@@ -46,7 +46,7 @@ function expectEveryExternalLink(html: string, href: string): void {
 function expectEveryExpectedExternalLink(html: string): void {
   for (const href of [
     ...Object.values(productFacts).map((product) => product.url),
-    openSourceProject.url,
+    ...Object.values(openSourceProjectFacts).map((project) => project.url),
     contactFacts.githubUrl,
   ]) {
     expectEveryExternalLink(html, href);
@@ -125,6 +125,25 @@ describe('品牌页构建产物', () => {
     expectEveryExpectedExternalLink(html);
     expectLink(html, `mailto:${contactFacts.email}`);
     expectLink(html, languageHref);
+  });
+
+  it.each([
+    ['en', () => englishPage],
+    ['zh', () => chinesePage],
+  ])('%s 页面为两个开源项目输出独立展台', (_locale, getHtml) => {
+    const html = getHtml();
+
+    for (const [projectId, project] of Object.entries(openSourceProjectFacts)) {
+      const article = html.match(
+        new RegExp(`<article(?=[^>]*data-project=["']${projectId}["'])[^>]*>[\\s\\S]*?<\\/article>`),
+      );
+
+      expect(article, `应输出 ${projectId} 开源项目展台`).not.toBeNull();
+      expect(article![0]).toContain(`<h3>${project.name}</h3>`);
+      for (const fact of project.facts) {
+        expect(article![0]).toContain(fact);
+      }
+    }
   });
 
   it('英文未来方向中每个共享事实只渲染一个可见标题', () => {

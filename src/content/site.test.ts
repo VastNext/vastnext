@@ -5,7 +5,7 @@ import * as site from './site';
 const {
   futureTrackFacts,
   locales,
-  openSourceProject,
+  openSourceProjectFacts,
   productFacts,
   siteCopy,
   siteFacts,
@@ -69,13 +69,25 @@ describe('站点内容模型', () => {
     });
   });
 
-  it('保存准确的 GlanceMD 开源事实', () => {
-    expect(openSourceProject).toEqual({
-      name: 'GlanceMD',
-      url: 'https://github.com/VastNext/GlanceMD',
-      platform: 'Windows',
-      stack: 'Rust + WebView2',
-      license: 'MIT',
+  it('保存两个准确的开源项目事实', () => {
+    expect(openSourceProjectFacts).toEqual({
+      glancemd: {
+        name: 'GlanceMD',
+        url: 'https://github.com/VastNext/GlanceMD',
+        facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
+      },
+      'opencode-rapid-agent-team': {
+        name: 'OpenCode Rapid Agent Team',
+        url: 'https://github.com/VastNext/opencode-rapid-agent-team',
+        facts: [
+          'OpenCode',
+          'Python',
+          'Multi-agent',
+          'MIT',
+          'Fast · Standard · Strict',
+          'rapid-dev-team · /rapid-dev',
+        ],
+      },
     });
   });
 
@@ -85,6 +97,7 @@ describe('站点内容模型', () => {
 
       expectStringsToBeNonEmpty(copy, locale);
       expect(Object.keys(copy.products)).toEqual(Object.keys(productFacts));
+      expect(Object.keys(copy.openSource.projects)).toEqual(Object.keys(openSourceProjectFacts));
       expect(Object.keys(copy.future.tracks)).toEqual(Object.keys(futureTrackFacts));
     }
 
@@ -136,8 +149,14 @@ describe('站点内容模型', () => {
       [en.products['password-generator'].description, zh.products['password-generator'].description, 'products.password-generator.description'],
       [en.products['vast-translator'].description, zh.products['vast-translator'].description, 'products.vast-translator.description'],
       [en.openSource.eyebrow, zh.openSource.eyebrow, 'openSource.eyebrow'],
+      [en.openSource.title, zh.openSource.title, 'openSource.title'],
       [en.openSource.description, zh.openSource.description, 'openSource.description'],
-      [en.openSource.cta, zh.openSource.cta, 'openSource.cta'],
+      [en.openSource.projects.glancemd.typeLabel, zh.openSource.projects.glancemd.typeLabel, 'openSource.projects.glancemd.typeLabel'],
+      [en.openSource.projects.glancemd.description, zh.openSource.projects.glancemd.description, 'openSource.projects.glancemd.description'],
+      [en.openSource.projects.glancemd.cta, zh.openSource.projects.glancemd.cta, 'openSource.projects.glancemd.cta'],
+      [en.openSource.projects['opencode-rapid-agent-team'].typeLabel, zh.openSource.projects['opencode-rapid-agent-team'].typeLabel, 'openSource.projects.opencode-rapid-agent-team.typeLabel'],
+      [en.openSource.projects['opencode-rapid-agent-team'].description, zh.openSource.projects['opencode-rapid-agent-team'].description, 'openSource.projects.opencode-rapid-agent-team.description'],
+      [en.openSource.projects['opencode-rapid-agent-team'].cta, zh.openSource.projects['opencode-rapid-agent-team'].cta, 'openSource.projects.opencode-rapid-agent-team.cta'],
       [en.future.eyebrow, zh.future.eyebrow, 'future.eyebrow'],
       [en.future.title, zh.future.title, 'future.title'],
       [en.future.description, zh.future.description, 'future.description'],

@@ -128,4 +128,15 @@ describe('明亮新界视觉系统', () => {
     expect(source('../../public/favicon-01.svg')).toContain('data-concept="01"');
     expect(source('../components/BrandMark.astro')).toContain('data-concept="01"');
   });
+
+  it('为两个开源项目提供并列展台和移动单列布局', () => {
+    const css = source('./global.css');
+
+    expect(css).toMatch(/\.open-source__projects\s*\{[^}]*display:\s*grid[^}]*grid-template-columns:\s*repeat\(2,/);
+    expect(css).toMatch(/\.open-source-project--glancemd\s*\{/);
+    expect(css).toMatch(/\.open-source-project--opencode-rapid-agent-team\s*\{/);
+    expect(css).not.toMatch(/\.open-source-project:hover\s*\{[^}]*transform/);
+    expect(css).toMatch(/\.open-source-project__type\s*\{[^}]*color:\s*var\(--color-ink\)/);
+    expect(css).toMatch(/@media\s*\(max-width:\s*768px\)[\s\S]*\.open-source__projects\s*\{[^}]*grid-template-columns:\s*1fr/);
+  });
 });

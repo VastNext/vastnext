@@ -42,12 +42,21 @@ export interface Product {
   url: string;
 }
 
+interface OpenSourceProjectFact extends NamedLink {
+  facts: readonly string[];
+}
+
+interface OpenSourceProjectCopy {
+  typeLabel: string;
+  description: string;
+  cta: string;
+}
+
 export interface OpenSourceProject {
+  id: OpenSourceProjectId;
   name: string;
   url: string;
-  platform: string;
-  stack: string;
-  license: string;
+  facts: readonly string[];
 }
 
 interface ProductCopy {
@@ -107,8 +116,9 @@ export interface SiteCopy {
   products: Record<ProductId, ProductCopy>;
   openSource: {
     eyebrow: string;
+    title: string;
     description: string;
-    cta: string;
+    projects: Record<OpenSourceProjectId, OpenSourceProjectCopy>;
   };
   future: {
     eyebrow: string;
@@ -141,13 +151,34 @@ export const products: Product[] = Object.entries(productFacts).map(([id, produc
   ...product,
 }));
 
-export const openSourceProject = {
-  name: 'GlanceMD',
-  url: 'https://github.com/VastNext/GlanceMD',
-  platform: 'Windows',
-  stack: 'Rust + WebView2',
-  license: 'MIT',
-} as const satisfies OpenSourceProject;
+export const openSourceProjectFacts = {
+  glancemd: {
+    name: 'GlanceMD',
+    url: 'https://github.com/VastNext/GlanceMD',
+    facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
+  },
+  'opencode-rapid-agent-team': {
+    name: 'OpenCode Rapid Agent Team',
+    url: 'https://github.com/VastNext/opencode-rapid-agent-team',
+    facts: [
+      'OpenCode',
+      'Python',
+      'Multi-agent',
+      'MIT',
+      'Fast · Standard · Strict',
+      'rapid-dev-team · /rapid-dev',
+    ],
+  },
+} as const satisfies Record<string, OpenSourceProjectFact>;
+
+export type OpenSourceProjectId = keyof typeof openSourceProjectFacts;
+
+export const openSourceProjects: OpenSourceProject[] = Object.entries(openSourceProjectFacts).map(
+  ([id, project]) => ({
+    id: id as OpenSourceProjectId,
+    ...project,
+  }),
+);
 
 export const contactFacts = {
   email: 'hello@vastnext.com',
@@ -200,9 +231,23 @@ export const siteCopy = {
     },
     openSource: {
       eyebrow: 'Open by default',
+      title: 'Built in the open',
       description:
-        'Open Markdown files in a focused viewer built to make reading quick and distraction-free.',
-      cta: 'Explore GlanceMD on GitHub',
+        'Two open-source projects exploring native desktop tools and agent-powered software delivery.',
+      projects: {
+        glancemd: {
+          typeLabel: 'Native desktop tool',
+          description:
+            'A lightweight cross-platform Markdown viewer and editor with fast startup, split editing, tabs, outlines, search, and native system packages.',
+          cta: 'Explore GlanceMD on GitHub',
+        },
+        'opencode-rapid-agent-team': {
+          typeLabel: 'OpenCode agent team',
+          description:
+            'A self-installing OpenCode development team with adaptive delivery modes, heterogeneous workers, independent review, and strict high-risk gates.',
+          cta: 'Explore Rapid Agent Team on GitHub',
+        },
+      },
     },
     future: {
       eyebrow: 'On the horizon',
@@ -300,8 +345,22 @@ export const siteCopy = {
     },
     openSource: {
       eyebrow: '默认开放',
-      description: '在专注的查看器中打开 Markdown 文件，快速阅读，不受干扰。',
-      cta: '在 GitHub 探索 GlanceMD',
+      title: '在开放中构建',
+      description: '两个开源项目，分别探索原生桌面工具与 Agent 驱动的软件交付。',
+      projects: {
+        glancemd: {
+          typeLabel: '跨平台桌面工具',
+          description:
+            '轻量跨平台 Markdown 查看器与编辑器，提供快速启动、分屏编辑、多标签、目录、查找和系统原生安装包。',
+          cta: '在 GitHub 探索 GlanceMD',
+        },
+        'opencode-rapid-agent-team': {
+          typeLabel: 'OpenCode Agent Team',
+          description:
+            '可自安装的 OpenCode 软件开发团队，提供自适应执行档位、异构 Worker、独立审查与高风险严格门禁。',
+          cta: '在 GitHub 探索 Rapid Agent Team',
+        },
+      },
     },
     future: {
       eyebrow: '未来方向',
