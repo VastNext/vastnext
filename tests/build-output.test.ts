@@ -10,12 +10,15 @@ import {
   siteCopy,
   siteFacts,
 } from '../src/content/site';
+import { lexiLayerFacts, lexiLayerCopy } from '../src/content/lexiLayer';
 import { buildSite, readBuiltPage } from './helpers/build';
 
 let englishPage: string;
 let chinesePage: string;
 let englishPrivacyPage: string;
 let chinesePrivacyPage: string;
+let englishLexiLayerPage: string;
+let chineseLexiLayerPage: string;
 
 const projectRoot = resolve(import.meta.dirname, '..');
 
@@ -94,6 +97,8 @@ beforeAll(() => {
   chinesePage = readBuiltPage('zh/index.html');
   englishPrivacyPage = readBuiltPage('privacy/index.html');
   chinesePrivacyPage = readBuiltPage('zh/privacy/index.html');
+  englishLexiLayerPage = readBuiltPage('lexi-layer/index.html');
+  chineseLexiLayerPage = readBuiltPage('zh/lexi-layer/index.html');
 }, 90_000);
 
 describe('品牌页构建产物', () => {
@@ -251,5 +256,30 @@ describe('品牌页构建产物', () => {
     expectLink(chinesePage, '/zh/privacy/');
     expect(englishPrivacyPage).toContain(siteCopy.en.privacy.title);
     expect(chinesePrivacyPage).toContain(siteCopy.zh.privacy.title);
+  });
+});
+
+describe('LexiLayer 产品页构建产物', () => {
+  it('输出双语元数据、核心入口和全部产品截图', () => {
+    const enUrl = `${siteFacts.siteUrl}/lexi-layer/`;
+    const zhUrl = `${siteFacts.siteUrl}/zh/lexi-layer/`;
+
+    expectLocalizedMetadata(englishLexiLayerPage, 'en', enUrl, enUrl, zhUrl);
+    expectLocalizedMetadata(chineseLexiLayerPage, 'zh-CN', zhUrl, enUrl, zhUrl);
+
+    for (const html of [englishLexiLayerPage, chineseLexiLayerPage]) {
+      expect(html).toContain(lexiLayerFacts.githubUrl);
+      expect(html).toContain(lexiLayerFacts.issuesUrl);
+      expect(html).toContain(lexiLayerFacts.pullsUrl);
+      expect(html).toContain(lexiLayerFacts.demoSiteUrl);
+      for (const screenshot of Object.values(lexiLayerFacts.screenshots)) {
+        expect(html).toContain(`src="${screenshot}"`);
+        expect(existsSync(resolve(projectRoot, 'public', screenshot.slice(1)))).toBe(true);
+      }
+      expect(html).not.toMatch(/sk-[A-Za-z0-9_-]{20,}/);
+    }
+
+    expect(englishLexiLayerPage).toContain(lexiLayerCopy.en.hero.title);
+    expect(chineseLexiLayerPage).toContain(lexiLayerCopy.zh.hero.title);
   });
 });

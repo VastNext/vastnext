@@ -1,0 +1,17 @@
+---
+import LexiLayerPage from '../../components/LexiLayerPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { lexiLayerCopy } from '../../content/lexiLayer';
+
+const copy = lexiLayerCopy.zh;
+---
+
+<BaseLayout
+  locale="zh"
+  title={`${copy.title} — VastNext`}
+  description={copy.description}
+  canonicalPath="/zh/lexi-layer/"
+  alternatePath="/lexi-layer/"
+>
+  <LexiLayerPage locale="zh" />
+</BaseLayout>

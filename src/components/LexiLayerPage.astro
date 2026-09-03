@@ -1,0 +1,394 @@
+---
+import BrandMark from './BrandMark.astro';
+import ExternalIcon from './ExternalIcon.astro';
+import type { Locale } from '../content/site';
+import { lexiLayerCopy, lexiLayerFacts } from '../content/lexiLayer';
+import '../styles/lexi-layer.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = lexiLayerCopy[locale];
+const isZh = locale === 'zh';
+const homeHref = isZh ? '/zh/' : '/';
+const privacyHref = isZh ? '/zh/privacy/' : '/privacy/';
+const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new window)';
+---
+
+<div class="lexi-page">
+  <a class="skip-link" href="#main-content">
+    {isZh ? '跳到主要内容' : 'Skip to main content'}
+  </a>
+
+  <!-- Header -->
+  <header class="lexi-header">
+    <div class="lexi-container lexi-header__inner">
+      <div class="lexi-header__branding">
+        <a href={homeHref} class="lexi-header__brand-link" aria-label={isZh ? '返回 VastNext 首页' : 'Back to VastNext Home'}>
+          <BrandMark />
+        </a>
+        <span class="lexi-header__product-badge">
+          LexiLayer
+        </span>
+      </div>
+
+      <nav class="lexi-header__nav" aria-label={isZh ? '主导航' : 'Primary Navigation'}>
+        <a href="#features">{copy.nav.features}</a>
+        <a href="#experts">{copy.nav.experts}</a>
+        <a href="#customization">{copy.nav.customization}</a>
+        <a href="#community">{copy.nav.community}</a>
+        <a
+          href={lexiLayerFacts.githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="lexi-header__nav-github"
+        >
+          {copy.nav.github}
+          <ExternalIcon />
+          <span class="sr-only">{newWindowText}</span>
+        </a>
+        <a
+          href={copy.nav.languageSwitchHref}
+          hreflang={isZh ? 'en' : 'zh-CN'}
+          class="lexi-header__lang-toggle"
+        >
+          {copy.nav.languageSwitchLabel}
+        </a>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <details class="lexi-header__mobile-menu">
+        <summary>{isZh ? '菜单' : 'Menu'}</summary>
+        <nav aria-label={isZh ? '移动端导航' : 'Mobile Navigation'}>
+          <a href="#features">{copy.nav.features}</a>
+          <a href="#experts">{copy.nav.experts}</a>
+          <a href="#customization">{copy.nav.customization}</a>
+          <a href="#community">{copy.nav.community}</a>
+           <a href={lexiLayerFacts.githubUrl} target="_blank" rel="noreferrer">
+             {copy.nav.github} <ExternalIcon /> <span class="sr-only">{newWindowText}</span>
+          </a>
+          <a href={copy.nav.languageSwitchHref} hreflang={isZh ? 'en' : 'zh-CN'}>
+            {copy.nav.languageSwitchLabel}
+          </a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="lexi-hero">
+      <div class="lexi-container">
+        <div class="lexi-hero__content">
+          <div class="lexi-hero__pill">
+            <span>✨ {copy.hero.eyebrow}</span>
+          </div>
+          <h1 class="lexi-hero__title">
+            {copy.hero.title} <span class="lexi-hero__title-accent">{copy.hero.titleAccent}</span>
+          </h1>
+          <p class="lexi-hero__tagline">{copy.hero.tagline}</p>
+          <p class="lexi-hero__description">{copy.hero.description}</p>
+
+          <div class="lexi-hero__actions">
+            <a
+              href={lexiLayerFacts.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="lexi-btn lexi-btn--primary"
+            >
+              <span>{copy.hero.ctaPrimary}</span>
+              <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </a>
+            <a href="#features" class="lexi-btn lexi-btn--secondary">
+              <span>{copy.hero.ctaSecondary}</span>
+            </a>
+          </div>
+
+          <div class="lexi-hero__badges">
+            {copy.hero.badges.map((badge) => (
+              <span class="lexi-badge">{badge}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Hero Browser Window Frame -->
+        <div class="lexi-hero__showcase">
+          <div class="lexi-browser-frame">
+            <div class="lexi-browser-frame__bar">
+              <div class="lexi-browser-frame__dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="lexi-browser-frame__address">
+                🔒 {copy.hero.browserUrl}
+              </div>
+            </div>
+            <div class="lexi-browser-frame__media">
+              <img
+                src={lexiLayerFacts.screenshots.hero}
+                alt={isZh ? 'LexiLayer 双语对照翻译主视觉演示' : 'LexiLayer bilingual translation hero preview'}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <div class="lexi-browser-frame__caption">
+              <span class="lexi-live-indicator">{isZh ? '实时双语渲染引擎激活' : 'Bilingual Context Engine Active'}</span>
+              <span>{copy.hero.browserNote}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Pillars Section -->
+    <section class="lexi-pillars-section">
+      <div class="lexi-container">
+        <div class="lexi-section-header">
+          <p class="lexi-eyebrow">{copy.keyPillars.eyebrow}</p>
+          <h2>{copy.keyPillars.title}</h2>
+          <p>{copy.keyPillars.description}</p>
+        </div>
+
+        <div class="lexi-pillars-grid">
+          {copy.keyPillars.items.map((item) => (
+            <div class={`lexi-pillar-card lexi-pillar-card--${item.accent}`}>
+              <span class="lexi-pillar-card__icon">{item.icon}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Deep-Dive Section -->
+    <section id="features" class="lexi-features-section">
+      <div class="lexi-container">
+        {copy.features.map((feature, idx) => {
+          const isReversed = idx % 2 === 1;
+          const sectionId = feature.id === 'expert-personas' ? 'experts' : feature.id === 'custom-ai-models' ? 'customization' : feature.id;
+          return (
+            <article
+              id={sectionId}
+              class={`lexi-feature-block ${isReversed ? 'lexi-feature-block--reverse' : ''}`}
+            >
+              <div class="lexi-feature-block__text">
+                <span class={`lexi-feature-badge lexi-feature-badge--${feature.tagColor || 'electric'}`}>
+                  {feature.badge}
+                </span>
+                <h3>{feature.title}</h3>
+                <p class="lexi-feature-block__subtitle">{feature.subtitle}</p>
+                <p class="lexi-feature-block__desc">{feature.description}</p>
+                <ul class="lexi-feature-list">
+                  {feature.highlights.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="lexi-feature-block__media">
+                <div class="lexi-feature-window">
+                  <div class="lexi-feature-window__top">
+                    <div class="lexi-feature-window__dots">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <span>LexiLayer v0.7.1</span>
+                  </div>
+                  <div class="lexi-feature-window__img-wrap">
+                    <img
+                      src={lexiLayerFacts.screenshots[feature.screenshotKey]}
+                      alt={feature.screenshotAlt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Real-World Scenarios Section -->
+    <section class="lexi-scenarios-section">
+      <div class="lexi-container">
+        <div class="lexi-section-header">
+          <p class="lexi-eyebrow">{copy.scenarioSection.eyebrow}</p>
+          <h2>{copy.scenarioSection.title}</h2>
+          <p>{copy.scenarioSection.description}</p>
+        </div>
+
+        <div class="lexi-scenarios-grid">
+          {copy.scenarioSection.scenarios.map((sc) => (
+            <div class="lexi-scenario-card">
+              <span class="lexi-scenario-card__role">{sc.role}</span>
+              <h3>{sc.title}</h3>
+              <p>{sc.detail}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="lexi-realworld-banner">
+          <div class="lexi-realworld-banner__info">
+            <h4>{copy.scenarioSection.realWorldTitle}</h4>
+            <p>{copy.scenarioSection.realWorldDesc}</p>
+          </div>
+          <a
+            href={lexiLayerFacts.demoSiteUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="lexi-btn lexi-btn--secondary"
+          >
+            <span>{copy.scenarioSection.visitDemoLabel}</span>
+            <ExternalIcon />
+            <span class="sr-only">{newWindowText}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Source & Community Section -->
+    <section id="community" class="lexi-community-section">
+      <div class="lexi-container">
+        <div class="lexi-section-header">
+          <p class="lexi-eyebrow">{copy.community.eyebrow}</p>
+          <h2>{copy.community.title}</h2>
+          <p>{copy.community.description}</p>
+        </div>
+
+        <div class="lexi-community-grid">
+          <!-- Card 1: Open Source -->
+          <a
+            href={lexiLayerFacts.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="lexi-community-card lexi-community-card--oss"
+          >
+            <span class="lexi-community-card__tag">{copy.community.cardOpenSource.tag}</span>
+            <h3>{copy.community.cardOpenSource.title}</h3>
+            <p>{copy.community.cardOpenSource.desc}</p>
+            <div class="lexi-community-card__meta">
+              {copy.community.cardOpenSource.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="lexi-community-card__link">
+              {copy.community.cardOpenSource.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+
+          <!-- Card 2: Issues -->
+          <a
+            href={lexiLayerFacts.issuesUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="lexi-community-card lexi-community-card--issues"
+          >
+            <span class="lexi-community-card__tag">{copy.community.cardIssues.tag}</span>
+            <h3>{copy.community.cardIssues.title}</h3>
+            <p>{copy.community.cardIssues.desc}</p>
+            <div class="lexi-community-card__meta">
+              {copy.community.cardIssues.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="lexi-community-card__link">
+              {copy.community.cardIssues.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+
+          <!-- Card 3: Pull Requests -->
+          <a
+            href={lexiLayerFacts.pullsUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="lexi-community-card lexi-community-card--pulls"
+          >
+            <span class="lexi-community-card__tag">{copy.community.cardPulls.tag}</span>
+            <h3>{copy.community.cardPulls.title}</h3>
+            <p>{copy.community.cardPulls.desc}</p>
+            <div class="lexi-community-card__meta">
+              {copy.community.cardPulls.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="lexi-community-card__link">
+              {copy.community.cardPulls.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <section class="lexi-cta-section">
+      <div class="lexi-container">
+        <div class="lexi-cta-box">
+          <p class="lexi-eyebrow">{copy.cta.eyebrow}</p>
+          <h2>{copy.cta.title}</h2>
+          <p>{copy.cta.description}</p>
+          <div class="lexi-cta-box__actions">
+            <a
+              href={lexiLayerFacts.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="lexi-btn lexi-btn--primary"
+            >
+              <span>{copy.cta.primaryBtn}</span>
+              <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </a>
+            <a
+              href={lexiLayerFacts.issuesUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="lexi-btn lexi-btn--secondary"
+            >
+              <span>{copy.cta.secondaryBtn}</span>
+              <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </a>
+          </div>
+          <p class="lexi-cta-box__note">{copy.cta.note}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="lexi-footer">
+    <div class="lexi-container">
+      <div class="lexi-footer__inner">
+        <div class="lexi-footer__brand">
+          <BrandMark />
+          <p>{copy.footer.brandTagline}</p>
+        </div>
+        <nav class="lexi-footer__links" aria-label={isZh ? '页脚导航' : 'Footer Navigation'}>
+          <a href={homeHref}>{copy.footer.backToHome}</a>
+          <a href={lexiLayerFacts.githubUrl} target="_blank" rel="noreferrer">
+            {copy.footer.githubRepo} <ExternalIcon />
+            <span class="sr-only">{newWindowText}</span>
+          </a>
+          <a href={privacyHref}>{copy.footer.privacyPolicy}</a>
+          <a href={copy.nav.languageSwitchHref} hreflang={isZh ? 'en' : 'zh-CN'}>
+            {copy.nav.languageSwitchLabel}
+          </a>
+        </nav>
+      </div>
+      <div class="lexi-footer__bottom">
+        <span>{copy.footer.copyright}</span>
+        <span>{lexiLayerFacts.versionTag}</span>
+      </div>
+    </div>
+  </footer>
+</div>
