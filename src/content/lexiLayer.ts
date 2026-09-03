@@ -7,7 +7,7 @@ export const lexiLayerFacts = {
   demoSiteUrl: 'https://findryai.com',
   versionTag: 'v0.7.1 · MVP',
   screenshots: {
-    hero: '/lexi-layer/hero-translated.png',
+    hero: '/lexi-layer/hero-translated.jpg',
     notebooklm: '/lexi-layer/notebooklm-fullpage.png',
     popup: '/lexi-layer/popup-controls.png',
     customAi: '/lexi-layer/options-custom-ai.png',
