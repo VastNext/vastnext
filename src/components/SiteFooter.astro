@@ -16,7 +16,7 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
 
 <footer class="site-footer">
   <div class="site-footer__brand">
-    <BrandMark />
+    <BrandMark wordmarkText={copy.brandName} />
     <p>{copy.tagline}</p>
   </div>
   <nav class="site-footer__links" aria-label={locale === 'zh' ? '页脚导航' : 'Footer navigation'}>

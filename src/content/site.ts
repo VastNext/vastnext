@@ -86,6 +86,7 @@ interface PrivacyCopy {
 }
 
 export interface SiteCopy {
+  brandName: string;
   title: string;
   description: string;
   tagline: string;
@@ -189,6 +190,7 @@ export const futureTracks = Object.keys(futureTrackFacts) as FutureTrackId[];
 
 export const siteCopy = {
   en: {
+    brandName: 'VastNext',
     title: 'VastNext — Useful products for what comes next',
     description:
       'VastNext is an independent future product lab creating practical digital products for everyone.',
@@ -305,8 +307,9 @@ export const siteCopy = {
     },
   },
   zh: {
-    title: 'VastNext — 为下一个未来创造实用产品',
-    description: 'VastNext 是一个独立未来产品实验室，为每个人创造实用的数字产品。',
+    brandName: '瀚海未来',
+    title: '瀚海未来 — 为下一个未来创造实用产品',
+    description: '瀚海未来是一个独立未来产品实验室，为每个人创造实用的数字产品。',
     tagline: '把有用的想法，带到下一个未来。',
     metadata: {
       canonicalPath: '/zh/',
@@ -328,7 +331,7 @@ export const siteCopy = {
       },
     },
     productsSection: {
-      eyebrow: 'VastNext 出品',
+      eyebrow: '瀚海未来出品',
       title: '目标清晰的小工具',
       description: '专注解决具体问题，让有用的工作更简单。',
     },
@@ -381,29 +384,29 @@ export const siteCopy = {
       },
     },
     about: {
-      eyebrow: '关于 VastNext',
+      eyebrow: '关于瀚海未来',
       title: '辽阔视野，迈向下一步。',
       description:
-        'Vast 代表辽阔、开放与充满可能的瀚海，Next 代表下一步、下一代与未来。VastNext 即“瀚海·未来”，表达我们长期为每个人创造实用产品的方向。',
+        'Vast 代表辽阔、开放与充满可能的瀚海，Next 代表下一步、下一代与未来。瀚海未来（VastNext）即由此而来，表达我们长期为每个人创造实用产品的方向。',
       equationLabel: 'Vast 加上 Next，寓意瀚海与未来。',
     },
     footer: {
       emailLabel: '联系我们',
-      githubLabel: 'VastNext 的 GitHub',
+      githubLabel: '瀚海未来的 GitHub',
       privacy: '隐私政策',
-      copyright: '© VastNext',
+      copyright: '© 瀚海未来',
     },
     privacy: {
       title: '隐私政策',
-      description: 'VastNext 品牌站如何处理隐私与必要技术信息。',
+      description: '瀚海未来品牌站如何处理隐私与必要技术信息。',
       updatedLabel: '更新时间',
       updatedDate: '2026 年 8 月 23 日',
-      introduction: '这份简短说明介绍 VastNext 品牌站的隐私做法，仅供一般参考，不构成法律意见。',
+      introduction: '这份简短说明介绍瀚海未来品牌站的隐私做法，仅供一般参考，不构成法律意见。',
       sections: ['我们收集的信息', '技术服务信息', '外部链接'],
       noCollection: '本站不通过账户、表单、分析或广告主动收集个人信息。',
       technicalData:
         '为交付和保护本站，服务器及 Cloudflare 等 CDN 服务商可能处理必要技术信息和基础请求日志。本站不设置分析或广告 Cookie。',
-      externalLinks: '本站链接到的 VastNext 产品及其他外部服务，适用各产品或服务自身的隐私政策。',
+      externalLinks: '本站链接到的瀚海未来产品及其他外部服务，适用各产品或服务自身的隐私政策。',
       contactTitle: '联系我们',
       contact: '如有隐私相关问题，请发送邮件至',
       homeLabel: '返回首页',

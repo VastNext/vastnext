@@ -21,7 +21,7 @@ const enUrl = new URL(enPath, siteFacts.siteUrl);
 const zhUrl = new URL(zhPath, siteFacts.siteUrl);
 const ogImageUrl = new URL(siteFacts.ogImage, siteFacts.siteUrl);
 const metadata = siteCopy[locale].metadata;
-const ogImageAlt = `${siteFacts.brandName}: ${siteCopy[locale].tagline}`;
+const ogImageAlt = `${siteCopy[locale].brandName}: ${siteCopy[locale].tagline}`;
 const organizationJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -47,7 +47,7 @@ const organizationJsonLd = JSON.stringify({
     <link rel="icon" href="/favicon-01.svg" type="image/svg+xml" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={siteFacts.brandName} />
+    <meta property="og:site_name" content={siteCopy[locale].brandName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />

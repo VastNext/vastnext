@@ -2,6 +2,7 @@
 import BrandMark from './BrandMark.astro';
 import ExternalIcon from './ExternalIcon.astro';
 import type { Locale } from '../content/site';
+import { siteCopy } from '../content/site';
 import { lexiLayerCopy, lexiLayerFacts } from '../content/lexiLayer';
 import '../styles/lexi-layer.css';
 
@@ -12,6 +13,7 @@ interface Props {
 const { locale } = Astro.props;
 const copy = lexiLayerCopy[locale];
 const isZh = locale === 'zh';
+const brandName = siteCopy[locale].brandName;
 const homeHref = isZh ? '/zh/' : '/';
 const privacyHref = isZh ? '/zh/privacy/' : '/privacy/';
 const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new window)';
@@ -26,11 +28,11 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
   <header class="lexi-header">
     <div class="lexi-container lexi-header__inner">
       <div class="lexi-header__branding">
-        <a href={homeHref} class="lexi-header__brand-link" aria-label={isZh ? '返回 VastNext 首页' : 'Back to VastNext Home'}>
-          <BrandMark />
+        <a href={homeHref} class="lexi-header__brand-link" aria-label={isZh ? `返回${brandName}首页` : 'Back to VastNext Home'}>
+          <BrandMark wordmarkText={brandName} />
         </a>
         <span class="lexi-header__product-badge">
-          LexiLayer
+          {isZh ? '语层翻译' : 'LexiLayer'}
         </span>
       </div>
 
@@ -130,7 +132,7 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
             <div class="lexi-browser-frame__media">
               <img
                 src={lexiLayerFacts.screenshots.hero}
-                alt={isZh ? 'LexiLayer 翻译 findryai.com 首页的双语对照实景' : 'LexiLayer bilingual translation on the findryai.com homepage'}
+                alt={isZh ? '语层翻译 findryai.com 首页的双语对照实景' : 'LexiLayer bilingual translation on the findryai.com homepage'}
                 loading="eager"
                 decoding="async"
               />
@@ -198,7 +200,7 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
                       <span></span>
                       <span></span>
                     </div>
-                    <span>LexiLayer v0.7.1</span>
+                    <span>{isZh ? '语层 v0.7.1' : 'LexiLayer v0.7.1'}</span>
                   </div>
                   <div class="lexi-feature-window__img-wrap">
                     <img
@@ -370,7 +372,7 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
     <div class="lexi-container">
       <div class="lexi-footer__inner">
         <div class="lexi-footer__brand">
-          <BrandMark />
+          <BrandMark wordmarkText={brandName} />
           <p>{copy.footer.brandTagline}</p>
         </div>
         <nav class="lexi-footer__links" aria-label={isZh ? '页脚导航' : 'Footer Navigation'}>

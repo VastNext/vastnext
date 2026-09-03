@@ -2,9 +2,10 @@
 interface Props {
   wordmark?: boolean;
   label?: string;
+  wordmarkText?: string;
 }
 
-const { wordmark = true, label = 'VastNext' } = Astro.props;
+const { wordmark = true, label = 'VastNext', wordmarkText = 'VastNext' } = Astro.props;
 ---
 
 <span class="brand-mark">
@@ -24,7 +25,7 @@ const { wordmark = true, label = 'VastNext' } = Astro.props;
     <path class="brand-mark__arrow" d="M38.5 11L43 7L42.5 13" />
     <circle class="brand-mark__beacon" cx="41" cy="5.5" r="3.5" />
   </svg>
-  {wordmark && <span class="brand-mark__wordmark">VastNext</span>}
+  {wordmark && <span class="brand-mark__wordmark">{wordmarkText}</span>}
 </span>
 
 <style>

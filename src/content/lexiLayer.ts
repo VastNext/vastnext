@@ -344,13 +344,13 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
     },
   },
   zh: {
-    title: 'LexiLayer 翻译 — 免登录、可定制 AI 专家角色的开源网页翻译扩展',
+    title: '语层翻译 — 免登录、可定制 AI 专家角色的开源网页翻译扩展',
     description:
-      'LexiLayer 是一款免登录、零门槛的 AI 浏览器双语翻译扩展。支持上下文 AI 翻译、可定制的 AI 专家角色与提示词，并把选择权交给用户。',
+      '语层是一款免登录、零门槛的 AI 浏览器双语翻译扩展。支持上下文 AI 翻译、可定制的 AI 专家角色与提示词，并把选择权交给用户。',
     tagline: '你的翻译工具，由你完全定制！',
     nav: {
-      home: 'VastNext 首页',
-      productName: 'LexiLayer 翻译扩展',
+      home: '瀚海未来首页',
+      productName: '语层翻译扩展',
       features: '功能特性',
       experts: 'AI 专家角色',
       customization: '模型与定制',
@@ -365,7 +365,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       titleAccent: '由你完全定制！',
       tagline: '免注册登录 · 免费翻译 · AI 深度语境 · 专家角色定制 · GitHub 共建',
       description:
-        '打破网页语言藩篱。LexiLayer 将大语言模型深层语境理解、双语沉浸式对照排版、可自由定制的 AI 专家角色提示词以及私有 API Key 直连能力融入浏览器，带来零摩擦的阅读体验。',
+        '打破网页语言藩篱。语层将大语言模型深层语境理解、双语沉浸式对照排版、可自由定制的 AI 专家角色提示词以及私有 API Key 直连能力融入浏览器，带来零摩擦的阅读体验。',
       ctaPrimary: '前往 GitHub 获取',
       ctaSecondary: '浏览核心特性',
       badges: ['完全免登录', '免费翻译引擎', '自定义 AI 专家', '配置本地保存'],
@@ -376,12 +376,12 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       eyebrow: '核心优势',
       title: '更清晰、更自由、更懂你的专业翻译',
       description:
-        '告别传统机器翻译生硬死板的字词直译与繁杂的账号充值套路。LexiLayer 坚持隐私至上、深度智能和用户自主定制。',
+        '告别传统机器翻译生硬死板的字词直译与繁杂的账号充值套路。语层坚持隐私至上、深度智能和用户自主定制。',
       items: [
         {
           icon: '⚡',
           title: '免登录零门槛',
-          desc: '安装即用，无需注册 VastNext 账号或手机号验证；翻译由你选择的引擎发起。',
+          desc: '安装即用，无需注册瀚海未来账号或手机号验证；翻译由你选择的引擎发起。',
           accent: 'mint',
         },
         {
@@ -411,7 +411,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
         title: '网页全文双语智能对照',
         subtitle: '完美保留排版，原文与译文段落并排沉浸呈现',
         description:
-          '将复杂晦涩的外文长文转化为清晰自然的双语对照阅读视图。LexiLayer 智能保护网页原有结构、代码块、高亮格式与数学公式，在原文下方或侧边无缝呈现流畅译文。',
+          '将复杂晦涩的外文长文转化为清晰自然的双语对照阅读视图。语层智能保护网页原有结构、代码块、高亮格式与数学公式，在原文下方或侧边无缝呈现流畅译文。',
         highlights: [
           '段落级双语并排对照排版',
           '完美保留代码块、Markdown 格式与数学公式',
@@ -419,7 +419,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '一键在双语对照与纯净译文视图间自由切换',
         ],
         screenshotKey: 'notebooklm',
-        screenshotAlt: 'LexiLayer 对 findryai.com NotebookLM 详情页的整页双语翻译实景',
+        screenshotAlt: '语层对 findryai.com NotebookLM 详情页的整页双语翻译实景',
         tagColor: 'electric',
       },
       {
@@ -436,7 +436,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '一键快速复制译文与词条解析结果',
         ],
         screenshotKey: 'selection',
-        screenshotAlt: 'LexiLayer 划选翻译与悬浮卡片交互效果图',
+        screenshotAlt: '语层划选翻译与悬浮卡片交互效果图',
         tagColor: 'coral',
       },
       {
@@ -445,7 +445,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
         title: '可设定 AI 专家角色与自定义 Prompt',
         subtitle: '针对不同学科与场景，定制你的专属翻译官',
         description:
-          '不同领域有截然不同的语言习惯。LexiLayer 内置并支持自定义多领域 AI 专家角色（如计算机科研专家、医学顾问、法律翻译官、轻小说润色师），用专属 System Prompt 注入专业灵魂。',
+          '不同领域有截然不同的语言习惯。语层内置并支持自定义多领域 AI 专家角色（如计算机科研专家、医学顾问、法律翻译官、轻小说润色师），用专属 System Prompt 注入专业灵魂。',
         highlights: [
           '内置技术开发、学术前沿、商务金融与日常阅读等丰富预设',
           '自由新建、编辑并保存无限数量的自定义 AI 专家 Prompt',
@@ -453,7 +453,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '自由微调语气、严谨度、口语化程度与排版风格',
         ],
         screenshotKey: 'experts',
-        screenshotAlt: 'LexiLayer 设置面板中的 AI 专家角色管理界面',
+        screenshotAlt: '语层设置面板中的 AI 专家角色管理界面',
         tagColor: 'lilac',
       },
       {
@@ -470,7 +470,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '本地端点只要提供 OpenAI 兼容 API 即可接入',
         ],
         screenshotKey: 'customAi',
-        screenshotAlt: 'LexiLayer 自定义 AI 服务商与 API Key 配置界面',
+        screenshotAlt: '语层自定义 AI 服务商与 API Key 配置界面',
         tagColor: 'mint',
       },
       {
@@ -487,7 +487,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '超轻量级架构设计，内存占用低且极速响应',
         ],
         screenshotKey: 'popup',
-        screenshotAlt: 'LexiLayer 浏览器工具栏弹窗控制面板界面',
+        screenshotAlt: '语层浏览器工具栏弹窗控制面板界面',
         tagColor: 'electric',
       },
     ],
@@ -495,7 +495,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       eyebrow: '真实应用场景',
       title: '专为高密度知识获取与技术研读打造',
       description:
-        '从追踪全球 AI 最新进展，到研读英文开源技术文档与论文，LexiLayer 为知识探索者提供强大的效率杠杆。',
+        '从追踪全球 AI 最新进展，到研读英文开源技术文档与论文，语层为知识探索者提供强大的效率杠杆。',
       realWorldTitle: '在真实复杂的网络环境中经受验证',
       realWorldDesc:
         '在诸如 findryai.com 科技前沿资讯站、GitHub 开发者社区、arXiv 预印本平台及全球科技博客中，均能获得流畅的双语阅读体验。',
@@ -522,7 +522,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       eyebrow: '开放协作 · 社区共建',
       title: '开源透明，期待与你一同打磨进化',
       description:
-        'LexiLayer 在 GitHub 上持续公开开发。提交 Issue 一起决定产品方向，提交 Pull Request 一起改进产品。',
+        '语层在 GitHub 上持续公开开发。提交 Issue 一起决定产品方向，提交 Pull Request 一起改进产品。',
       cardOpenSource: {
         tag: '完全开源',
         title: '源码可见，一起决定下一步',
@@ -549,17 +549,17 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       eyebrow: '立即开启高效阅读',
       title: '你的翻译工具，由你完全定制！',
       description:
-        '安装 LexiLayer，接入你心仪的 AI 模型，配置专属的专家角色，尽情探索无边界的全球互联网。',
+        '安装语层，接入你心仪的 AI 模型，配置专属的专家角色，尽情探索无边界的全球互联网。',
       primaryBtn: '在 GitHub 获取扩展与源码',
       secondaryBtn: '浏览开放 Issues',
       note: '免费使用 · GitHub 共建 · 无需注册登录',
     },
     footer: {
       brandTagline: 'Useful ideas, built for what comes next.',
-      backToHome: '返回 VastNext 首页',
+      backToHome: '返回 瀚海未来首页',
       privacyPolicy: '隐私政策',
       githubRepo: 'GitHub 仓库',
-      copyright: '© 2026 VastNext. Built in the open on GitHub.',
+      copyright: '© 2026 瀚海未来. Built in the open on GitHub.',
     },
   },
 };

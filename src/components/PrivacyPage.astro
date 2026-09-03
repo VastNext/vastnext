@@ -17,15 +17,15 @@ const languageHref = locale === 'zh' ? '/privacy/' : '/zh/privacy/';
   {locale === 'zh' ? '跳到主要内容' : 'Skip to main content'}
 </a>
 <header class="privacy-header">
-  <a class="privacy-header__brand" href={privacy.homeHref} aria-label={locale === 'zh' ? 'VastNext 首页' : 'VastNext home'}>
-    <BrandMark />
+  <a class="privacy-header__brand" href={privacy.homeHref} aria-label={locale === 'zh' ? `${copy.brandName}首页` : 'VastNext home'}>
+    <BrandMark wordmarkText={copy.brandName} />
   </a>
   <a href={languageHref} hreflang={locale === 'zh' ? 'en' : 'zh-CN'}>{copy.languageSwitch.label}</a>
 </header>
 <main id="main-content" class="privacy-main">
   <article class="privacy-article">
     <header class="privacy-article__header">
-      <p class="eyebrow">VastNext</p>
+      <p class="eyebrow">{copy.brandName}</p>
       <h1>{privacy.title}</h1>
       <p class="privacy-article__updated">{privacy.updatedLabel}: {privacy.updatedDate}</p>
       <p class="privacy-article__introduction">{privacy.introduction}</p>

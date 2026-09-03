@@ -14,8 +14,8 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
 ---
 
 <header class="site-header">
-  <a class="site-header__brand" href={locale === 'zh' ? '/zh/' : '/'} aria-label="VastNext">
-    <BrandMark />
+  <a class="site-header__brand" href={locale === 'zh' ? '/zh/' : '/'} aria-label={copy.brandName}>
+    <BrandMark wordmarkText={copy.brandName} />
   </a>
 
   <nav class="site-header__nav" aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
