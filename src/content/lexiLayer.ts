@@ -347,7 +347,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
     title: 'LexiLayer 翻译 — 免登录、可定制 AI 专家角色的开源网页翻译扩展',
     description:
       'LexiLayer 是一款免登录、零门槛的 AI 浏览器双语翻译扩展。支持上下文 AI 翻译、可定制的 AI 专家角色与提示词，并把选择权交给用户。',
-    tagline: '你的翻译工具，由你完全定制。',
+    tagline: '你的翻译工具，由你完全定制！',
     nav: {
       home: 'VastNext 首页',
       productName: 'LexiLayer 翻译扩展',
@@ -362,7 +362,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
     hero: {
       eyebrow: '新一代 AI 网页双语翻译扩展',
       title: '智能双语翻译',
-      titleAccent: '由你完全定制。',
+      titleAccent: '由你完全定制！',
       tagline: '免注册登录 · 免费翻译 · AI 深度语境 · 专家角色定制 · GitHub 共建',
       description:
         '打破网页语言藩篱。LexiLayer 将大语言模型深层语境理解、双语沉浸式对照排版、可自由定制的 AI 专家角色提示词以及私有 API Key 直连能力融入浏览器，带来零摩擦的阅读体验。',
@@ -547,7 +547,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
     },
     cta: {
       eyebrow: '立即开启高效阅读',
-      title: '你的翻译工具，由你完全定制。',
+      title: '你的翻译工具，由你完全定制！',
       description:
         '安装 LexiLayer，接入你心仪的 AI 模型，配置专属的专家角色，尽情探索无边界的全球互联网。',
       primaryBtn: '在 GitHub 获取扩展与源码',
