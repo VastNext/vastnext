@@ -199,7 +199,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           'Instant toggle between bilingual and single view',
         ],
         screenshotKey: 'hero',
-        screenshotAlt: 'LexiLayer full page bilingual translation view',
+        screenshotAlt: 'LexiLayer full page bilingual translation on real web environments like NotebookLM',
         tagColor: 'electric',
       },
       {
@@ -233,7 +233,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           'Custom prompt engineering for tone, formality, and style',
         ],
         screenshotKey: 'experts',
-        screenshotAlt: 'LexiLayer translating real web pages like NotebookLM on findryai.com',
+        screenshotAlt: 'LexiLayer options page showing AI expert persona configurations',
         tagColor: 'lilac',
       },
       {
@@ -418,7 +418,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '一键在双语对照与纯净译文视图间自由切换',
         ],
         screenshotKey: 'hero',
-        screenshotAlt: 'LexiLayer 全文双语对照翻译效果图',
+        screenshotAlt: 'LexiLayer 在真实复杂网页（如 findryai.com 上 NotebookLM 详情页）中的全屏双语对照翻译实景',
         tagColor: 'electric',
       },
       {
@@ -452,7 +452,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '自由微调语气、严谨度、口语化程度与排版风格',
         ],
         screenshotKey: 'experts',
-        screenshotAlt: 'LexiLayer 真实网页（如 findryai.com 上 NotebookLM 详情页）双语翻译实景',
+        screenshotAlt: 'LexiLayer 设置面板中的 AI 专家角色管理界面',
         tagColor: 'lilac',
       },
       {
