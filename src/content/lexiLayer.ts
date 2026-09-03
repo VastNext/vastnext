@@ -8,6 +8,7 @@ export const lexiLayerFacts = {
   versionTag: 'v0.7.1 · MVP',
   screenshots: {
     hero: '/lexi-layer/hero-translated.png',
+    notebooklm: '/lexi-layer/notebooklm-fullpage.png',
     popup: '/lexi-layer/popup-controls.png',
     customAi: '/lexi-layer/options-custom-ai.png',
     experts: '/lexi-layer/options-experts.png',
@@ -198,8 +199,8 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           'Fast incremental DOM translation for dynamic sites',
           'Instant toggle between bilingual and single view',
         ],
-        screenshotKey: 'hero',
-        screenshotAlt: 'LexiLayer full page bilingual translation on real web environments like NotebookLM',
+        screenshotKey: 'notebooklm',
+        screenshotAlt: 'LexiLayer full-page bilingual translation of the NotebookLM page on findryai.com',
         tagColor: 'electric',
       },
       {
@@ -417,8 +418,8 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
           '针对动态渲染网页的高效增量 DOM 翻译',
           '一键在双语对照与纯净译文视图间自由切换',
         ],
-        screenshotKey: 'hero',
-        screenshotAlt: 'LexiLayer 在真实复杂网页（如 findryai.com 上 NotebookLM 详情页）中的全屏双语对照翻译实景',
+        screenshotKey: 'notebooklm',
+        screenshotAlt: 'LexiLayer 对 findryai.com NotebookLM 详情页的整页双语翻译实景',
         tagColor: 'electric',
       },
       {
