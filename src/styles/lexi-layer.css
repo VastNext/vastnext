@@ -371,7 +371,7 @@
   position: relative;
   background: #0f1530;
   overflow: hidden;
-  aspect-ratio: 16 / 9.5;
+  aspect-ratio: 16 / 15;
 }
 
 .lexi-browser-frame__media img {
