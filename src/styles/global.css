@@ -518,6 +518,11 @@ h3 {
   background: #DCE8FF;
 }
 
+.product--lexi-layer {
+  min-height: 22rem;
+  background: #FFE7DF;
+}
+
 .product__copy {
   position: relative;
   z-index: 2;
@@ -683,6 +688,45 @@ h3 {
 
 .translator-demo__results > div + div {
   border-top: 1px solid var(--color-line);
+}
+
+.lexi-demo {
+  display: grid;
+  width: min(100%, 22rem);
+  gap: 0.6rem;
+  padding: 1.2rem 1.4rem 1.4rem;
+  transform: rotate(-1.5deg);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-small);
+  background: var(--color-paper);
+  box-shadow: 0.6rem 0.6rem 0 rgba(240, 111, 82, 0.28);
+}
+
+.lexi-demo span {
+  justify-self: start;
+  padding: 0.32rem 0.65rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.lexi-demo p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  font-weight: 600;
+}
+
+.lexi-demo__source {
+  color: #3f4974;
+}
+
+.lexi-demo__output {
+  color: #246bfd;
 }
 
 .open-source {
@@ -1315,6 +1359,10 @@ h3 {
 
   .translator-demo {
     grid-template-columns: 1fr;
+    transform: rotate(0);
+  }
+
+  .lexi-demo {
     transform: rotate(0);
   }
 

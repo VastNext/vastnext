@@ -62,6 +62,10 @@ describe('站点内容模型', () => {
         name: 'Password Generator',
         url: 'https://pg.vastnext.com',
       },
+      'lexi-layer': {
+        name: 'LexiLayer',
+        url: '/lexi-layer/',
+      },
       'vast-translator': {
         name: 'Vast Translator',
         url: 'https://tr.vastnext.com',
@@ -148,6 +152,7 @@ describe('站点内容模型', () => {
       [en.products['findry-ai'].description, zh.products['findry-ai'].description, 'products.findry-ai.description'],
       [en.products['password-generator'].description, zh.products['password-generator'].description, 'products.password-generator.description'],
       [en.products['vast-translator'].description, zh.products['vast-translator'].description, 'products.vast-translator.description'],
+      [en.products['lexi-layer'].description, zh.products['lexi-layer'].description, 'products.lexi-layer.description'],
       [en.openSource.eyebrow, zh.openSource.eyebrow, 'openSource.eyebrow'],
       [en.openSource.title, zh.openSource.title, 'openSource.title'],
       [en.openSource.description, zh.openSource.description, 'openSource.description'],

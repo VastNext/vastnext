@@ -22,6 +22,10 @@ export const productFacts = {
     name: 'Password Generator',
     url: 'https://pg.vastnext.com',
   },
+  'lexi-layer': {
+    name: 'LexiLayer',
+    url: '/lexi-layer/',
+  },
   'vast-translator': {
     name: 'Vast Translator',
     url: 'https://tr.vastnext.com',
@@ -60,6 +64,7 @@ export interface OpenSourceProject {
 }
 
 interface ProductCopy {
+  name?: string;
   description: string;
 }
 
@@ -227,6 +232,10 @@ export const siteCopy = {
       'password-generator': {
         description: 'Generate random passwords, memorable passwords, and PINs.',
       },
+      'lexi-layer': {
+        description:
+          'Free, open-source browser translation with deep AI context and custom expert personas.',
+      },
       'vast-translator': {
         description: 'Compare results from multiple translation engines side by side.',
       },
@@ -341,6 +350,10 @@ export const siteCopy = {
       },
       'password-generator': {
         description: '生成随机密码、易记密码和 PIN。',
+      },
+      'lexi-layer': {
+        name: '语层翻译',
+        description: '免登录、零门槛的 AI 浏览器双语翻译扩展，支持专家角色与提示词定制。',
       },
       'vast-translator': {
         description: '并排比较多个翻译引擎的结果。',

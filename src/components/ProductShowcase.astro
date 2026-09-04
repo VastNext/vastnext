@@ -10,6 +10,18 @@ interface Props {
 const { locale } = Astro.props;
 const copy = siteCopy[locale];
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
+
+function isInternalProduct(product: (typeof products)[number]): boolean {
+  return product.url.startsWith('/');
+}
+
+function productHref(product: (typeof products)[number]): string {
+  return locale === 'zh' ? `/zh${product.url}` : product.url;
+}
+
+function productName(product: (typeof products)[number]): string {
+  return copy.products[product.id].name ?? product.name;
+}
 ---
 
 <section id="products" class="products" aria-labelledby="products-title" data-reveal>
@@ -29,13 +41,17 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
         >
           <div class="product__copy">
             <p class="product__number">0{index + 1}</p>
-            <h3>{product.name}</h3>
+            <h3>{productName(product)}</h3>
             <p>{copy.products[product.id].description}</p>
-            <a href={product.url} target="_blank" rel="noreferrer">
-              {product.name}
-              <ExternalIcon />
-              <span class="sr-only">{newWindowLabel}</span>
-            </a>
+            {isInternalProduct(product) ? (
+              <a href={productHref(product)}>{productName(product)}</a>
+            ) : (
+              <a href={product.url} target="_blank" rel="noreferrer">
+                {product.name}
+                <ExternalIcon />
+                <span class="sr-only">{newWindowLabel}</span>
+              </a>
+            )}
           </div>
 
           <div class="product__demo" aria-hidden="true">
@@ -59,6 +75,13 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
                 <div class="password-demo__strength">
                   <span></span><span></span><span></span><span></span>
                 </div>
+              </div>
+            )}
+            {product.id === 'lexi-layer' && (
+              <div class="lexi-demo">
+                <span>语层 · LexiLayer</span>
+                <p class="lexi-demo__source">Knowledge knows no borders.</p>
+                <p class="lexi-demo__output">知识无国界，阅读无藩篱。</p>
               </div>
             )}
             {product.id === 'vast-translator' && (

@@ -48,7 +48,9 @@ function expectEveryExternalLink(html: string, href: string): void {
 
 function expectEveryExpectedExternalLink(html: string): void {
   for (const href of [
-    ...Object.values(productFacts).map((product) => product.url),
+    ...Object.values(productFacts)
+      .map((product) => product.url)
+      .filter((url) => /^https?:\/\//.test(url)),
     ...Object.values(openSourceProjectFacts).map((project) => project.url),
     contactFacts.githubUrl,
   ]) {
@@ -122,14 +124,15 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
-    ['en', () => englishPage, siteCopy.en.languageSwitch.href],
-    ['zh', () => chinesePage, siteCopy.zh.languageSwitch.href],
-  ])('%s 页面包含所有产品、开源项目、联系入口及语言切换', (_locale, getHtml, languageHref) => {
+    ['en', () => englishPage, siteCopy.en.languageSwitch.href, '/lexi-layer/'],
+    ['zh', () => chinesePage, siteCopy.zh.languageSwitch.href, '/zh/lexi-layer/'],
+  ])('%s 页面包含所有产品、开源项目、联系入口、语层翻译入口及语言切换', (_locale, getHtml, languageHref, lexiLayerHref) => {
     const html = getHtml();
 
     expectEveryExpectedExternalLink(html);
     expectLink(html, `mailto:${contactFacts.email}`);
     expectLink(html, languageHref);
+    expectLink(html, lexiLayerHref);
   });
 
   it.each([
@@ -234,8 +237,9 @@ describe('品牌页构建产物', () => {
     expectLink(html, homeHref);
   });
 
-  it('构建产物包含 Cloudflare 安全头、robots 和 sitemap', () => {
+  it('构建产物包含 Cloudflare 安全头、robots、sitemap 和无斜杠重定向', () => {
     const headers = readFileSync(resolve(projectRoot, 'dist/_headers'), 'utf8');
+    const redirects = readFileSync(resolve(projectRoot, 'dist/_redirects'), 'utf8');
     const fontHeaders = headers.match(/\/fonts\/\*[\s\S]*?(?=\n\/|$)/)?.[0] ?? '';
     const svgHeaders = headers.match(/\/\*\.svg[\s\S]*?(?=\n\/|$)/)?.[0] ?? '';
 
@@ -247,6 +251,14 @@ describe('品牌页构建产物', () => {
     expect(fontHeaders).toContain('Cache-Control: public, max-age=0, must-revalidate');
     expect(fontHeaders).not.toContain('max-age=604800');
     expect(svgHeaders).toContain('Cache-Control: public, max-age=0, must-revalidate');
+    for (const [from, to] of [
+      ['/privacy', '/privacy/'],
+      ['/lexi-layer', '/lexi-layer/'],
+      ['/zh/privacy', '/zh/privacy/'],
+      ['/zh/lexi-layer', '/zh/lexi-layer/'],
+    ] as const) {
+      expect(redirects).toContain(`${from} ${to} 308`);
+    }
     expect(existsSync(resolve(projectRoot, 'dist/robots.txt'))).toBe(true);
     expect(existsSync(resolve(projectRoot, 'dist/sitemap-index.xml'))).toBe(true);
   });
