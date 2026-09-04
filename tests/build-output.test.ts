@@ -144,9 +144,9 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
-    ['en', () => englishPage],
-    ['zh', () => chinesePage],
-  ])('%s 页面为两个开源项目输出独立展台', (_locale, getHtml) => {
+    ['en', () => englishPage, '/glance-md/'],
+    ['zh', () => chinesePage, '/zh/glance-md/'],
+  ])('%s 页面为两个开源项目输出独立展台且站内链接指向对应语言', (_locale, getHtml, glanceMdHref) => {
     const html = getHtml();
 
     for (const [projectId, project] of Object.entries(openSourceProjectFacts)) {
@@ -160,6 +160,11 @@ describe('品牌页构建产物', () => {
         expect(article![0]).toContain(fact);
       }
     }
+
+    const glanceMdArticle = html.match(
+      /<article(?=[^>]*data-project=["']glancemd["'])[^>]*>[\s\S]*?<\/article>/,
+    );
+    expect(glanceMdArticle![0]).toContain(`href="${glanceMdHref}"`);
   });
 
   it('英文未来方向中每个共享事实只渲染一个可见标题', () => {
