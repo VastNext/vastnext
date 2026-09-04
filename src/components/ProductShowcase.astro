@@ -1,6 +1,6 @@
 ---
 import ExternalIcon from './ExternalIcon.astro';
-import type { Locale } from '../content/site';
+import type { Locale, SiteCopy } from '../content/site';
 import { products, siteCopy } from '../content/site';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const copy = siteCopy[locale];
+const copy: SiteCopy = siteCopy[locale];
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
 
 function isInternalProduct(product: (typeof products)[number]): boolean {
