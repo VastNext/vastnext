@@ -281,6 +281,7 @@ describe('LexiLayer 产品页构建产物', () => {
 
     for (const html of [englishLexiLayerPage, chineseLexiLayerPage]) {
       expect(html).toContain(lexiLayerFacts.githubUrl);
+      expect(html).toContain(lexiLayerFacts.releasesUrl);
       expect(html).toContain(lexiLayerFacts.issuesUrl);
       expect(html).toContain(lexiLayerFacts.pullsUrl);
       expect(html).toContain(lexiLayerFacts.demoSiteUrl);

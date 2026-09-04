@@ -2,6 +2,7 @@ import type { Locale } from './site';
 
 export const lexiLayerFacts = {
   githubUrl: 'https://github.com/VastNext/LexiLayer-Translator',
+  releasesUrl: 'https://github.com/VastNext/LexiLayer-Translator/releases/latest',
   issuesUrl: 'https://github.com/VastNext/LexiLayer-Translator/issues',
   pullsUrl: 'https://github.com/VastNext/LexiLayer-Translator/pulls',
   demoSiteUrl: 'https://findryai.com',
@@ -39,6 +40,7 @@ export interface LexiLayerCopy {
     experts: string;
     customization: string;
     community: string;
+    download: string;
     github: string;
     languageSwitchLabel: string;
     languageSwitchHref: string;
@@ -136,6 +138,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       experts: 'AI Experts',
       customization: 'Custom Models',
       community: 'Open Source',
+      download: 'Download Release',
       github: 'GitHub',
       languageSwitchLabel: '中文',
       languageSwitchHref: '/zh/lexi-layer/',
@@ -355,6 +358,7 @@ export const lexiLayerCopy: Record<Locale, LexiLayerCopy> = {
       experts: 'AI 专家角色',
       customization: '模型与定制',
       community: '开源协作',
+      download: '下载最新版本',
       github: 'GitHub',
       languageSwitchLabel: 'English',
       languageSwitchHref: '/lexi-layer/',

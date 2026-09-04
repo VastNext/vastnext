@@ -42,6 +42,16 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
         <a href="#customization">{copy.nav.customization}</a>
         <a href="#community">{copy.nav.community}</a>
         <a
+          href={lexiLayerFacts.releasesUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="lexi-header__nav-download"
+        >
+          {copy.nav.download}
+          <ExternalIcon />
+          <span class="sr-only">{newWindowText}</span>
+        </a>
+        <a
           href={lexiLayerFacts.githubUrl}
           target="_blank"
           rel="noreferrer"
@@ -68,8 +78,11 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
           <a href="#experts">{copy.nav.experts}</a>
           <a href="#customization">{copy.nav.customization}</a>
           <a href="#community">{copy.nav.community}</a>
-           <a href={lexiLayerFacts.githubUrl} target="_blank" rel="noreferrer">
-             {copy.nav.github} <ExternalIcon /> <span class="sr-only">{newWindowText}</span>
+          <a href={lexiLayerFacts.releasesUrl} target="_blank" rel="noreferrer">
+            {copy.nav.download} <ExternalIcon /> <span class="sr-only">{newWindowText}</span>
+          </a>
+          <a href={lexiLayerFacts.githubUrl} target="_blank" rel="noreferrer">
+            {copy.nav.github} <ExternalIcon /> <span class="sr-only">{newWindowText}</span>
           </a>
           <a href={copy.nav.languageSwitchHref} hreflang={isZh ? 'en' : 'zh-CN'}>
             {copy.nav.languageSwitchLabel}

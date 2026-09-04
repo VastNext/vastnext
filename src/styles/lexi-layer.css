@@ -96,6 +96,23 @@
   color: var(--ll-electric);
 }
 
+.lexi-header__nav-download {
+  padding: 0.45rem 1rem;
+  border: 1.5px solid var(--ll-electric);
+  border-radius: 999px;
+  background: var(--ll-electric);
+  color: var(--ll-paper) !important;
+  font-weight: 700;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.lexi-header__nav-download:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 0.25rem 0.25rem 0 var(--ll-coral);
+  background: #1d57d4;
+  color: var(--ll-paper) !important;
+}
+
 .lexi-header__nav-github {
   padding: 0.45rem 0.95rem;
   border: 1.5px solid var(--ll-ink);
