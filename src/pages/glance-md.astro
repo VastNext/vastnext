@@ -1,0 +1,17 @@
+---
+import GlanceMdPage from '../components/GlanceMdPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { glanceMdCopy } from '../content/glanceMd';
+
+const copy = glanceMdCopy.en;
+---
+
+<BaseLayout
+  locale="en"
+  title={`${copy.title} — VastNext`}
+  description={copy.description}
+  canonicalPath="/glance-md/"
+  alternatePath="/zh/glance-md/"
+>
+  <GlanceMdPage locale="en" />
+</BaseLayout>

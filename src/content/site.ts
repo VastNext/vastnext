@@ -102,6 +102,7 @@ export interface SiteCopy {
   };
   nav: {
     lexiLayer: string;
+    glanceMd: string;
     products: string;
     openSource: string;
     about: string;
@@ -161,7 +162,7 @@ export const products: Product[] = Object.entries(productFacts).map(([id, produc
 export const openSourceProjectFacts = {
   glancemd: {
     name: 'GlanceMD',
-    url: 'https://github.com/VastNext/GlanceMD',
+    url: '/glance-md/',
     facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
   },
   'opencode-rapid-agent-team': {
@@ -208,6 +209,7 @@ export const siteCopy = {
     },
     nav: {
       lexiLayer: 'LexiLayer',
+      glanceMd: 'GlanceMD',
       products: 'Products',
       openSource: 'Open Source',
       about: 'About',
@@ -252,7 +254,7 @@ export const siteCopy = {
           typeLabel: 'Native desktop tool',
           description:
             'A lightweight cross-platform Markdown viewer and editor with fast startup, split editing, tabs, outlines, search, and native system packages.',
-          cta: 'Explore GlanceMD on GitHub',
+          cta: 'Explore GlanceMD',
         },
         'opencode-rapid-agent-team': {
           typeLabel: 'OpenCode agent team',
@@ -329,6 +331,7 @@ export const siteCopy = {
     },
     nav: {
       lexiLayer: '语层翻译',
+      glanceMd: 'GlanceMD',
       products: '产品',
       openSource: '开源',
       about: '关于',
@@ -371,7 +374,7 @@ export const siteCopy = {
           typeLabel: '跨平台桌面工具',
           description:
             '轻量跨平台 Markdown 查看器与编辑器，提供快速启动、分屏编辑、多标签、目录、查找和系统原生安装包。',
-          cta: '在 GitHub 探索 GlanceMD',
+          cta: '探索 GlanceMD',
         },
         'opencode-rapid-agent-team': {
           typeLabel: 'OpenCode Agent Team',

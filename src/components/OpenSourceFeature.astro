@@ -22,6 +22,7 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
   <div class="open-source__projects">
     {openSourceProjects.map((project) => {
       const projectCopy = copy.projects[project.id];
+      const isExternalLink = /^https?:\/\//.test(project.url);
 
       return (
         <article
@@ -39,11 +40,15 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
             >
               {project.facts.map((fact) => <li>{fact}</li>)}
             </ul>
-            <a href={project.url} target="_blank" rel="noreferrer">
-              {projectCopy.cta}
-              <ExternalIcon />
-              <span class="sr-only">{newWindowLabel}</span>
-            </a>
+            {isExternalLink ? (
+              <a href={project.url} target="_blank" rel="noreferrer">
+                {projectCopy.cta}
+                <ExternalIcon />
+                <span class="sr-only">{newWindowLabel}</span>
+              </a>
+            ) : (
+              <a href={project.url}>{projectCopy.cta}</a>
+            )}
           </div>
 
           {project.id === 'glancemd' ? (

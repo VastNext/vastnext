@@ -11,6 +11,7 @@ import {
   siteFacts,
 } from '../src/content/site';
 import { lexiLayerFacts, lexiLayerCopy } from '../src/content/lexiLayer';
+import { glanceMdFacts, glanceMdCopy } from '../src/content/glanceMd';
 import { buildSite, readBuiltPage } from './helpers/build';
 
 let englishPage: string;
@@ -19,6 +20,8 @@ let englishPrivacyPage: string;
 let chinesePrivacyPage: string;
 let englishLexiLayerPage: string;
 let chineseLexiLayerPage: string;
+let englishGlanceMdPage: string;
+let chineseGlanceMdPage: string;
 
 const projectRoot = resolve(import.meta.dirname, '..');
 
@@ -51,7 +54,9 @@ function expectEveryExpectedExternalLink(html: string): void {
     ...Object.values(productFacts)
       .map((product) => product.url)
       .filter((url) => /^https?:\/\//.test(url)),
-    ...Object.values(openSourceProjectFacts).map((project) => project.url),
+    ...Object.values(openSourceProjectFacts)
+      .map((project) => project.url)
+      .filter((url) => /^https?:\/\//.test(url)),
     contactFacts.githubUrl,
   ]) {
     expectEveryExternalLink(html, href);
@@ -101,6 +106,8 @@ beforeAll(() => {
   chinesePrivacyPage = readBuiltPage('zh/privacy/index.html');
   englishLexiLayerPage = readBuiltPage('lexi-layer/index.html');
   chineseLexiLayerPage = readBuiltPage('zh/lexi-layer/index.html');
+  englishGlanceMdPage = readBuiltPage('glance-md/index.html');
+  chineseGlanceMdPage = readBuiltPage('zh/glance-md/index.html');
 }, 90_000);
 
 describe('品牌页构建产物', () => {
@@ -124,15 +131,16 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
-    ['en', () => englishPage, siteCopy.en.languageSwitch.href, '/lexi-layer/'],
-    ['zh', () => chinesePage, siteCopy.zh.languageSwitch.href, '/zh/lexi-layer/'],
-  ])('%s 页面包含所有产品、开源项目、联系入口、语层翻译入口及语言切换', (_locale, getHtml, languageHref, lexiLayerHref) => {
+    ['en', () => englishPage, siteCopy.en.languageSwitch.href, '/lexi-layer/', '/glance-md/'],
+    ['zh', () => chinesePage, siteCopy.zh.languageSwitch.href, '/zh/lexi-layer/', '/zh/glance-md/'],
+  ])('%s 页面包含所有产品、开源项目、联系入口、语层翻译入口及语言切换', (_locale, getHtml, languageHref, lexiLayerHref, glanceMdHref) => {
     const html = getHtml();
 
     expectEveryExpectedExternalLink(html);
     expectLink(html, `mailto:${contactFacts.email}`);
     expectLink(html, languageHref);
     expectLink(html, lexiLayerHref);
+    expectLink(html, glanceMdHref);
   });
 
   it.each([
@@ -255,8 +263,10 @@ describe('品牌页构建产物', () => {
     for (const [from, to] of [
       ['/privacy', '/privacy/'],
       ['/lexi-layer', '/lexi-layer/'],
+      ['/glance-md', '/glance-md/'],
       ['/zh/privacy', '/zh/privacy/'],
       ['/zh/lexi-layer', '/zh/lexi-layer/'],
+      ['/zh/glance-md', '/zh/glance-md/'],
     ] as const) {
       expect(redirects).toContain(`${from} ${to} 308`);
     }
@@ -295,5 +305,33 @@ describe('LexiLayer 产品页构建产物', () => {
 
     expect(englishLexiLayerPage).toContain(lexiLayerCopy.en.hero.title);
     expect(chineseLexiLayerPage).toContain(lexiLayerCopy.zh.hero.title);
+  });
+});
+
+describe('GlanceMD 产品页构建产物', () => {
+  it('输出双语元数据、核心入口、最新版下载直链和全部使用截图', () => {
+    const enUrl = `${siteFacts.siteUrl}/glance-md/`;
+    const zhUrl = `${siteFacts.siteUrl}/zh/glance-md/`;
+
+    expectLocalizedMetadata(englishGlanceMdPage, 'en', enUrl, enUrl, zhUrl);
+    expectLocalizedMetadata(chineseGlanceMdPage, 'zh-CN', zhUrl, enUrl, zhUrl);
+
+    for (const html of [englishGlanceMdPage, chineseGlanceMdPage]) {
+      expect(html).toContain(glanceMdFacts.githubUrl);
+      expect(html).toContain(glanceMdFacts.releasesUrl);
+      expect(html).toContain(glanceMdFacts.issuesUrl);
+      expect(html).toContain(glanceMdFacts.pullsUrl);
+      for (const download of Object.values(glanceMdFacts.downloadFiles)) {
+        expectEveryExternalLink(html, download.url);
+      }
+      for (const screenshot of Object.values(glanceMdFacts.screenshots)) {
+        expect(html).toContain(`src="${screenshot}"`);
+        expect(existsSync(resolve(projectRoot, 'public', screenshot.slice(1)))).toBe(true);
+      }
+      expect(html).not.toMatch(/sk-[A-Za-z0-9_-]{20,}/);
+    }
+
+    expect(englishGlanceMdPage).toContain(glanceMdCopy.en.hero.title);
+    expect(chineseGlanceMdPage).toContain(glanceMdCopy.zh.hero.title);
   });
 });

@@ -77,7 +77,7 @@ describe('站点内容模型', () => {
     expect(openSourceProjectFacts).toEqual({
       glancemd: {
         name: 'GlanceMD',
-        url: 'https://github.com/VastNext/GlanceMD',
+        url: '/glance-md/',
         facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
       },
       'opencode-rapid-agent-team': {

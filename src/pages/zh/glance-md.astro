@@ -1,0 +1,17 @@
+---
+import GlanceMdPage from '../../components/GlanceMdPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { glanceMdCopy } from '../../content/glanceMd';
+
+const copy = glanceMdCopy.zh;
+---
+
+<BaseLayout
+  locale="zh"
+  title={`${copy.title} — 瀚海未来`}
+  description={copy.description}
+  canonicalPath="/zh/glance-md/"
+  alternatePath="/glance-md/"
+>
+  <GlanceMdPage locale="zh" />
+</BaseLayout>

@@ -1,0 +1,463 @@
+---
+import BrandMark from './BrandMark.astro';
+import ExternalIcon from './ExternalIcon.astro';
+import type { Locale } from '../content/site';
+import { siteCopy } from '../content/site';
+import { glanceMdCopy, glanceMdFacts } from '../content/glanceMd';
+import '../styles/glance-md.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = glanceMdCopy[locale];
+const facts = glanceMdFacts;
+const isZh = locale === 'zh';
+const brandName = siteCopy[locale].brandName;
+const homeHref = isZh ? '/zh/' : '/';
+const privacyHref = isZh ? '/zh/privacy/' : '/privacy/';
+const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new window)';
+---
+
+<div class="gm-page">
+  <a class="skip-link" href="#main-content">
+    {isZh ? '跳到主要内容' : 'Skip to main content'}
+  </a>
+
+  <!-- Header -->
+  <header class="gm-header">
+    <div class="gm-container gm-header__inner">
+      <div class="gm-header__branding">
+        <a href={homeHref} class="gm-header__brand-link" aria-label={isZh ? `返回${brandName}首页` : 'Back to VastNext Home'}>
+          <BrandMark wordmarkText={brandName} />
+        </a>
+        <span class="gm-header__product-badge">
+          <img src={facts.screenshots.icon} alt="" width="22" height="22" />
+          {copy.nav.productName}
+        </span>
+      </div>
+
+      <nav class="gm-header__nav" aria-label={isZh ? '主导航' : 'Primary Navigation'}>
+        <a href="#features">{copy.nav.features}</a>
+        <a href="#marco">{copy.nav.elegant}</a>
+        <a href="#community">{copy.nav.community}</a>
+        <a href="#download" class="gm-header__nav-download">{copy.nav.download}</a>
+        <a
+          href={facts.githubUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="gm-header__nav-github"
+        >
+          {copy.nav.github}
+          <ExternalIcon />
+          <span class="sr-only">{newWindowText}</span>
+        </a>
+        <a
+          href={copy.nav.languageSwitchHref}
+          hreflang={isZh ? 'en' : 'zh-CN'}
+          class="gm-header__lang-toggle"
+        >
+          {copy.nav.languageSwitchLabel}
+        </a>
+      </nav>
+
+      <!-- Mobile Menu -->
+      <details class="gm-header__mobile-menu">
+        <summary>{isZh ? '菜单' : 'Menu'}</summary>
+        <nav aria-label={isZh ? '移动端导航' : 'Mobile Navigation'}>
+          <a href="#features">{copy.nav.features}</a>
+          <a href="#marco">{copy.nav.elegant}</a>
+          <a href="#community">{copy.nav.community}</a>
+          <a href="#download">{copy.nav.download}</a>
+          <a href={facts.githubUrl} target="_blank" rel="noreferrer">
+            {copy.nav.github} <ExternalIcon /> <span class="sr-only">{newWindowText}</span>
+          </a>
+          <a href={copy.nav.languageSwitchHref} hreflang={isZh ? 'en' : 'zh-CN'}>
+            {copy.nav.languageSwitchLabel}
+          </a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="gm-hero">
+      <div class="gm-container">
+        <div class="gm-hero__content">
+          <div class="gm-hero__pill">
+            <span>✨ {copy.hero.eyebrow}</span>
+          </div>
+          <h1 class="gm-hero__title">
+            {copy.hero.title} <span class="gm-hero__title-accent">{copy.hero.titleAccent}</span>
+          </h1>
+          <p class="gm-hero__tagline">{copy.hero.tagline}</p>
+          <p class="gm-hero__description">{copy.hero.description}</p>
+
+          <div class="gm-hero__actions">
+            <a href="#download" class="gm-btn gm-btn--primary">
+              <span>{copy.hero.ctaPrimary}</span>
+            </a>
+            <a
+              href={facts.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="gm-btn gm-btn--secondary"
+            >
+              <span>{copy.hero.ctaSecondary}</span>
+              <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </a>
+          </div>
+
+          <div class="gm-hero__badges">
+            {copy.hero.badges.map((badge) => (
+              <span class="gm-badge">{badge}</span>
+            ))}
+          </div>
+        </div>
+
+        <!-- Hero App Window Frame -->
+        <div class="gm-hero__showcase">
+          <div class="gm-app-frame">
+            <div class="gm-app-frame__bar">
+              <div class="gm-app-frame__dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="gm-app-frame__title">
+                <img src={facts.screenshots.icon} alt="" />
+                {copy.hero.windowTitle}
+              </div>
+            </div>
+            <div class="gm-app-frame__media">
+              <img
+                src={facts.screenshots.light}
+                alt={isZh
+                  ? 'GlanceMD 浅色主题窗口实景：渐变标题、通栏排版与大纲侧栏'
+                  : 'GlanceMD light theme window with gradient headings, full-width layout, and outline sidebar'}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <div class="gm-app-frame__caption">
+              <span class="gm-live-indicator">{copy.hero.captionLabel}</span>
+              <span>{copy.hero.captionNote}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="gm-stats-section">
+      <div class="gm-container">
+        <div class="gm-stats-grid">
+          {copy.stats.map((stat) => (
+            <div class="gm-stat">
+              <span class="gm-stat__value">{stat.value}</span>
+              <span class="gm-stat__label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Pillars Section -->
+    <section class="gm-pillars-section">
+      <div class="gm-container">
+        <div class="gm-section-header">
+          <p class="gm-eyebrow">{copy.keyPillars.eyebrow}</p>
+          <h2>{copy.keyPillars.title}</h2>
+          <p>{copy.keyPillars.description}</p>
+        </div>
+
+        <div class="gm-pillars-grid">
+          {copy.keyPillars.items.map((item) => (
+            <div class={`gm-pillar-card gm-pillar-card--${item.accent}`}>
+              <span class="gm-pillar-card__icon">{item.icon}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Deep-Dive Section -->
+    <section id="features" class="gm-features-section">
+      <div class="gm-container">
+        {copy.features.map((feature, idx) => {
+          const isReversed = idx % 2 === 1;
+          const sectionId = feature.id === 'marco-typography' ? 'marco' : feature.id;
+          return (
+            <article
+              id={sectionId}
+              class={`gm-feature-block ${isReversed ? 'gm-feature-block--reverse' : ''}`}
+            >
+              <div class="gm-feature-block__text">
+                <span class={`gm-feature-badge gm-feature-badge--${feature.tagColor}`}>
+                  {feature.badge}
+                </span>
+                <h3>{feature.title}</h3>
+                <p class="gm-feature-block__subtitle">{feature.subtitle}</p>
+                <p class="gm-feature-block__desc">{feature.description}</p>
+                <ul class="gm-feature-list">
+                  {feature.highlights.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="gm-feature-block__media">
+                <div class="gm-feature-window">
+                  <div class="gm-feature-window__top">
+                    <div class="gm-feature-window__dots">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <span>{facts.versionTag}</span>
+                  </div>
+
+                  {feature.visual === 'screenshot-dark' && (
+                    <div class="gm-feature-window__img-wrap">
+                      <img
+                        src={facts.screenshots.dark}
+                        alt={feature.screenshotAlt}
+                        decoding="async"
+                      />
+                    </div>
+                  )}
+
+                  {feature.visual === 'screenshot-detail' && (
+                    <div class="gm-feature-window__img-wrap gm-feature-window__img-wrap--detail">
+                      <img
+                        src={facts.screenshots.detail}
+                        alt={feature.screenshotAlt}
+                        decoding="async"
+                      />
+                    </div>
+                  )}
+
+                  {feature.visual === 'shortcuts' && (
+                    <div class="gm-shortcuts-panel">
+                      {copy.shortcuts.map((shortcut) => (
+                        <div class="gm-shortcut-row">
+                          <span class="gm-shortcut-row__action">{shortcut.action}</span>
+                          <span class="gm-kbd-group">
+                            {shortcut.keys.map((key) => (
+                              <kbd class="gm-kbd">{key}</kbd>
+                            ))}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {feature.visual === 'stack' && (
+                    <div class="gm-stack-panel">
+                      {copy.stack.layers.map((layer) => (
+                        <div class="gm-stack-layer">
+                          <span class="gm-stack-layer__name">{layer.name}</span>
+                          <span class="gm-stack-layer__desc">{layer.desc}</span>
+                        </div>
+                      ))}
+                      <div class="gm-stack-excluded">
+                        <span class="gm-stack-excluded__label">{copy.stack.excludedLabel}</span>
+                        {copy.stack.excluded.map((item) => (
+                          <span>{item}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section id="download" class="gm-downloads-section">
+      <div class="gm-container">
+        <div class="gm-section-header">
+          <p class="gm-eyebrow">{copy.downloads.eyebrow}</p>
+          <h2>{copy.downloads.title}</h2>
+          <p>{copy.downloads.description}</p>
+        </div>
+
+        <div class="gm-downloads-grid">
+          {copy.downloads.cards.map((card) => {
+            const file = facts.downloadFiles[card.key];
+            return (
+              <div class="gm-download-card">
+                <span class="gm-download-card__platform">{card.platform}</span>
+                <span class="gm-download-card__note">{card.note}</span>
+                <span class="gm-download-card__file">{file.file}</span>
+                <span class="gm-download-card__size">{file.size}</span>
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="gm-download-card__btn"
+                >
+                  {copy.downloads.downloadLabel}
+                  <ExternalIcon />
+                  <span class="sr-only">{newWindowText}</span>
+                </a>
+              </div>
+            );
+          })}
+        </div>
+
+        <div class="gm-downloads-meta">
+          <p class="gm-downloads-meta__note">{copy.downloads.macosNote}</p>
+          <a
+            href={facts.releasesUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="gm-btn gm-btn--secondary"
+          >
+            <span>{copy.downloads.allReleasesLabel}</span>
+            <ExternalIcon />
+            <span class="sr-only">{newWindowText}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Source & Community Section -->
+    <section id="community" class="gm-community-section">
+      <div class="gm-container">
+        <div class="gm-section-header">
+          <p class="gm-eyebrow">{copy.community.eyebrow}</p>
+          <h2>{copy.community.title}</h2>
+          <p>{copy.community.description}</p>
+        </div>
+
+        <div class="gm-community-grid">
+          <!-- Card 1: Open Source -->
+          <a
+            href={facts.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="gm-community-card gm-community-card--oss"
+          >
+            <span class="gm-community-card__tag">{copy.community.cardOpenSource.tag}</span>
+            <h3>{copy.community.cardOpenSource.title}</h3>
+            <p>{copy.community.cardOpenSource.desc}</p>
+            <div class="gm-community-card__meta">
+              {copy.community.cardOpenSource.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="gm-community-card__link">
+              {copy.community.cardOpenSource.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+
+          <!-- Card 2: Issues -->
+          <a
+            href={facts.issuesUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="gm-community-card gm-community-card--issues"
+          >
+            <span class="gm-community-card__tag">{copy.community.cardIssues.tag}</span>
+            <h3>{copy.community.cardIssues.title}</h3>
+            <p>{copy.community.cardIssues.desc}</p>
+            <div class="gm-community-card__meta">
+              {copy.community.cardIssues.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="gm-community-card__link">
+              {copy.community.cardIssues.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+
+          <!-- Card 3: Pull Requests -->
+          <a
+            href={facts.pullsUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="gm-community-card gm-community-card--pulls"
+          >
+            <span class="gm-community-card__tag">{copy.community.cardPulls.tag}</span>
+            <h3>{copy.community.cardPulls.title}</h3>
+            <p>{copy.community.cardPulls.desc}</p>
+            <div class="gm-community-card__meta">
+              {copy.community.cardPulls.meta.map((m) => (
+                <span>{m}</span>
+              ))}
+            </div>
+            <span class="gm-community-card__link">
+              {copy.community.cardPulls.linkText} <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA Banner -->
+    <section class="gm-cta-section">
+      <div class="gm-container">
+        <div class="gm-cta-box">
+          <p class="gm-eyebrow">{copy.cta.eyebrow}</p>
+          <h2>{copy.cta.title}</h2>
+          <p>{copy.cta.description}</p>
+          <div class="gm-cta-box__actions">
+            <a href="#download" class="gm-btn gm-btn--primary">
+              <span>{copy.cta.primaryBtn}</span>
+            </a>
+            <a
+              href={facts.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              class="gm-btn gm-btn--secondary"
+            >
+              <span>{copy.cta.secondaryBtn}</span>
+              <ExternalIcon />
+              <span class="sr-only">{newWindowText}</span>
+            </a>
+          </div>
+          <p class="gm-cta-box__note">{copy.cta.note}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="gm-footer">
+    <div class="gm-container">
+      <div class="gm-footer__inner">
+        <div class="gm-footer__brand">
+          <BrandMark wordmarkText={brandName} />
+          <p>{copy.footer.brandTagline}</p>
+        </div>
+        <nav class="gm-footer__links" aria-label={isZh ? '页脚导航' : 'Footer Navigation'}>
+          <a href={homeHref}>{copy.footer.backToHome}</a>
+          <a href={facts.githubUrl} target="_blank" rel="noreferrer">
+            {copy.footer.githubRepo} <ExternalIcon />
+            <span class="sr-only">{newWindowText}</span>
+          </a>
+          <a href={privacyHref}>{copy.footer.privacyPolicy}</a>
+          <a href={copy.nav.languageSwitchHref} hreflang={isZh ? 'en' : 'zh-CN'}>
+            {copy.nav.languageSwitchLabel}
+          </a>
+        </nav>
+      </div>
+      <div class="gm-footer__bottom">
+        <span>{copy.footer.copyright}</span>
+        <span>{facts.versionTag}</span>
+      </div>
+    </div>
+  </footer>
+</div>
