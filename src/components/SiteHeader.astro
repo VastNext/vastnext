@@ -19,6 +19,9 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
   </a>
 
   <nav class="site-header__nav" aria-label={locale === 'zh' ? '主导航' : 'Primary navigation'}>
+    <a href={locale === 'zh' ? '/zh/lexi-layer/' : '/lexi-layer/'} class="site-header__nav-featured">
+      {copy.nav.lexiLayer}
+    </a>
     <a href="#products">{copy.nav.products}</a>
     <a href="#open-source">{copy.nav.openSource}</a>
     <a href="#about">{copy.nav.about}</a>
@@ -35,6 +38,9 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
   <details class="site-header__menu">
     <summary>{locale === 'zh' ? '菜单' : 'Menu'}</summary>
     <nav aria-label={locale === 'zh' ? '移动端导航' : 'Mobile navigation'}>
+      <a href={locale === 'zh' ? '/zh/lexi-layer/' : '/lexi-layer/'}>
+        {copy.nav.lexiLayer}
+      </a>
       <a href="#products">{copy.nav.products}</a>
       <a href="#open-source">{copy.nav.openSource}</a>
       <a href="#about">{copy.nav.about}</a>

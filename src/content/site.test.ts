@@ -139,6 +139,7 @@ describe('站点内容模型', () => {
       [en.title, zh.title, 'title'],
       [en.description, zh.description, 'description'],
       [en.tagline, zh.tagline, 'tagline'],
+      [en.nav.lexiLayer, zh.nav.lexiLayer, 'nav.lexiLayer'],
       [en.nav.products, zh.nav.products, 'nav.products'],
       [en.nav.openSource, zh.nav.openSource, 'nav.openSource'],
       [en.nav.about, zh.nav.about, 'nav.about'],

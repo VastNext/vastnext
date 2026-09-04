@@ -101,6 +101,7 @@ export interface SiteCopy {
     alternateLocale: string;
   };
   nav: {
+    lexiLayer: string;
     products: string;
     openSource: string;
     about: string;
@@ -206,6 +207,7 @@ export const siteCopy = {
       alternateLocale: 'zh_CN',
     },
     nav: {
+      lexiLayer: 'LexiLayer',
       products: 'Products',
       openSource: 'Open Source',
       about: 'About',
@@ -326,6 +328,7 @@ export const siteCopy = {
       alternateLocale: 'en_US',
     },
     nav: {
+      lexiLayer: '语层翻译',
       products: '产品',
       openSource: '开源',
       about: '关于',

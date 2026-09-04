@@ -187,11 +187,12 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
-    ['en', () => englishPage, '/privacy/'],
-    ['zh', () => chinesePage, '/zh/privacy/'],
-  ])('%s 页面包含站内导航和隐私链接', (_locale, getHtml, privacyHref) => {
+    ['en', () => englishPage, '/privacy/', '/lexi-layer/'],
+    ['zh', () => chinesePage, '/zh/privacy/', '/zh/lexi-layer/'],
+  ])('%s 页面包含站内导航和隐私链接', (_locale, getHtml, privacyHref, lexiLayerHref) => {
     const html = getHtml();
 
+    expectLink(html, lexiLayerHref);
     expectLink(html, '#products');
     expectLink(html, '#open-source');
     expectLink(html, '#about');
