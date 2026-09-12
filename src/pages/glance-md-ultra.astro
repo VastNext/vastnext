@@ -1,0 +1,17 @@
+---
+import GlanceMdUltraPage from '../components/GlanceMdUltraPage.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { glanceMdUltraCopy } from '../content/glanceMdUltra';
+
+const copy = glanceMdUltraCopy.en;
+---
+
+<BaseLayout
+  locale="en"
+  title={`${copy.title} — VastNext`}
+  description={copy.description}
+  canonicalPath="/glance-md-ultra/"
+  alternatePath="/zh/glance-md-ultra/"
+>
+  <GlanceMdUltraPage locale="en" />
+</BaseLayout>

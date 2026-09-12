@@ -12,6 +12,7 @@ import {
 } from '../src/content/site';
 import { lexiLayerFacts, lexiLayerCopy } from '../src/content/lexiLayer';
 import { glanceMdFacts, glanceMdCopy } from '../src/content/glanceMd';
+import { glanceMdUltraFacts, glanceMdUltraCopy } from '../src/content/glanceMdUltra';
 import { buildSite, readBuiltPage } from './helpers/build';
 
 let englishPage: string;
@@ -22,6 +23,8 @@ let englishLexiLayerPage: string;
 let chineseLexiLayerPage: string;
 let englishGlanceMdPage: string;
 let chineseGlanceMdPage: string;
+let englishGlanceMdUltraPage: string;
+let chineseGlanceMdUltraPage: string;
 
 const projectRoot = resolve(import.meta.dirname, '..');
 
@@ -108,6 +111,8 @@ beforeAll(() => {
   chineseLexiLayerPage = readBuiltPage('zh/lexi-layer/index.html');
   englishGlanceMdPage = readBuiltPage('glance-md/index.html');
   chineseGlanceMdPage = readBuiltPage('zh/glance-md/index.html');
+  englishGlanceMdUltraPage = readBuiltPage('glance-md-ultra/index.html');
+  chineseGlanceMdUltraPage = readBuiltPage('zh/glance-md-ultra/index.html');
 }, 90_000);
 
 describe('品牌页构建产物', () => {
@@ -269,9 +274,11 @@ describe('品牌页构建产物', () => {
       ['/privacy', '/privacy/'],
       ['/lexi-layer', '/lexi-layer/'],
       ['/glance-md', '/glance-md/'],
+      ['/glance-md-ultra', '/glance-md-ultra/'],
       ['/zh/privacy', '/zh/privacy/'],
       ['/zh/lexi-layer', '/zh/lexi-layer/'],
       ['/zh/glance-md', '/zh/glance-md/'],
+      ['/zh/glance-md-ultra', '/zh/glance-md-ultra/'],
     ] as const) {
       expect(redirects).toContain(`${from} ${to} 308`);
     }
@@ -338,5 +345,40 @@ describe('GlanceMD 产品页构建产物', () => {
 
     expect(englishGlanceMdPage).toContain(glanceMdCopy.en.hero.title);
     expect(chineseGlanceMdPage).toContain(glanceMdCopy.zh.hero.title);
+  });
+});
+
+describe('GlanceMD Ultra 产品页构建产物', () => {
+  it('输出双语元数据、核心入口、最新版下载直链和按语言区分的使用截图', () => {
+    const enUrl = `${siteFacts.siteUrl}/glance-md-ultra/`;
+    const zhUrl = `${siteFacts.siteUrl}/zh/glance-md-ultra/`;
+
+    expectLocalizedMetadata(englishGlanceMdUltraPage, 'en', enUrl, enUrl, zhUrl);
+    expectLocalizedMetadata(chineseGlanceMdUltraPage, 'zh-CN', zhUrl, enUrl, zhUrl);
+
+    const pagesByLocale = {
+      en: englishGlanceMdUltraPage,
+      zh: chineseGlanceMdUltraPage,
+    } as const;
+
+    for (const locale of ['en', 'zh'] as const) {
+      const html = pagesByLocale[locale];
+      expect(html).toContain(glanceMdUltraFacts.githubUrl);
+      expect(html).toContain(glanceMdUltraFacts.releasesUrl);
+      expect(html).toContain(glanceMdUltraFacts.issuesUrl);
+      expect(html).toContain(glanceMdUltraFacts.pullsUrl);
+      for (const download of Object.values(glanceMdUltraFacts.downloadFiles)) {
+        expectEveryExternalLink(html, download.url);
+      }
+      for (const pair of Object.values(glanceMdUltraFacts.screenshots)) {
+        const src = pair[locale];
+        expect(html).toContain(`src="${src}"`);
+        expect(existsSync(resolve(projectRoot, 'public', src.slice(1)))).toBe(true);
+      }
+      expect(html).not.toMatch(/sk-[A-Za-z0-9_-]{20,}/);
+    }
+
+    expect(englishGlanceMdUltraPage).toContain(glanceMdUltraCopy.en.hero.title);
+    expect(chineseGlanceMdUltraPage).toContain(glanceMdUltraCopy.zh.hero.title);
   });
 });

@@ -1,0 +1,63 @@
+/* GlanceMD Ultra page — accents layered on the shared GlanceMD design system */
+
+.gm-page--ultra .gm-header__product-badge {
+  box-shadow: 0.18rem 0.18rem 0 var(--gm-indigo);
+}
+
+.gmu-ultra-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.4rem;
+  background: var(--gm-gradient);
+  color: #ffffff;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.gm-page--ultra .gm-hero__pill {
+  color: var(--gm-ink);
+  box-shadow: 0.25rem 0.25rem 0 var(--gm-pink);
+}
+
+.gm-page--ultra .gm-hero__pill span {
+  background: var(--gm-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gm-page--ultra .gm-pillar-card--grape:hover { box-shadow: 0.45rem 0.45rem 0 var(--gm-indigo); }
+.gm-page--ultra .gm-pillar-card--pink:hover { box-shadow: 0.45rem 0.45rem 0 var(--gm-grape); }
+.gm-page--ultra .gm-pillar-card--indigo:hover { box-shadow: 0.45rem 0.45rem 0 var(--gm-pink); }
+.gm-page--ultra .gm-pillar-card--amber:hover { box-shadow: 0.45rem 0.45rem 0 var(--gm-indigo); }
+
+.gm-page--ultra .gm-community-card:hover {
+  box-shadow: 0.55rem 0.55rem 0 var(--gm-indigo);
+}
+
+@media (max-width: 600px) {
+  .gm-page--ultra .gmu-ultra-chip {
+    display: none;
+  }
+
+  .gm-page--ultra .gm-header__product-badge {
+    white-space: nowrap;
+    gap: 0.3rem;
+    padding: 0.2rem 0.55rem 0.2rem 0.3rem;
+    font-size: 0.72rem;
+  }
+
+  .gm-page--ultra .gm-header__product-badge img {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+}
+
+@media (max-width: 355px) {
+  .gm-page--ultra .gm-header__product-badge {
+    display: none;
+  }
+}

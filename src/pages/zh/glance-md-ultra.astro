@@ -1,0 +1,17 @@
+---
+import GlanceMdUltraPage from '../../components/GlanceMdUltraPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { glanceMdUltraCopy } from '../../content/glanceMdUltra';
+
+const copy = glanceMdUltraCopy.zh;
+---
+
+<BaseLayout
+  locale="zh"
+  title={`${copy.title} — 瀚海未来`}
+  description={copy.description}
+  canonicalPath="/zh/glance-md-ultra/"
+  alternatePath="/glance-md-ultra/"
+>
+  <GlanceMdUltraPage locale="zh" />
+</BaseLayout>
