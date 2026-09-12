@@ -149,9 +149,9 @@ describe('品牌页构建产物', () => {
   });
 
   it.each([
-    ['en', () => englishPage, '/glance-md/'],
-    ['zh', () => chinesePage, '/zh/glance-md/'],
-  ])('%s 页面为两个开源项目输出独立展台且站内链接指向对应语言', (_locale, getHtml, glanceMdHref) => {
+    ['en', () => englishPage, '/glance-md/', '/glance-md-ultra/'],
+    ['zh', () => chinesePage, '/zh/glance-md/', '/zh/glance-md-ultra/'],
+  ])('%s 页面为三个开源项目输出独立展台且站内链接指向对应语言', (_locale, getHtml, glanceMdHref, glanceMdUltraHref) => {
     const html = getHtml();
 
     for (const [projectId, project] of Object.entries(openSourceProjectFacts)) {
@@ -170,6 +170,11 @@ describe('品牌页构建产物', () => {
       /<article(?=[^>]*data-project=["']glancemd["'])[^>]*>[\s\S]*?<\/article>/,
     );
     expect(glanceMdArticle![0]).toContain(`href="${glanceMdHref}"`);
+
+    const glanceMdUltraArticle = html.match(
+      /<article(?=[^>]*data-project=["']glance-md-ultra["'])[^>]*>[\s\S]*?<\/article>/,
+    );
+    expect(glanceMdUltraArticle![0]).toContain(`href="${glanceMdUltraHref}"`);
   });
 
   it('英文未来方向中每个共享事实只渲染一个可见标题', () => {

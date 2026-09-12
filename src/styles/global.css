@@ -782,6 +782,10 @@ h3 {
   background: #EEE9FC;
 }
 
+.open-source-project--glance-md-ultra {
+  background: #FBE3F0;
+}
+
 .open-source-project--opencode-rapid-agent-team {
   background: #DDF5EC;
 }
@@ -833,6 +837,26 @@ h3 {
 
 .glancemd-demo {
   box-shadow: 0.65rem 0.65rem 0 rgba(182, 167, 242, 0.72);
+}
+
+.gmu-demo {
+  box-shadow: 0.65rem 0.65rem 0 rgba(236, 72, 153, 0.5);
+}
+
+.gmu-demo .glancemd-demo__bar {
+  background: #FBD9EA;
+}
+
+.gmu-demo__toast {
+  width: fit-content;
+  margin: 0.9rem 1rem 1rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
 }
 
 .glancemd-demo__bar,

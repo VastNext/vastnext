@@ -165,6 +165,11 @@ export const openSourceProjectFacts = {
     url: '/glance-md/',
     facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'Mermaid', 'MIT', 'v1.7.0'],
   },
+  'glance-md-ultra': {
+    name: 'GlanceMD Ultra',
+    url: '/glance-md-ultra/',
+    facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'Built-in translation', 'MIT', 'v0.6.1'],
+  },
   'opencode-rapid-agent-team': {
     name: 'OpenCode Rapid Agent Team',
     url: 'https://github.com/VastNext/opencode-rapid-agent-team',
@@ -248,13 +253,19 @@ export const siteCopy = {
       eyebrow: 'Open by default',
       title: 'Built in the open',
       description:
-        'Two open-source projects exploring native desktop tools and agent-powered software delivery.',
+        'Three open-source projects: two native desktop tools and an agent-powered software delivery team.',
       projects: {
         glancemd: {
           typeLabel: 'Native desktop tool',
           description:
             'A lightweight cross-platform Markdown viewer and editor with offline Mermaid diagram rendering, fast startup, split editing, tabs, outlines, search, and native system packages.',
           cta: 'Explore GlanceMD',
+        },
+        'glance-md-ultra': {
+          typeLabel: 'Native workspace editor',
+          description:
+            'A Markdown workspace editor with a project tree, built-in LexiLayer translation, rebindable shortcuts, project search, and crash-safe file watching.',
+          cta: 'Explore GlanceMD Ultra',
         },
         'opencode-rapid-agent-team': {
           typeLabel: 'OpenCode agent team',
@@ -368,13 +379,19 @@ export const siteCopy = {
     openSource: {
       eyebrow: '默认开放',
       title: '在开放中构建',
-      description: '两个开源项目，分别探索原生桌面工具与 Agent 驱动的软件交付。',
+      description: '三个开源项目：两款原生桌面工具与一个 Agent 驱动的交付团队。',
       projects: {
         glancemd: {
           typeLabel: '跨平台桌面工具',
           description:
             '轻量跨平台 Markdown 查看器与编辑器，支持离线渲染 Mermaid 图表，提供快速启动、分屏编辑、多标签、目录、查找和系统原生安装包。',
           cta: '探索 GlanceMD',
+        },
+        'glance-md-ultra': {
+          typeLabel: '原生工作区编辑器',
+          description:
+            '带项目树的 Markdown 工作区编辑器，内置语层翻译、快捷键完全自定义、全项目搜索与崩溃恢复的文件监视。',
+          cta: '探索 GlanceMD Ultra',
         },
         'opencode-rapid-agent-team': {
           typeLabel: 'OpenCode Agent Team',

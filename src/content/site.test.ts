@@ -73,12 +73,23 @@ describe('站点内容模型', () => {
     });
   });
 
-  it('保存两个准确的开源项目事实', () => {
+  it('保存三个准确的开源项目事实', () => {
     expect(openSourceProjectFacts).toEqual({
       glancemd: {
         name: 'GlanceMD',
         url: '/glance-md/',
         facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'Mermaid', 'MIT', 'v1.7.0'],
+      },
+      'glance-md-ultra': {
+        name: 'GlanceMD Ultra',
+        url: '/glance-md-ultra/',
+        facts: [
+          'Windows · macOS · Linux',
+          'Rust + System WebView',
+          'Built-in translation',
+          'MIT',
+          'v0.6.1',
+        ],
       },
       'opencode-rapid-agent-team': {
         name: 'OpenCode Rapid Agent Team',
@@ -160,6 +171,9 @@ describe('站点内容模型', () => {
       [en.openSource.projects.glancemd.typeLabel, zh.openSource.projects.glancemd.typeLabel, 'openSource.projects.glancemd.typeLabel'],
       [en.openSource.projects.glancemd.description, zh.openSource.projects.glancemd.description, 'openSource.projects.glancemd.description'],
       [en.openSource.projects.glancemd.cta, zh.openSource.projects.glancemd.cta, 'openSource.projects.glancemd.cta'],
+      [en.openSource.projects['glance-md-ultra'].typeLabel, zh.openSource.projects['glance-md-ultra'].typeLabel, 'openSource.projects[\'glance-md-ultra\'].typeLabel'],
+      [en.openSource.projects['glance-md-ultra'].description, zh.openSource.projects['glance-md-ultra'].description, 'openSource.projects[\'glance-md-ultra\'].description'],
+      [en.openSource.projects['glance-md-ultra'].cta, zh.openSource.projects['glance-md-ultra'].cta, 'openSource.projects[\'glance-md-ultra\'].cta'],
       [en.openSource.projects['opencode-rapid-agent-team'].typeLabel, zh.openSource.projects['opencode-rapid-agent-team'].typeLabel, 'openSource.projects.opencode-rapid-agent-team.typeLabel'],
       [en.openSource.projects['opencode-rapid-agent-team'].description, zh.openSource.projects['opencode-rapid-agent-team'].description, 'openSource.projects.opencode-rapid-agent-team.description'],
       [en.openSource.projects['opencode-rapid-agent-team'].cta, zh.openSource.projects['opencode-rapid-agent-team'].cta, 'openSource.projects.opencode-rapid-agent-team.cta'],

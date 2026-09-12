@@ -76,6 +76,29 @@ function projectHref(url: string): string {
                 </div>
               </div>
             </div>
+          ) : project.id === 'glance-md-ultra' ? (
+            <div class="open-source-project__demo gmu-demo" aria-hidden="true">
+              <div class="glancemd-demo__bar">
+                <span>Windows</span><span>macOS</span><span>Linux</span>
+              </div>
+              <div class="glancemd-demo__workspace">
+                <div class="glancemd-demo__editor">
+                  <span># 项目笔记</span>
+                  <span>大家好！</span>
+                  <span>下周一发布。</span>
+                </div>
+                <div class="glancemd-demo__preview">
+                  <strong>Meeting Notes</strong>
+                  <span>Hello everyone. Shipping next Monday.</span>
+                  <i></i><i></i>
+                </div>
+              </div>
+              <p class="gmu-demo__toast">
+                {locale === 'zh'
+                  ? '语层翻译 · 双语对照 · 2 段 · 86ms'
+                  : 'LexiLayer · Bilingual · 2 segments · 86ms'}
+              </p>
+            </div>
           ) : (
             <div class="open-source-project__demo agent-team-demo" aria-hidden="true">
               <div class="agent-team-demo__modes">
