@@ -1,7 +1,7 @@
 ---
 import BrandMark from './BrandMark.astro';
 import ExternalIcon from './ExternalIcon.astro';
-import type { Locale, SiteCopy } from '../content/site';
+import type { Locale, OpenSourceProjectId, ProductId, SiteCopy } from '../content/site';
 import { contactFacts, openSourceProjects, products, siteCopy } from '../content/site';
 
 interface Props {
@@ -13,9 +13,30 @@ const copy: SiteCopy = siteCopy[locale];
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
 const homeBase = locale === 'zh' ? '/zh/' : '/';
 
-function productName(productId: keyof typeof copy.products): string {
+interface DropdownItem {
+  label: string;
+  href: string;
+}
+
+function productName(productId: ProductId): string {
   return copy.products[productId].name ?? products.find((product) => product.id === productId)!.name;
 }
+
+function productItem(productId: ProductId): DropdownItem {
+  return { label: productName(productId), href: `${homeBase}#product-${productId}` };
+}
+
+function projectItem(projectId: OpenSourceProjectId): DropdownItem {
+  const project = openSourceProjects.find((project) => project.id === projectId)!;
+  return { label: project.name, href: `${homeBase}#project-${projectId}` };
+}
+
+const dropdownRows: DropdownItem[][] = [
+  [productItem('findry-ai')],
+  [productItem('lexi-layer')],
+  [projectItem('glancemd'), projectItem('glance-md-ultra')],
+  [productItem('password-generator'), productItem('vast-translator')],
+];
 ---
 
 <header class="site-header">
@@ -28,6 +49,7 @@ function productName(productId: keyof typeof copy.products): string {
       {copy.nav.lexiLayer}
     </a>
     <a href={locale === 'zh' ? '/zh/glance-md/' : '/glance-md/'}>{copy.nav.glanceMd}</a>
+    <a href={locale === 'zh' ? '/zh/glance-md-ultra/' : '/glance-md-ultra/'}>{copy.nav.glanceMdUltra}</a>
     <details class="site-header__dropdown" data-header-dropdown>
       <summary>
         {copy.nav.products}
@@ -42,13 +64,14 @@ function productName(productId: keyof typeof copy.products): string {
         </svg>
       </summary>
       <div class="site-header__dropdown-panel">
-        <p class="site-header__dropdown-group">{copy.nav.products}</p>
-        {products.map((product) => (
-          <a href={`${homeBase}#product-${product.id}`}>{productName(product.id)}</a>
-        ))}
-        <p class="site-header__dropdown-group">{copy.nav.openSource}</p>
-        {openSourceProjects.map((project) => (
-          <a href={`${homeBase}#project-${project.id}`}>{project.name}</a>
+        {dropdownRows.map((row) => (
+          <div
+            class={`site-header__dropdown-row ${row.length === 1 ? 'site-header__dropdown-row--single' : ''}`}
+          >
+            {row.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))}
+          </div>
         ))}
       </div>
     </details>
