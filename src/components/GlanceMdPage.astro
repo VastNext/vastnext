@@ -18,6 +18,14 @@ const brandName = siteCopy[locale].brandName;
 const homeHref = isZh ? '/zh/' : '/';
 const privacyHref = isZh ? '/zh/privacy/' : '/privacy/';
 const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new window)';
+
+const diagramCodeHtml = [
+  '<span class="gm-tok-fence">```mermaid</span>',
+  '<span class="gm-tok-kw">flowchart</span> LR',
+  '  <span class="gm-tok-node">A</span><span class="gm-tok-label">[Markdown]</span> <span class="gm-tok-arrow">--&gt;</span> <span class="gm-tok-node">B</span><span class="gm-tok-label">{Mermaid}</span>',
+  '  <span class="gm-tok-node">B</span> <span class="gm-tok-arrow">--&gt;</span> <span class="gm-tok-node">C</span><span class="gm-tok-label">[Diagram]</span>',
+  '<span class="gm-tok-fence">```</span>',
+].join('\n');
 ---
 
 <div class="gm-page">
@@ -239,6 +247,51 @@ const newWindowText = isZh ? '（在新窗口打开）' : ' (opens in a new wind
                         alt={feature.screenshotAlt}
                         decoding="async"
                       />
+                    </div>
+                  )}
+
+                  {feature.visual === 'diagram' && (
+                    <div class="gm-diagram-panel">
+                      <pre class="gm-diagram-panel__code" set:html={diagramCodeHtml} />
+                      <svg
+                        class="gm-diagram-panel__chart"
+                        viewBox="0 0 440 130"
+                        role="img"
+                        aria-label={isZh
+                          ? 'Mermaid 流程图渲染示意：Markdown 到 Mermaid 到 Diagram'
+                          : 'Rendered Mermaid flowchart: Markdown to Mermaid to Diagram'}
+                      >
+                        <defs>
+                          <linearGradient id="gm-diag-grad" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#a855f7"></stop>
+                            <stop offset="1" stop-color="#ec4899"></stop>
+                          </linearGradient>
+                          <marker
+                            id="gm-diag-arrow"
+                            viewBox="0 0 10 10"
+                            refX="9"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto-start-reverse"
+                          >
+                            <path d="M0 0 L10 5 L0 10 z" fill="#57496E"></path>
+                          </marker>
+                        </defs>
+                        <rect x="8" y="42" width="118" height="44" rx="12" class="gm-diag-node"></rect>
+                        <text x="67" y="69" text-anchor="middle" class="gm-diag-node__text">Markdown</text>
+                        <line x1="128" y1="64" x2="170" y2="64" class="gm-diag-edge" marker-end="url(#gm-diag-arrow)"></line>
+                        <polygon points="220,16 261,64 220,112 179,64" class="gm-diag-diamond"></polygon>
+                        <text x="220" y="69" text-anchor="middle" class="gm-diag-node__text">Mermaid</text>
+                        <line x1="262" y1="64" x2="304" y2="64" class="gm-diag-edge" marker-end="url(#gm-diag-arrow)"></line>
+                        <rect x="308" y="42" width="124" height="44" rx="12" fill="url(#gm-diag-grad)"></rect>
+                        <text x="370" y="69" text-anchor="middle" class="gm-diag-node__text gm-diag-node__text--light">Diagram</text>
+                      </svg>
+                      <div class="gm-diagram-panel__chips">
+                        {copy.diagram.chips.map((chip) => (
+                          <span>{chip}</span>
+                        ))}
+                      </div>
                     </div>
                   )}
 

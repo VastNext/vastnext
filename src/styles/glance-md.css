@@ -888,6 +888,77 @@
   font-size: 0.7rem;
 }
 
+/* Mermaid Diagram Visual */
+.gm-diagram-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background:
+    radial-gradient(circle at 88% 8%, rgba(168, 85, 247, 0.1), transparent 55%),
+    var(--gm-paper);
+}
+
+.gm-diagram-panel__code {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  border-radius: 0.9rem;
+  background: var(--gm-ink);
+  color: #E9E1F6;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.75;
+  overflow-x: auto;
+}
+
+.gm-diagram-panel__code .gm-tok-fence { color: #9C8FB4; }
+.gm-diagram-panel__code .gm-tok-kw { color: #D8B4FE; font-weight: 700; }
+.gm-diagram-panel__code .gm-tok-node { color: #F9A8D4; font-weight: 700; }
+.gm-diagram-panel__code .gm-tok-label { color: #C4B8E0; }
+.gm-diagram-panel__code .gm-tok-arrow { color: #EC4899; font-weight: 700; }
+
+.gm-diagram-panel__chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gm-diag-node { fill: var(--gm-paper); stroke: var(--gm-ink); stroke-width: 2; }
+.gm-diag-diamond { fill: var(--gm-grape-light); stroke: var(--gm-ink); stroke-width: 2; }
+.gm-diag-node__text {
+  fill: var(--gm-ink);
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+}
+.gm-diag-node__text--light { fill: #FFFFFF; }
+.gm-diag-edge { stroke: #57496E; stroke-width: 2; }
+
+.gm-diagram-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gm-diagram-panel__chips span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.7rem;
+  border: 1.5px dashed rgba(236, 72, 153, 0.5);
+  border-radius: 999px;
+  background: var(--gm-pink-light);
+  color: #BE2E74;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.gm-diagram-panel__chips span::before {
+  content: '✓';
+  font-size: 0.7rem;
+}
+
 /* Downloads Section */
 .gm-downloads-section {
   padding-block: clamp(4.5rem, 8vw, 7.5rem);

@@ -163,7 +163,7 @@ export const openSourceProjectFacts = {
   glancemd: {
     name: 'GlanceMD',
     url: '/glance-md/',
-    facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
+    facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'Mermaid', 'MIT', 'v1.7.0'],
   },
   'opencode-rapid-agent-team': {
     name: 'OpenCode Rapid Agent Team',
@@ -253,7 +253,7 @@ export const siteCopy = {
         glancemd: {
           typeLabel: 'Native desktop tool',
           description:
-            'A lightweight cross-platform Markdown viewer and editor with fast startup, split editing, tabs, outlines, search, and native system packages.',
+            'A lightweight cross-platform Markdown viewer and editor with offline Mermaid diagram rendering, fast startup, split editing, tabs, outlines, search, and native system packages.',
           cta: 'Explore GlanceMD',
         },
         'opencode-rapid-agent-team': {
@@ -373,7 +373,7 @@ export const siteCopy = {
         glancemd: {
           typeLabel: '跨平台桌面工具',
           description:
-            '轻量跨平台 Markdown 查看器与编辑器，提供快速启动、分屏编辑、多标签、目录、查找和系统原生安装包。',
+            '轻量跨平台 Markdown 查看器与编辑器，支持离线渲染 Mermaid 图表，提供快速启动、分屏编辑、多标签、目录、查找和系统原生安装包。',
           cta: '探索 GlanceMD',
         },
         'opencode-rapid-agent-team': {

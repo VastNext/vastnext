@@ -5,8 +5,8 @@ export const glanceMdFacts = {
   releasesUrl: 'https://github.com/VastNext/GlanceMD/releases/latest',
   issuesUrl: 'https://github.com/VastNext/GlanceMD/issues',
   pullsUrl: 'https://github.com/VastNext/GlanceMD/pulls',
-  versionTag: 'GlanceMD v1.6.3 · MIT',
-  version: 'v1.6.3',
+  versionTag: 'GlanceMD v1.7.0 · MIT',
+  version: 'v1.7.0',
   screenshots: {
     light: '/glance-md/preview-light.png',
     dark: '/glance-md/preview-dark.png',
@@ -16,28 +16,28 @@ export const glanceMdFacts = {
   downloadFiles: {
     windows: {
       file: 'GlanceMD-windows-x64.exe',
-      size: '≈ 1.0 MB',
+      size: '≈ 4.2 MB',
       url: 'https://github.com/VastNext/GlanceMD/releases/latest/download/GlanceMD-windows-x64.exe',
     },
     macosArm: {
       file: 'GlanceMD-macos-arm64-unsigned.dmg',
-      size: '≈ 0.8 MB',
+      size: '≈ 1.7 MB',
       url: 'https://github.com/VastNext/GlanceMD/releases/latest/download/GlanceMD-macos-arm64-unsigned.dmg',
     },
     macosIntel: {
       file: 'GlanceMD-macos-x64-unsigned.dmg',
-      size: '≈ 0.8 MB',
+      size: '≈ 1.7 MB',
       url: 'https://github.com/VastNext/GlanceMD/releases/latest/download/GlanceMD-macos-x64-unsigned.dmg',
     },
     linuxDeb: {
-      file: 'GlanceMD_1.6.3_amd64.deb',
-      size: '≈ 1.8 MB',
-      url: 'https://github.com/VastNext/GlanceMD/releases/download/v1.6.3/GlanceMD_1.6.3_amd64.deb',
+      file: 'GlanceMD_1.7.0_amd64.deb',
+      size: '≈ 2.7 MB',
+      url: 'https://github.com/VastNext/GlanceMD/releases/download/v1.7.0/GlanceMD_1.7.0_amd64.deb',
     },
     linuxAppImage: {
-      file: 'GlanceMD_1.6.3_x86_64.AppImage',
-      size: '≈ 73 MB',
-      url: 'https://github.com/VastNext/GlanceMD/releases/download/v1.6.3/GlanceMD_1.6.3_x86_64.AppImage',
+      file: 'GlanceMD_1.7.0_x86_64.AppImage',
+      size: '≈ 74 MB',
+      url: 'https://github.com/VastNext/GlanceMD/releases/download/v1.7.0/GlanceMD_1.7.0_x86_64.AppImage',
     },
   },
 } as const;
@@ -51,7 +51,7 @@ export interface GlanceMdFeature {
   subtitle: string;
   description: string;
   highlights: readonly string[];
-  visual: 'screenshot-dark' | 'screenshot-detail' | 'shortcuts' | 'stack';
+  visual: 'screenshot-dark' | 'screenshot-detail' | 'diagram' | 'shortcuts' | 'stack';
   screenshotAlt?: string;
   tagColor: 'grape' | 'pink' | 'indigo' | 'amber';
 }
@@ -104,6 +104,9 @@ export interface GlanceMdCopy {
     keys: readonly string[];
     action: string;
   }[];
+  diagram: {
+    chips: readonly string[];
+  };
   stack: {
     windowTitle: string;
     layers: readonly {
@@ -173,7 +176,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
   en: {
     title: 'GlanceMD — Lightweight, Elegant Markdown Viewer & Editor',
     description:
-      'GlanceMD is a free, open-source Markdown viewer and editor: a ~1 MB single file on Windows, no Electron, Notepad-fast startup, and elegant Marco typography. Native packages for Windows, macOS, and Linux.',
+      'GlanceMD is a free, open-source Markdown viewer and editor: no Electron, Notepad-fast startup, elegant Marco typography, and built-in Mermaid diagram rendering. Native packages for Windows, macOS, and Linux.',
     tagline: 'Notepad-fast startup · Obsidian-pretty rendering · Zero Electron',
     nav: {
       home: 'VastNext',
@@ -192,16 +195,16 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
       titleAccent: 'Elegant by design.',
       tagline: 'Notepad-fast startup · Obsidian-pretty rendering · Zero Electron',
       description:
-        'GlanceMD is a cross-platform Markdown viewer and editor built with Rust and the system webview. It opens as fast as Notepad, renders with the refined Marco typography, and ships as a single ~1 MB executable on Windows — no installer, no Electron, no bloat.',
+        'GlanceMD is a cross-platform Markdown viewer and editor built with Rust and the system webview. It opens as fast as Notepad, renders with the refined Marco typography, and draws Mermaid diagrams right inside the preview — no installer, no Electron, no bloat.',
       ctaPrimary: 'Download Latest Release',
       ctaSecondary: 'Explore Features',
-      badges: ['Windows · macOS · Linux', '~1 MB single file on Windows', 'No Electron', 'MIT · Free & open source'],
+      badges: ['Windows · macOS · Linux', 'Mermaid diagrams built in', 'No Electron', 'MIT · Free & open source'],
       windowTitle: 'GlanceMD — README.md',
       captionLabel: 'Marco typography · Light theme',
       captionNote: 'Real app window — gradient headings, full-width content, outline sidebar',
     },
     stats: [
-      { value: '≈ 1 MB', label: 'Single-file Windows executable' },
+      { value: 'Mermaid', label: 'Diagrams rendered offline, theme-aware' },
       { value: '0', label: 'Electron or Node runtime bundled' },
       { value: '30+', label: 'Languages with syntax highlighting' },
       { value: '3', label: 'Desktop platforms with native packages' },
@@ -215,7 +218,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
         {
           icon: '⚡',
           title: 'Truly Lightweight',
-          desc: 'Rust plus the webview your OS already ships. No Electron, no Node, no bundler — the Windows build is one ~1 MB executable with every asset embedded.',
+          desc: 'Rust plus the webview your OS already ships. No Electron, no Node, no bundler — just a compact native executable with every asset embedded.',
           accent: 'grape',
         },
         {
@@ -274,6 +277,23 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
         tagColor: 'grape',
       },
       {
+        id: 'mermaid-diagrams',
+        badge: 'Diagram Engine',
+        title: 'Mermaid Diagrams, Rendered Inline',
+        subtitle: 'Flowcharts, sequence diagrams, and more — straight from fenced code blocks',
+        description:
+          'Wrap a diagram in a ```mermaid code block and GlanceMD draws it in place: flowcharts, sequence diagrams, gantt charts, and the rest of the Mermaid family. The engine is embedded, so diagrams render fully offline; colors follow the app theme; and invalid syntax shows a parse error without touching the rest of the document.',
+        highlights: [
+          '```mermaid fences draw flowcharts, sequences, gantt & more',
+          'Embedded engine — diagrams render fully offline',
+          'Colors adapt to the light / dark theme',
+          'Invalid charts show a parse error, never a blank page',
+          'Copy the original Mermaid source from the chart corner',
+        ],
+        visual: 'diagram',
+        tagColor: 'pink',
+      },
+      {
         id: 'focused-workflow',
         badge: 'Focused Workflow',
         title: 'A Keyboard-First Reading Workbench',
@@ -284,6 +304,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
           'Multi-tab with an auto-hiding tab bar',
           'Auto outline sidebar (Ctrl+Shift+O)',
           'Find in document with match navigation (Ctrl+F)',
+          'Instant image preview: PNG, SVG, GIF, WebP and more',
           'Drag & drop files, recent-files panel, file association',
         ],
         visual: 'shortcuts',
@@ -316,6 +337,9 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
       { keys: ['Ctrl', 'Tab'], action: 'Next tab' },
       { keys: ['Ctrl', '='], action: 'Zoom in' },
     ],
+    diagram: {
+      chips: ['Renders offline', 'Theme-aware colors', 'One-click source copy'],
+    },
     stack: {
       windowTitle: 'How GlanceMD is built',
       layers: [
@@ -391,7 +415,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
   zh: {
     title: 'GlanceMD — 轻量优雅的跨平台 Markdown 查看器与编辑器',
     description:
-      'GlanceMD 是免费开源的 Markdown 查看器与编辑器：Windows 单文件约 1 MB、不含 Electron、启动媲美记事本、内置 Marco 优雅排版。提供 Windows / macOS / Linux 系统原生安装包，免费下载。',
+      'GlanceMD 是免费开源的 Markdown 查看器与编辑器：不含 Electron、启动媲美记事本、内置 Marco 优雅排版，现在还支持 Mermaid 图表渲染。提供 Windows / macOS / Linux 系统原生安装包，免费下载。',
     tagline: '启动媲美记事本 · 渲染媲美 Obsidian · 零 Electron',
     nav: {
       home: '瀚海未来首页',
@@ -410,16 +434,16 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
       titleAccent: '优雅天成。',
       tagline: '启动媲美记事本 · 渲染媲美 Obsidian · 零 Electron',
       description:
-        'GlanceMD 是一款用 Rust 与系统原生 WebView 打造的跨平台 Markdown 查看器与编辑器：打开速度媲美记事本，内置 Marco 优雅排版，Windows 上是约 1 MB 的单文件程序——免安装、无 Electron、毫无臃肿。',
+        'GlanceMD 是一款用 Rust 与系统原生 WebView 打造的跨平台 Markdown 查看器与编辑器：打开速度媲美记事本，内置 Marco 优雅排版，还能在预览中直接渲染 Mermaid 图表——免安装、无 Electron、毫无臃肿。',
       ctaPrimary: '下载最新版本',
       ctaSecondary: '浏览核心特性',
-      badges: ['Windows · macOS · Linux', 'Windows 单文件约 1 MB', '不含 Electron', 'MIT · 免费开源'],
+      badges: ['Windows · macOS · Linux', '内置 Mermaid 图表渲染', '不含 Electron', 'MIT · 免费开源'],
       windowTitle: 'GlanceMD — README.md',
       captionLabel: 'Marco 排版 · 浅色主题',
       captionNote: '真实应用窗口 — 渐变标题、通栏排版、大纲侧栏',
     },
     stats: [
-      { value: '≈ 1 MB', label: 'Windows 单文件体积' },
+      { value: 'Mermaid', label: '图表引擎内嵌，离线渲染、随主题配色' },
       { value: '0', label: 'Electron / Node 运行时依赖' },
       { value: '30+', label: '语法高亮语言' },
       { value: '3', label: '桌面平台原生安装包' },
@@ -433,7 +457,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
         {
           icon: '⚡',
           title: '极致轻量',
-          desc: 'Rust + 操作系统自带的 WebView：无 Electron、无 Node、无打包器。Windows 版是约 1 MB 的单文件程序，资源全部内嵌。',
+          desc: 'Rust + 操作系统自带的 WebView：无 Electron、无 Node、无打包器——一个小巧的原生程序，资源全部内嵌。',
           accent: 'grape',
         },
         {
@@ -492,6 +516,23 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
         tagColor: 'grape',
       },
       {
+        id: 'mermaid-diagrams',
+        badge: '图表引擎',
+        title: 'Mermaid 图表，随写随渲',
+        subtitle: '流程图、时序图直接来自代码块，离线也能渲染',
+        description:
+          '用 ```mermaid 代码块包裹图表定义，GlanceMD 就地把它画出来：流程图、时序图、甘特图等 Mermaid 全家桶都支持。图表引擎直接内嵌，离线环境照样渲染；配色自动跟随明暗主题；语法出错时只提示解析错误，绝不影响文档其他内容。',
+        highlights: [
+          '```mermaid 代码块渲染流程图、时序图、甘特图等',
+          '引擎内嵌，完全离线可渲染',
+          '配色自动适配深色 / 浅色主题',
+          '无效图表只提示解析错误，不会白屏',
+          '图表右上角一键复制 Mermaid 源码',
+        ],
+        visual: 'diagram',
+        tagColor: 'pink',
+      },
+      {
         id: 'focused-workflow',
         badge: '高效操作',
         title: '键盘优先的阅读工作台',
@@ -502,6 +543,7 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
           '多标签页，单文件时自动隐藏标签栏',
           '自动大纲侧栏（Ctrl+Shift+O）',
           '文档内查找，匹配项高亮跳转（Ctrl+F）',
+          '图片即点即看：PNG、SVG、GIF、WebP 等',
           '拖放打开、最近文件面板、系统文件关联',
         ],
         visual: 'shortcuts',
@@ -534,6 +576,9 @@ export const glanceMdCopy: Record<Locale, GlanceMdCopy> = {
       { keys: ['Ctrl', 'Tab'], action: '下一个标签页' },
       { keys: ['Ctrl', '='], action: '放大' },
     ],
+    diagram: {
+      chips: ['离线渲染', '随主题配色', '一键复制源码'],
+    },
     stack: {
       windowTitle: 'GlanceMD 的构建方式',
       layers: [

@@ -78,7 +78,7 @@ describe('站点内容模型', () => {
       glancemd: {
         name: 'GlanceMD',
         url: '/glance-md/',
-        facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'MIT', 'v1.6.3'],
+        facts: ['Windows · macOS · Linux', 'Rust + System WebView', 'Mermaid', 'MIT', 'v1.7.0'],
       },
       'opencode-rapid-agent-team': {
         name: 'OpenCode Rapid Agent Team',
