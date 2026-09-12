@@ -103,6 +103,7 @@ export interface SiteCopy {
   nav: {
     lexiLayer: string;
     glanceMd: string;
+    glanceMdUltra: string;
     products: string;
     openSource: string;
     about: string;
@@ -215,6 +216,7 @@ export const siteCopy = {
     nav: {
       lexiLayer: 'LexiLayer',
       glanceMd: 'GlanceMD',
+      glanceMdUltra: 'GlanceMD Ultra',
       products: 'Products',
       openSource: 'Open Source',
       about: 'About',
@@ -343,6 +345,7 @@ export const siteCopy = {
     nav: {
       lexiLayer: '语层翻译',
       glanceMd: 'GlanceMD',
+      glanceMdUltra: 'GlanceMD Ultra',
       products: '产品',
       openSource: '开源',
       about: '关于',

@@ -33,6 +33,7 @@ function projectHref(url: string): string {
 
       return (
         <article
+          id={`project-${project.id}`}
           class={`open-source-project open-source-project--${project.id}`}
           data-project={project.id}
           data-reveal

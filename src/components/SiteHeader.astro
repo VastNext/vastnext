@@ -1,20 +1,25 @@
 ---
 import BrandMark from './BrandMark.astro';
 import ExternalIcon from './ExternalIcon.astro';
-import type { Locale } from '../content/site';
-import { contactFacts, siteCopy } from '../content/site';
+import type { Locale, SiteCopy } from '../content/site';
+import { contactFacts, openSourceProjects, products, siteCopy } from '../content/site';
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const copy = siteCopy[locale];
+const copy: SiteCopy = siteCopy[locale];
 const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
+const homeBase = locale === 'zh' ? '/zh/' : '/';
+
+function productName(productId: keyof typeof copy.products): string {
+  return copy.products[productId].name ?? products.find((product) => product.id === productId)!.name;
+}
 ---
 
 <header class="site-header">
-  <a class="site-header__brand" href={locale === 'zh' ? '/zh/' : '/'} aria-label={copy.brandName}>
+  <a class="site-header__brand" href={homeBase} aria-label={copy.brandName}>
     <BrandMark wordmarkText={copy.brandName} />
   </a>
 
@@ -23,7 +28,30 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
       {copy.nav.lexiLayer}
     </a>
     <a href={locale === 'zh' ? '/zh/glance-md/' : '/glance-md/'}>{copy.nav.glanceMd}</a>
-    <a href="#products">{copy.nav.products}</a>
+    <details class="site-header__dropdown" data-header-dropdown>
+      <summary>
+        {copy.nav.products}
+        <svg
+          class="site-header__dropdown-chevron"
+          width="10"
+          height="7"
+          viewBox="0 0 10 7"
+          aria-hidden="true"
+        >
+          <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </summary>
+      <div class="site-header__dropdown-panel">
+        <p class="site-header__dropdown-group">{copy.nav.products}</p>
+        {products.map((product) => (
+          <a href={`${homeBase}#product-${product.id}`}>{productName(product.id)}</a>
+        ))}
+        <p class="site-header__dropdown-group">{copy.nav.openSource}</p>
+        {openSourceProjects.map((project) => (
+          <a href={`${homeBase}#project-${project.id}`}>{project.name}</a>
+        ))}
+      </div>
+    </details>
     <a href="#open-source">{copy.nav.openSource}</a>
     <a href="#about">{copy.nav.about}</a>
     <a href={contactFacts.githubUrl} target="_blank" rel="noreferrer">
@@ -42,7 +70,12 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
       <a href={locale === 'zh' ? '/zh/lexi-layer/' : '/lexi-layer/'}>
         {copy.nav.lexiLayer}
       </a>
-      <a href={locale === 'zh' ? '/zh/glance-md/' : '/glance-md/'}>{copy.nav.glanceMd}</a>
+      <a href={locale === 'zh' ? '/zh/glance-md/' : '/glance-md/'}>
+        {copy.nav.glanceMd}
+      </a>
+      <a href={locale === 'zh' ? '/zh/glance-md-ultra/' : '/glance-md-ultra/'}>
+        {copy.nav.glanceMdUltra}
+      </a>
       <a href="#products">{copy.nav.products}</a>
       <a href="#open-source">{copy.nav.openSource}</a>
       <a href="#about">{copy.nav.about}</a>
@@ -57,3 +90,28 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
     </nav>
   </details>
 </header>
+
+<script>
+  function initHeaderDropdown(): void {
+    const dropdown = document.querySelector<HTMLDetailsElement>('details[data-header-dropdown]');
+    if (!dropdown) return;
+
+    const close = (): void => dropdown.removeAttribute('open');
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Element && !dropdown.contains(target)) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+
+    dropdown.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest('a')) close();
+    });
+  }
+
+  initHeaderDropdown();
+</script>
