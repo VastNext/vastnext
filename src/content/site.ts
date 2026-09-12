@@ -18,13 +18,13 @@ interface NamedLink {
 
 export const productFacts = {
   'findry-ai': { name: 'Findry AI', url: 'https://findryai.com' },
-  'password-generator': {
-    name: 'Password Generator',
-    url: 'https://pg.vastnext.com',
-  },
   'lexi-layer': {
     name: 'LexiLayer',
     url: '/lexi-layer/',
+  },
+  'password-generator': {
+    name: 'Password Generator',
+    url: 'https://pg.vastnext.com',
   },
   'vast-translator': {
     name: 'Vast Translator',
@@ -242,12 +242,12 @@ export const siteCopy = {
       'findry-ai': {
         description: 'Discover curated AI tools that fit the task at hand.',
       },
-      'password-generator': {
-        description: 'Generate random passwords, memorable passwords, and PINs.',
-      },
       'lexi-layer': {
         description:
           'Free, open-source browser translation with deep AI context and custom expert personas.',
+      },
+      'password-generator': {
+        description: 'Generate random passwords, memorable passwords, and PINs.',
       },
       'vast-translator': {
         description: 'Compare results from multiple translation engines side by side.',
@@ -371,12 +371,12 @@ export const siteCopy = {
       'findry-ai': {
         description: '发现经过精选、适合当前任务的 AI 工具。',
       },
-      'password-generator': {
-        description: '生成随机密码、易记密码和 PIN。',
-      },
       'lexi-layer': {
         name: '语层翻译',
         description: '免登录、零门槛的 AI 浏览器双语翻译扩展，支持专家角色与提示词定制。',
+      },
+      'password-generator': {
+        description: '生成随机密码、易记密码和 PIN。',
       },
       'vast-translator': {
         description: '并排比较多个翻译引擎的结果。',

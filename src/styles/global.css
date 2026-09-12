@@ -634,7 +634,7 @@ h3 {
 
 .products__list {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.72fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -642,11 +642,8 @@ h3 {
   min-width: 0;
 }
 
-.product-reveal--findry-ai {
-  grid-row: span 2;
-}
-
-.product-reveal--vast-translator {
+.product-reveal--findry-ai,
+.product-reveal--lexi-layer {
   grid-column: 1 / -1;
 }
 
@@ -898,7 +895,7 @@ h3 {
 .open-source::before {
   position: absolute;
   z-index: -1;
-  inset: 8% calc(50% - 50vw);
+  inset: 0 calc(50% - 50vw);
   content: '';
   background: #EAF0E8;
 }
@@ -1517,6 +1514,7 @@ h3 {
   }
 
   .product-reveal--findry-ai,
+  .product-reveal--lexi-layer,
   .product-reveal--vast-translator {
     grid-column: auto;
     grid-row: auto;

@@ -99,8 +99,9 @@ describe('明亮新界视觉系统', () => {
     expect(component).toMatch(/class=\{`product-reveal product-reveal--\$\{product\.id\}`\}[\s\S]*?data-reveal/);
     expect(productOpeningTag).toBeDefined();
     expect(productOpeningTag).not.toContain('data-reveal');
-    expect(css).toMatch(/\.product-reveal--findry-ai\s*\{[^}]*grid-row:\s*span 2/);
-    expect(css).toMatch(/\.product-reveal--vast-translator\s*\{[^}]*grid-column:\s*1 \/ -1/);
+    expect(css).toMatch(
+      /\.product-reveal--findry-ai\s*,\s*\.product-reveal--lexi-layer\s*\{[^}]*grid-column:\s*1 \/ -1/,
+    );
     expect(css).toMatch(/\.product-reveal\s*>\s*\.product\s*\{[^}]*height:\s*100%/);
     expect(css).not.toMatch(/\.product:\s*hover\s*\{[^}]*transform/);
     expect(css).toMatch(/\.product__copy\s*>\s*a:hover/);
@@ -129,14 +130,16 @@ describe('明亮新界视觉系统', () => {
     expect(source('../components/BrandMark.astro')).toContain('data-concept="01"');
   });
 
-  it('为两个开源项目提供并列展台和移动单列布局', () => {
+  it('为三个开源项目提供并列展台和移动单列布局', () => {
     const css = source('./global.css');
 
     expect(css).toMatch(/\.open-source__projects\s*\{[^}]*display:\s*grid[^}]*grid-template-columns:\s*repeat\(2,/);
     expect(css).toMatch(/\.open-source-project--glancemd\s*\{/);
+    expect(css).toMatch(/\.open-source-project--glance-md-ultra\s*\{/);
     expect(css).toMatch(/\.open-source-project--opencode-rapid-agent-team\s*\{/);
     expect(css).not.toMatch(/\.open-source-project:hover\s*\{[^}]*transform/);
     expect(css).toMatch(/\.open-source-project__type\s*\{[^}]*color:\s*var\(--color-ink\)/);
+    expect(css).toMatch(/\.open-source::before\s*\{[^}]*inset:\s*0 calc\(50% - 50vw\)/);
     expect(css).toMatch(/@media\s*\(max-width:\s*768px\)[\s\S]*\.open-source__projects\s*\{[^}]*grid-template-columns:\s*1fr/);
   });
 });
