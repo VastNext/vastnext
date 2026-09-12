@@ -112,6 +112,7 @@ export interface SiteCopy {
   hero: {
     eyebrow: string;
     introduction: string;
+    scrollCue: string;
     cta: {
       products: string;
       github: string;
@@ -226,6 +227,7 @@ export const siteCopy = {
       eyebrow: 'An independent future product lab',
       introduction:
         'We explore open horizons and turn promising ideas into practical products for everyday use.',
+      scrollCue: 'Scroll to explore',
       cta: {
         products: 'Explore our products',
         github: 'View on GitHub',
@@ -354,6 +356,7 @@ export const siteCopy = {
     hero: {
       eyebrow: '独立未来产品实验室',
       introduction: '我们探索开放的可能，并把值得尝试的想法变成日常可用的产品。',
+      scrollCue: '下滑查看产品',
       cta: {
         products: '探索我们的产品',
         github: '在 GitHub 查看',
