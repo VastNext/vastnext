@@ -184,6 +184,9 @@ describe('站点内容模型', () => {
       [en.future.tracks.games.title, zh.future.tracks.games.title, 'future.tracks.games.title'],
       [en.future.tracks.games.description, zh.future.tracks.games.description, 'future.tracks.games.description'],
       [en.future.tracks.games.status, zh.future.tracks.games.status, 'future.tracks.games.status'],
+      [en.future.tracks.games.site!.badge, zh.future.tracks.games.site!.badge, 'future.tracks.games.site.badge'],
+      [en.future.tracks.games.site!.description, zh.future.tracks.games.site!.description, 'future.tracks.games.site.description'],
+      [en.future.tracks.games.site!.cta, zh.future.tracks.games.site!.cta, 'future.tracks.games.site.cta'],
       [en.future.tracks.utilities.title, zh.future.tracks.utilities.title, 'future.tracks.utilities.title'],
       [en.future.tracks.utilities.description, zh.future.tracks.utilities.description, 'future.tracks.utilities.description'],
       [en.future.tracks.utilities.status, zh.future.tracks.utilities.status, 'future.tracks.utilities.status'],
@@ -208,7 +211,12 @@ describe('站点内容模型', () => {
 
   it('将未来方向标记为探索中且不承诺日期', () => {
     expect(futureTrackFacts).toEqual({
-      games: {},
+      games: {
+        firstSite: {
+          name: 'VastArcade',
+          url: 'https://vastarcade.com',
+        },
+      },
       utilities: {},
     });
     expect(site).not.toHaveProperty('futureFacts');

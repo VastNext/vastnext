@@ -1,4 +1,5 @@
 ---
+import ExternalIcon from './ExternalIcon.astro';
 import type { Locale } from '../content/site';
 import { futureTracks, siteCopy } from '../content/site';
 
@@ -8,6 +9,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = siteCopy[locale].future;
+const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens in a new window)';
 ---
 
 <section class="future" aria-labelledby="future-title" data-reveal>
@@ -17,13 +19,41 @@ const copy = siteCopy[locale].future;
     <p>{copy.description}</p>
   </header>
   <div class="future__tracks">
-    {futureTracks.map((trackId) => (
-      <article class={`future-track future-track--${trackId}`} data-track={trackId} data-reveal>
-        <h3>{copy.tracks[trackId].title}</h3>
-        <p>{copy.tracks[trackId].description}</p>
-        <p class="future-track__status">{copy.tracks[trackId].status}</p>
-      </article>
-    ))}
+    {futureTracks.map((trackId) => {
+      const track = copy.tracks[trackId];
+      return (
+        <article class={`future-track future-track--${trackId}`} data-track={trackId} data-reveal>
+          <h3>{track.title}</h3>
+          <p>{track.description}</p>
+          <p class="future-track__status">{track.status}</p>
+
+          {track.site && (
+            <div class="future-track__site">
+              <div class="future-track__site-header">
+                <span class="future-track__site-badge">{track.site.badge}</span>
+                <p class="future-track__site-name">{track.site.name}</p>
+              </div>
+              <p class="future-track__site-description">{track.site.description}</p>
+              <ul class="future-track__site-highlights" aria-label={locale === 'zh' ? '站点亮点' : 'Highlights'}>
+                {track.site.highlights.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+              <a
+                href={track.site.url}
+                target="_blank"
+                rel="noreferrer"
+                class="future-track__site-link"
+              >
+                <span>{track.site.cta}</span>
+                <ExternalIcon />
+                <span class="sr-only">{newWindowLabel}</span>
+              </a>
+            </div>
+          )}
+        </article>
+      );
+    })}
   </div>
   <p class="future__note">{copy.explorationNote}</p>
 </section>

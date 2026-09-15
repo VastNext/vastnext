@@ -33,7 +33,12 @@ export const productFacts = {
 } as const satisfies Record<string, NamedLink>;
 
 export const futureTrackFacts = {
-  games: {},
+  games: {
+    firstSite: {
+      name: 'VastArcade',
+      url: 'https://vastarcade.com',
+    },
+  },
   utilities: {},
 } as const;
 
@@ -68,10 +73,20 @@ interface ProductCopy {
   description: string;
 }
 
-interface FutureTrackCopy {
+export interface FutureTrackSiteCopy {
+  name: string;
+  badge: string;
+  url: string;
+  description: string;
+  cta: string;
+  highlights: readonly string[];
+}
+
+export interface FutureTrackCopy {
   title: string;
   description: string;
   status: string;
+  site?: FutureTrackSiteCopy;
 }
 
 interface PrivacyCopy {
@@ -287,8 +302,18 @@ export const siteCopy = {
       tracks: {
         games: {
           title: 'Games',
-          description: 'Playful ideas shaped around curiosity, clarity, and delight.',
-          status: 'Exploring',
+          description:
+            'Playful ideas shaped around curiosity, clarity, and delight. Our first dedicated gaming station is live.',
+          status: 'Live',
+          site: {
+            name: 'VastArcade',
+            badge: 'First station',
+            url: 'https://vastarcade.com',
+            description:
+              'A curated browser platform featuring 1,500+ instant web titles across multiplayer .IO, puzzles, racing, and arcade classics with zero downloads.',
+            cta: 'Play on VastArcade',
+            highlights: ['1,500+ curated titles', 'Instant browser play', 'Zero download'],
+          },
         },
         utilities: {
           title: 'Utilities',
@@ -415,8 +440,17 @@ export const siteCopy = {
       tracks: {
         games: {
           title: '游戏',
-          description: '围绕好奇、清晰与愉悦展开有趣的互动想法。',
-          status: '探索中',
+          description: '围绕好奇、清晰与愉悦展开有趣的互动想法。首个游戏站现已上线。',
+          status: '首站已上线',
+          site: {
+            name: 'VastArcade',
+            badge: '首个游戏站',
+            url: 'https://vastarcade.com',
+            description:
+              '精选 1,500+ 款免下载网页游戏平台，汇集多人 .IO 对战、解谜益智、赛车竞速与经典街机，低延迟即点即玩。',
+            cta: '畅玩 VastArcade',
+            highlights: ['1,500+ 精选游戏', '即点即玩', '零下载免安装'],
+          },
         },
         utilities: {
           title: '实用工具',

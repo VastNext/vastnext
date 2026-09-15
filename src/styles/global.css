@@ -1198,6 +1198,100 @@ h3 {
   text-transform: uppercase;
 }
 
+.future-track__site {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-small);
+  background: var(--color-paper);
+  box-shadow: 0 4px 16px -4px rgba(24, 35, 92, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.future-track__site:hover {
+  border-color: rgba(240, 111, 82, 0.45);
+  box-shadow: 0 8px 24px -4px rgba(240, 111, 82, 0.12);
+  transform: translateY(-2px);
+}
+
+.future-track__site-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.future-track__site-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(240, 111, 82, 0.12);
+  color: var(--color-coral);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.future-track__site-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.future-track__site-description {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-ink-soft);
+}
+
+.future-track__site-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.future-track__site-highlights li {
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-canvas);
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+}
+
+.future-track__site-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-coral);
+  text-decoration: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.future-track__site-link:hover {
+  opacity: 0.85;
+  transform: translateX(3px);
+}
+
+.future-track__site-link .external-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
 .future__note {
   max-width: 42rem;
   margin: 2.5rem auto 0;

@@ -60,6 +60,7 @@ function expectEveryExpectedExternalLink(html: string): void {
     ...Object.values(openSourceProjectFacts)
       .map((project) => project.url)
       .filter((url) => /^https?:\/\//.test(url)),
+    futureTrackFacts.games.firstSite.url,
     contactFacts.githubUrl,
   ]) {
     expectEveryExternalLink(html, href);
@@ -189,6 +190,24 @@ describe('品牌页构建产物', () => {
 
       expect(article).toContain(`<h3>${title}</h3>`);
       expect(titleOccurrences, `${title} 在对应 future item 中应只显示一次`).toHaveLength(1);
+    }
+  });
+
+  it.each([
+    ['en', () => englishPage, siteCopy.en.future.tracks.games],
+    ['zh', () => chinesePage, siteCopy.zh.future.tracks.games],
+  ])('%s 页面游戏模块正确展示首个上线游戏站 VastArcade 信息与外链', (_locale, getHtml, gamesCopy) => {
+    const html = getHtml();
+    const gamesArticle = getFutureTrack(html, 'games');
+
+    expect(gamesArticle).toContain(gamesCopy.title);
+    expect(gamesArticle).toContain(gamesCopy.site!.name);
+    expect(gamesArticle).toContain(gamesCopy.site!.badge);
+    expect(gamesArticle).toContain(gamesCopy.site!.description);
+    expect(gamesArticle).toContain(gamesCopy.site!.cta);
+    expect(gamesArticle).toContain(`href="${futureTrackFacts.games.firstSite.url}"`);
+    for (const highlight of gamesCopy.site!.highlights) {
+      expect(gamesArticle).toContain(highlight);
     }
   });
 
