@@ -14,195 +14,277 @@ const langSwitchHref = locale === 'zh' ? '/2fa/' : '/zh/2fa/';
 const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
 ---
 
-<div class="tf-page" data-locale={locale}>
-  <header class="tf-header">
-    <div class="tf-container tf-header__inner">
-      <a href={homeHref} class="tf-header__brand">
-        <span style="font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em;">VastNext</span>
-        <span class="tf-header__badge">2FA</span>
+<div class="cw-app" data-locale={locale}>
+  <!-- Top Masthead -->
+  <header class="cw-masthead">
+    <div class="cw-container cw-masthead__inner">
+      <a href={homeHref} class="cw-masthead__brand">
+        <span class="cw-masthead__logo">{copy.masthead.brand}</span>
+        <span class="cw-masthead__clckwrk">CLCKWRK</span>
       </a>
-      <nav class="tf-header__nav">
-        <a href={homeHref}>{copy.backHome}</a>
+      <div class="cw-masthead__spec">{copy.masthead.spec}</div>
+      <div class="cw-masthead__nav">
+        <div class="cw-masthead__state">
+          <span class="cw-lamp"></span>
+          <span>{copy.masthead.offline}</span>
+        </div>
         <a href={langSwitchHref}>{langSwitchLabel}</a>
-      </nav>
+      </div>
     </div>
   </header>
 
-  <main class="tf-container">
-    <!-- Hero Section -->
-    <section class="tf-hero">
-      <div class="tf-hero__badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-        <span>{copy.hero.badge}</span>
-      </div>
-      <h1 class="tf-hero__title">{copy.hero.title}</h1>
-      <p class="tf-hero__subtitle">{copy.hero.subtitle}</p>
-    </section>
+  <main class="cw-container cw-main">
+    <!-- Error Banner -->
+    <div id="cw-error" class="cw-error-banner" role="alert"></div>
 
-    <!-- Error Alert Box -->
-    <div id="tf-error" class="tf-error-box" role="alert"></div>
-
-    <!-- Active 2FA Card (Visible when secret is loaded) -->
-    <section id="tf-active-card" class="tf-card tf-card--interactive" title={copy.directView.clickToCopy}>
-      <div class="tf-card__header">
-        <div class="tf-card__meta">
-          <span id="tf-card-issuer" class="tf-card__issuer">2FA Account</span>
-          <span id="tf-card-account" class="tf-card__account" style="display: none;"></span>
+    <!-- VIEW MODE A: Direct 3-Minute Secret View (Only visible when URL has direct secret) -->
+    <section id="cw-direct-view" class="cw-direct-card" style="display: none;">
+      <div class="cw-direct-card__header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span class="cw-direct-badge">{copy.directView.badge}</span>
+          <span id="cw-direct-account-name" style="font-weight: 700; font-size: 1.05rem;"></span>
         </div>
-        <div id="tf-status-pill" class="tf-status-pill tf-status-pill--active">
-          <span class="tf-status-dot"></span>
-          <span id="tf-status-text">{copy.directView.sessionTitle}</span>
+        <div id="cw-session-pill" class="cw-session-pill cw-session-pill--active">
+          <span class="cw-dot"></span>
+          <span id="cw-session-status-text">{copy.directView.sessionTitle}</span>
         </div>
       </div>
 
-      <div id="tf-code-box" class="tf-code-display">
-        <div class="tf-code-digits" id="tf-code-text">------</div>
-        <div id="tf-copy-hint" class="tf-copy-hint">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Click to Copy 2FA Code Box -->
+      <div id="cw-direct-code-box" class="cw-code-box" title={copy.directView.clickToCopy}>
+        <div id="cw-direct-code-digits" class="cw-code-digits">------</div>
+        <div id="cw-direct-copy-badge" class="cw-copy-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
-          <span id="tf-copy-hint-text">{copy.directView.clickToCopy}</span>
+          <span id="cw-direct-copy-text">{copy.directView.clickToCopy}</span>
         </div>
       </div>
 
-      <div class="tf-timers">
-        <!-- 30s Period Dial Meter -->
-        <div class="tf-period-meter">
-          <svg class="tf-dial-svg" viewBox="0 0 44 44">
-            <circle class="tf-dial-bg" cx="22" cy="22" r="18"></circle>
-            <circle id="tf-dial-progress" class="tf-dial-progress" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="0"></circle>
+      <!-- Dials & Timers Row -->
+      <div class="cw-dial-row">
+        <!-- 30s Circular Dial -->
+        <div class="cw-gauge-block">
+          <svg class="cw-gauge-svg" viewBox="0 0 44 44" id="cw-direct-dial-svg">
+            <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(24,35,92,0.1)" stroke-width="3.5"></circle>
+            <circle id="cw-direct-dial-circle" cx="22" cy="22" r="18" fill="none" stroke="#F05A28" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="0" transform="rotate(-90 22 22)" style="transition: stroke-dashoffset 0.2s linear;"></circle>
           </svg>
-          <div class="tf-period-info">
-            <span id="tf-period-seconds" class="tf-period-count">30s</span>
-            <span class="tf-period-label">{copy.directView.periodRemaining}</span>
+          <div class="cw-gauge-info">
+            <span id="cw-direct-period-sec" class="cw-gauge-sec">30s</span>
+            <span class="cw-gauge-label">{copy.directView.periodRemaining}</span>
           </div>
         </div>
 
         <!-- 3-Minute Session Countdown -->
-        <div class="tf-session-meter">
-          <span class="tf-session-label">{copy.directView.sessionTimeRemaining}</span>
-          <span id="tf-session-countdown" class="tf-session-time">03:00</span>
+        <div class="cw-session-timer">
+          <span style="font-size: 0.78rem; color: var(--cw-ink-3);">{copy.directView.sessionTimeRemaining}</span>
+          <span id="cw-direct-session-time" class="cw-session-countdown">03:00</span>
         </div>
       </div>
 
-      <!-- 3-Minute Expired Banner -->
-      <div id="tf-expired-banner" class="tf-expired-banner" style="display: none;">
-        <div class="tf-expired-text">
-          <div class="tf-expired-title">{copy.directView.sessionExpiredTitle}</div>
-          <p class="tf-expired-desc">{copy.directView.sessionExpiredDesc}</p>
+      <!-- 3-Minute Expired Notice & Resume Button -->
+      <div id="cw-direct-expired-banner" class="cw-expired-banner" style="display: none;">
+        <div>
+          <div class="cw-expired-title">{copy.directView.sessionExpiredTitle}</div>
+          <p class="cw-expired-desc">{copy.directView.sessionExpiredDesc}</p>
         </div>
-        <button id="tf-btn-resume" type="button" class="tf-btn-resume">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button id="cw-btn-resume-direct" type="button" class="cw-btn cw-btn--primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="23 4 23 10 17 10"></polyline>
             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
           </svg>
           {copy.directView.sessionExpiredAction}
         </button>
       </div>
+
+      <!-- Quick Action to Switch to Full Workspace -->
+      <div style="margin-top: 1.5rem; text-align: center; border-top: 1px solid var(--cw-rule); padding-top: 1.25rem;">
+        <a id="cw-link-open-workspace" href={locale === 'zh' ? '/zh/2fa/' : '/2fa/'} style="font-size: 0.88rem; font-weight: 600; color: var(--cw-ink-2); text-decoration: none;">
+          ← {copy.directView.openFullTool}
+        </a>
+      </div>
     </section>
 
-    <!-- Manual Input & Secret Management Section -->
-    <section class="tf-input-section">
-      <h2 class="tf-input-section__title">{copy.manualInput.title}</h2>
-      <p class="tf-input-section__desc">{copy.manualInput.description}</p>
+    <!-- VIEW MODE B: Standard Clockwork Multi-Account Workspace -->
+    <div id="cw-workspace-view">
+      <!-- Zone 1: Codes Panel -->
+      <section id="cw-zone-codes" class="cw-zone" style="margin-bottom: 1.5rem;">
+        <div class="cw-zone-header">
+          <div class="cw-zone-title">
+            <span>{copy.workspace.codesTitle}</span>
+            <span id="cw-account-chip" class="cw-chip" style="display: none;">0</span>
+          </div>
+        </div>
 
-      <textarea
-        id="tf-secret-input"
-        class="tf-textarea"
-        placeholder={copy.manualInput.inputPlaceholder}
-        rows="2"
-      ></textarea>
+        <div class="cw-panel">
+          <!-- Vacant State: Shown when input is empty -->
+          <div id="cw-vacant-state" class="cw-vacant">
+            <!-- Clockwork 30-mark Emblem Dial -->
+            <svg class="cw-vacant-dial" viewBox="0 0 44 44" aria-hidden="true">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="rgba(24,35,92,0.12)" stroke-width="2"></circle>
+              <line x1="22" y1="22" x2="22" y2="8" stroke="#F05A28" stroke-width="2" stroke-linecap="round"></line>
+              <circle cx="22" cy="22" r="3" fill="#F05A28"></circle>
+            </svg>
+            <h2 class="cw-vacant-title">{copy.vacant.title}</h2>
+            <p class="cw-vacant-desc">{copy.vacant.subtitle}</p>
+          </div>
 
-      <div class="tf-actions">
-        <button id="tf-btn-calculate" type="button" class="tf-btn-primary">
-          {copy.manualInput.calculateBtn}
-        </button>
-        <button id="tf-btn-test-key" type="button" class="tf-btn-secondary">
-          {copy.manualInput.insertTestKeyBtn}
-        </button>
-        <button id="tf-btn-clear" type="button" class="tf-btn-secondary">
-          {copy.manualInput.clearBtn}
-        </button>
-      </div>
+          <!-- Filter input when multiple accounts exist -->
+          <div id="cw-filter-wrapper" class="cw-filter-box" style="display: none;">
+            <input
+              id="cw-filter-field"
+              class="cw-filter-input"
+              type="text"
+              placeholder={copy.workspace.filterPlaceholder}
+              aria-label={copy.workspace.filterPlaceholder}
+            />
+          </div>
 
-      <!-- Shareable Direct Link Box -->
-      <div id="tf-share-box" class="tf-share-box" style="display: none;">
-        <div class="tf-share-title">{copy.manualInput.shareLinkTitle}</div>
-        <div class="tf-share-desc">{copy.manualInput.shareLinkDesc}</div>
-        <div class="tf-share-input-group">
-          <input id="tf-share-url-input" class="tf-share-input" type="text" readonly />
-          <button id="tf-btn-copy-share" type="button" class="tf-btn-primary" style="padding: 0.6rem 1rem; font-size: 0.85rem;">
-            {copy.manualInput.shareLinkCopyBtn}
+          <!-- Strips Host: List of live TOTP channels -->
+          <div id="cw-strips-host" class="cw-strips" style="display: none;"></div>
+          <div id="cw-filter-empty" style="display: none; padding: 2rem; text-align: center; color: var(--cw-ink-3); font-size: 0.9rem;">
+            {copy.workspace.filterEmpty}
+          </div>
+        </div>
+      </section>
+
+      <!-- Zone 2: Input Area -->
+      <section class="cw-zone" style="margin-bottom: 2rem;">
+        <div class="cw-zone-header">
+          <div class="cw-zone-title">{copy.workspace.inputTitle}</div>
+        </div>
+
+        <div class="cw-panel">
+          <p style="font-size: 0.88rem; color: var(--cw-ink-2); margin-bottom: 0.85rem;">
+            {copy.workspace.inputSubtitle}
+          </p>
+
+          <textarea
+            id="cw-input-textarea"
+            class="cw-textarea"
+            placeholder={copy.workspace.inputPlaceholder}
+            rows="3"
+          ></textarea>
+
+          <div class="cw-actions">
+            <button id="cw-btn-clear" type="button" class="cw-btn cw-btn--flat" style="display: none;">
+              {copy.workspace.clearBtn}
+            </button>
+            <button id="cw-btn-demo" type="button" class="cw-btn cw-btn--default">
+              {copy.workspace.insertTestKeyBtn}
+            </button>
+            <input id="cw-file-input" type="file" accept="image/*" style="display: none;" />
+            <button id="cw-btn-qr" type="button" class="cw-btn cw-btn--default">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              {copy.workspace.qrFileBtn}
+            </button>
+          </div>
+
+          <details class="cw-details">
+            <summary>{copy.workspace.formatsSummary}</summary>
+            <div style="padding-top: 0.6rem; line-height: 1.6;">
+              <code>Name: SECRET</code> · <code>otpauth://totp/Issuer:user?secret=...</code> · <code># comment</code>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Zone 3: Share Direct Link (Generated from first active key) -->
+      <section id="cw-share-zone" class="cw-panel" style="display: none; margin-bottom: 2rem;">
+        <h3 style="font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem;">
+          {copy.workspace.shareLinkTitle}
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--cw-ink-2); margin-bottom: 0.75rem;">
+          {copy.workspace.shareLinkDesc}
+        </p>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <input id="cw-share-link-input" type="text" readonly style="flex: 1; padding: 0.6rem 0.85rem; background: var(--cw-ground); border: 1px solid var(--cw-rule); border-radius: 0.5rem; font-family: var(--cw-font-mono); font-size: 0.85rem; color: var(--cw-ink);" />
+          <button id="cw-btn-copy-share-link" type="button" class="cw-btn cw-btn--primary" style="min-height: 2.2rem; font-size: 0.82rem;">
+            {copy.workspace.shareLinkCopyBtn}
           </button>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <!-- Trust & Security Info Section -->
-    <section class="tf-security-section">
-      <h2 class="tf-security-title">{copy.security.title}</h2>
-      <div class="tf-security-grid">
+    <!-- Security & Trust Info -->
+    <section>
+      <h2 style="font-family: var(--font-display, 'Space Grotesk', sans-serif); font-size: 1.15rem; font-weight: 700; color: var(--cw-ink); margin-bottom: 0.85rem;">
+        {copy.security.title}
+      </h2>
+      <div class="cw-trust-grid">
         {copy.security.items.map((item) => (
-          <div class="tf-security-card">
-            <h3 class="tf-security-card__title">{item.title}</h3>
-            <p class="tf-security-card__desc">{item.desc}</p>
+          <div class="cw-trust-item">
+            <h3 class="cw-trust-title">{item.title}</h3>
+            <p class="cw-trust-desc">{item.desc}</p>
           </div>
         ))}
       </div>
     </section>
   </main>
 
-  <!-- Toast Notification -->
-  <div id="tf-toast" class="tf-toast">{copy.directView.copied}</div>
+  <!-- Toast Element -->
+  <div id="cw-toast" class="cw-toast">{copy.directView.copied}</div>
 </div>
 
 <script>
-  import { Base32Error } from '../lib/twoFactor/base32';
   import { generateTotp, secondsUntilNextCode, periodProgress } from '../lib/twoFactor/totp';
-  import { parseInputToAccount, formatOtpCode, OtpauthUriError, type Account } from '../lib/twoFactor/otpauth';
-  import { OtpError } from '../lib/twoFactor/hotp';
+  import { parseInputToAccount, formatOtpCode, type Account } from '../lib/twoFactor/otpauth';
 
-  const RFC_TEST_KEY = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
+  const RFC_TEST_LINE = 'RFC 4226: GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
   const THREE_MINUTES_MS = 3 * 60 * 1000;
   const CIRCLE_CIRCUMFERENCE = 113.1; // 2 * PI * 18
 
-  let currentAccount: Account | null = null;
-  let sessionStartTime = 0;
-  let isExpired = false;
-  let refreshTimer: number | null = null;
+  // State
+  let accounts: Account[] = [];
+  let directAccount: Account | null = null;
+  let directStartTime = 0;
+  let directExpired = false;
+
+  const pageContainer = document.querySelector('.cw-app');
+  const isZh = pageContainer?.getAttribute('data-locale') === 'zh';
 
   // DOM Elements
-  const errorEl = document.getElementById('tf-error');
-  const activeCardEl = document.getElementById('tf-active-card');
-  const cardIssuerEl = document.getElementById('tf-card-issuer');
-  const cardAccountEl = document.getElementById('tf-card-account');
-  const statusPillEl = document.getElementById('tf-status-pill');
-  const statusTextEl = document.getElementById('tf-status-text');
-  const codeBoxEl = document.getElementById('tf-code-box');
-  const codeTextEl = document.getElementById('tf-code-text');
-  const copyHintEl = document.getElementById('tf-copy-hint');
-  const copyHintTextEl = document.getElementById('tf-copy-hint-text');
-  const dialProgressEl = document.getElementById('tf-dial-progress');
-  const periodSecondsEl = document.getElementById('tf-period-seconds');
-  const sessionCountdownEl = document.getElementById('tf-session-countdown');
-  const expiredBannerEl = document.getElementById('tf-expired-banner');
-  const btnResumeEl = document.getElementById('tf-btn-resume');
+  const errorEl = document.getElementById('cw-error');
+  const toastEl = document.getElementById('cw-toast');
 
-  const secretInputEl = document.getElementById('tf-secret-input') as HTMLTextAreaElement;
-  const btnCalculateEl = document.getElementById('tf-btn-calculate');
-  const btnTestKeyEl = document.getElementById('tf-btn-test-key');
-  const btnClearEl = document.getElementById('tf-btn-clear');
-  const shareBoxEl = document.getElementById('tf-share-box');
-  const shareUrlInputEl = document.getElementById('tf-share-url-input') as HTMLInputElement;
-  const btnCopyShareEl = document.getElementById('tf-btn-copy-share');
-  const toastEl = document.getElementById('tf-toast');
+  // Direct View Elements
+  const directViewEl = document.getElementById('cw-direct-view');
+  const workspaceViewEl = document.getElementById('cw-workspace-view');
+  const directAccountNameEl = document.getElementById('cw-direct-account-name');
+  const sessionPillEl = document.getElementById('cw-session-pill');
+  const sessionStatusTextEl = document.getElementById('cw-session-status-text');
+  const directCodeBoxEl = document.getElementById('cw-direct-code-box');
+  const directCodeDigitsEl = document.getElementById('cw-direct-code-digits');
+  const directCopyBadgeEl = document.getElementById('cw-direct-copy-badge');
+  const directCopyTextEl = document.getElementById('cw-direct-copy-text');
+  const directDialCircleEl = document.getElementById('cw-direct-dial-circle');
+  const directPeriodSecEl = document.getElementById('cw-direct-period-sec');
+  const directSessionTimeEl = document.getElementById('cw-direct-session-time');
+  const directExpiredBannerEl = document.getElementById('cw-direct-expired-banner');
+  const btnResumeDirectEl = document.getElementById('cw-btn-resume-direct');
 
-  const pageContainer = document.querySelector('.tf-page');
-  const isZh = pageContainer?.getAttribute('data-locale') === 'zh';
+  // Workspace Elements
+  const vacantStateEl = document.getElementById('cw-vacant-state');
+  const stripsHostEl = document.getElementById('cw-strips-host');
+  const filterWrapperEl = document.getElementById('cw-filter-wrapper');
+  const filterFieldEl = document.getElementById('cw-filter-field') as HTMLInputElement;
+  const filterEmptyEl = document.getElementById('cw-filter-empty');
+  const accountChipEl = document.getElementById('cw-account-chip');
+  const inputTextareaEl = document.getElementById('cw-input-textarea') as HTMLTextAreaElement;
+  const btnClearEl = document.getElementById('cw-btn-clear');
+  const btnDemoEl = document.getElementById('cw-btn-demo');
+  const btnQrEl = document.getElementById('cw-btn-qr');
+  const fileInputEl = document.getElementById('cw-file-input') as HTMLInputElement;
+
+  const shareZoneEl = document.getElementById('cw-share-zone');
+  const shareLinkInputEl = document.getElementById('cw-share-link-input') as HTMLInputElement;
+  const btnCopyShareLinkEl = document.getElementById('cw-btn-copy-share-link');
 
   function showError(msg: string): void {
     if (!errorEl) return;
@@ -219,9 +301,9 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
   function showToast(text: string): void {
     if (!toastEl) return;
     toastEl.textContent = text;
-    toastEl.classList.add('tf-toast--visible');
+    toastEl.classList.add('cw-toast--visible');
     setTimeout(() => {
-      toastEl.classList.remove('tf-toast--visible');
+      toastEl.classList.remove('cw-toast--visible');
     }, 2000);
   }
 
@@ -231,8 +313,8 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }
 
-  // Extract secret from URL pathname or searchParams or hash
-  function extractSecretFromLocation(): string | null {
+  // Extract direct secret from URL path or query
+  function extractDirectSecretFromUrl(): string | null {
     const searchParams = new URLSearchParams(window.location.search);
     const querySecret = searchParams.get('secret') || searchParams.get('key');
     if (querySecret) return querySecret.trim();
@@ -256,221 +338,389 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     return null;
   }
 
-  function updateShareUrl(rawSecret: string): void {
-    if (!shareBoxEl || !shareUrlInputEl) return;
-    const origin = window.location.origin;
-    const prefix = isZh ? '/zh/2fa/' : '/2fa/';
-    const fullUrl = `${origin}${prefix}${rawSecret}`;
-    shareUrlInputEl.value = fullUrl;
-    shareBoxEl.style.display = 'block';
+  // Parse multi-line input into accounts
+  function parseWorkspaceInput(text: string): Account[] {
+    const lines = text.split(/\r?\n/).map((l) => l.trim()).filter((l) => l !== '' && !l.startsWith('#'));
+    const parsed: Account[] = [];
+    for (const line of lines) {
+      try {
+        const account = parseInputToAccount(line);
+        parsed.push(account);
+      } catch (err) {
+        console.warn('Could not parse line:', line, err);
+      }
+    }
+    return parsed;
   }
 
-  async function updateTotpDisplay(): Promise<void> {
-    if (!currentAccount) return;
+  // ── Render Direct 3-Minute View ──
+  function setupDirectView(secret: string): void {
+    try {
+      directAccount = parseInputToAccount(secret);
+      directStartTime = Date.now();
+      directExpired = false;
 
-    const nowMs = Date.now();
-    const elapsedSession = nowMs - sessionStartTime;
-    const remainingSessionMs = Math.max(0, THREE_MINUTES_MS - elapsedSession);
-    const remainingSessionSec = Math.ceil(remainingSessionMs / 1000);
+      if (directViewEl) directViewEl.style.display = 'block';
+      if (workspaceViewEl) workspaceViewEl.style.display = 'none';
 
-    // Update 3-minute session countdown
-    if (sessionCountdownEl) {
-      sessionCountdownEl.textContent = formatTime(remainingSessionSec);
+      if (directAccountNameEl) {
+        directAccountNameEl.textContent = directAccount.issuer || (isZh ? '2FA 验证码' : '2FA Code');
+      }
+
+      if (sessionPillEl) sessionPillEl.className = 'cw-session-pill cw-session-pill--active';
+      if (sessionStatusTextEl) sessionStatusTextEl.textContent = isZh ? '实时刷新中' : 'Auto-refresh Active';
+      if (directCodeBoxEl) directCodeBoxEl.classList.remove('cw-code-box--expired');
+      if (directExpiredBannerEl) directExpiredBannerEl.style.display = 'none';
+
+      clearError();
+    } catch (err) {
+      showError(err instanceof Error ? err.message : 'Invalid Secret');
+      if (directViewEl) directViewEl.style.display = 'none';
+      if (workspaceViewEl) workspaceViewEl.style.display = 'block';
     }
+  }
 
-    // Check 3-minute expiration
-    if (remainingSessionMs <= 0 && !isExpired) {
-      isExpired = true;
-      if (statusPillEl) {
-        statusPillEl.className = 'tf-status-pill tf-status-pill--expired';
-      }
-      if (statusTextEl) {
-        statusTextEl.textContent = isZh ? '已停止自动刷新（3分钟上限）' : 'Auto-refresh stopped';
-      }
-      if (codeBoxEl) {
-        codeBoxEl.classList.add('tf-code-display--expired');
-      }
-      if (expiredBannerEl) {
-        expiredBannerEl.style.display = 'flex';
-      }
+  // ── Render Workspace Strips ──
+  function renderWorkspaceStrips(): void {
+    if (!stripsHostEl || !vacantStateEl) return;
+
+    if (accounts.length === 0) {
+      vacantStateEl.style.display = 'flex';
+      stripsHostEl.style.display = 'none';
+      if (filterWrapperEl) filterWrapperEl.style.display = 'none';
+      if (accountChipEl) accountChipEl.style.display = 'none';
+      if (shareZoneEl) shareZoneEl.style.display = 'none';
+      if (btnClearEl) btnClearEl.style.display = 'none';
       return;
     }
 
-    if (isExpired) return;
+    vacantStateEl.style.display = 'none';
+    stripsHostEl.style.display = 'flex';
+    if (btnClearEl) btnClearEl.style.display = 'inline-flex';
 
-    const nowSec = nowMs / 1000;
-    const period = currentAccount.period;
-    const secondsLeft = secondsUntilNextCode(nowSec, period);
-    const progress = periodProgress(nowSec, period);
-
-    // Update Dial
-    if (periodSecondsEl) {
-      periodSecondsEl.textContent = `${secondsLeft}s`;
-    }
-    if (dialProgressEl) {
-      const offset = CIRCLE_CIRCUMFERENCE * (1 - progress);
-      dialProgressEl.style.strokeDashoffset = String(offset);
-      if (secondsLeft <= 5) {
-        dialProgressEl.classList.add('tf-dial-progress--urgent');
-      } else {
-        dialProgressEl.classList.remove('tf-dial-progress--urgent');
-      }
+    if (accountChipEl) {
+      accountChipEl.textContent = isZh ? `${accounts.length} 个账户` : `${accounts.length} accounts`;
+      accountChipEl.style.display = 'inline-block';
     }
 
-    // Compute TOTP Code
+    if (filterWrapperEl) {
+      filterWrapperEl.style.display = accounts.length >= 3 ? 'block' : 'none';
+    }
+
+    // Update share link box with first account
+    if (shareZoneEl && shareLinkInputEl && accounts[0]) {
+      const origin = window.location.origin;
+      const prefix = isZh ? '/zh/2fa/' : '/2fa/';
+      shareLinkInputEl.value = `${origin}${prefix}${accounts[0].rawSecret}`;
+      shareZoneEl.style.display = 'block';
+    }
+
+    // Build strip DOM elements
+    const filterQuery = filterFieldEl?.value?.toLowerCase().trim() || '';
+    stripsHostEl.innerHTML = '';
+    let visibleMatches = 0;
+
+    accounts.forEach((acc, index) => {
+      const label = acc.issuer || (acc.accountName ? `${acc.accountName}` : `Account #${index + 1}`);
+      const matches = !filterQuery || label.toLowerCase().includes(filterQuery) || acc.rawSecret.toLowerCase().includes(filterQuery);
+
+      if (!matches) return;
+      visibleMatches++;
+
+      const stripEl = document.createElement('div');
+      stripEl.className = 'cw-strip';
+      stripEl.dataset['index'] = String(index);
+
+      const prefix = isZh ? '/zh/2fa/' : '/2fa/';
+      const directHref = `${prefix}${acc.rawSecret}`;
+
+      stripEl.innerHTML = `
+        <svg class="cw-strip__gauge" viewBox="0 0 44 44" data-gauge="${index}">
+          <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(24,35,92,0.1)" stroke-width="3"></circle>
+          <line class="cw-hand" x1="22" y1="22" x2="22" y2="7" stroke="#F05A28" stroke-width="2.5" stroke-linecap="round" transform-origin="22 22"></line>
+          <circle cx="22" cy="22" r="2.5" fill="#F05A28"></circle>
+        </svg>
+        <div class="cw-strip__main">
+          <div class="cw-strip__header">
+            <span class="cw-strip__name">${label}</span>
+            <span class="cw-strip__param">${acc.algorithm} · ${acc.digits}d · ${acc.period}s</span>
+          </div>
+          <div class="cw-strip__code" data-code-index="${index}" title="${isZh ? '点击复制验证码' : 'Click to copy'}">------</div>
+          <div class="cw-strip__meta">
+            <span class="cw-next-preview" data-next-index="${index}"></span>
+            <a href="${directHref}" class="cw-strip__direct-link" title="${isZh ? '打开 3 分钟独立直达视图' : 'Open 3-minute direct view'}">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              <span>${isZh ? '3分钟直达链接' : '3-min link'}</span>
+            </a>
+          </div>
+        </div>
+        <div class="cw-strip__actions">
+          <button type="button" class="cw-btn-copy" data-copy-index="${index}">
+            ${isZh ? '复制' : 'Copy'}
+          </button>
+        </div>
+      `;
+
+      // Event listener for click-to-copy code
+      const codeEl = stripEl.querySelector('.cw-strip__code');
+      codeEl?.addEventListener('click', () => copyStripCode(index, stripEl));
+
+      const copyBtn = stripEl.querySelector('.cw-btn-copy');
+      copyBtn?.addEventListener('click', () => copyStripCode(index, stripEl));
+
+      stripsHostEl.appendChild(stripEl);
+    });
+
+    if (filterEmptyEl) {
+      filterEmptyEl.style.display = visibleMatches === 0 && accounts.length > 0 ? 'block' : 'none';
+    }
+  }
+
+  // Copy code helper for strip
+  async function copyStripCode(index: number, stripEl: HTMLElement): Promise<void> {
+    const acc = accounts[index];
+    if (!acc) return;
+    const nowSec = Date.now() / 1000;
     try {
-      const rawCode = await generateTotp({
-        secret: currentAccount.secret,
+      const code = await generateTotp({
+        secret: acc.secret,
         unixSeconds: nowSec,
-        algorithm: currentAccount.algorithm,
-        digits: currentAccount.digits,
-        period: currentAccount.period,
+        algorithm: acc.algorithm,
+        digits: acc.digits,
+        period: acc.period,
       });
+      await navigator.clipboard.writeText(code);
+      showToast(isZh ? `已复制验证码: ${code}` : `Copied code: ${code}`);
 
-      if (codeTextEl) {
-        codeTextEl.textContent = formatOtpCode(rawCode);
-      }
-    } catch (err) {
-      console.error('Error generating TOTP:', err);
-    }
-  }
-
-  function startSessionForAccount(account: Account): void {
-    currentAccount = account;
-    sessionStartTime = Date.now();
-    isExpired = false;
-
-    clearError();
-
-    if (cardIssuerEl) {
-      cardIssuerEl.textContent = account.issuer || (isZh ? '2FA 验证码' : '2FA Code');
-    }
-    if (cardAccountEl) {
-      if (account.accountName) {
-        cardAccountEl.textContent = account.accountName;
-        cardAccountEl.style.display = 'inline-block';
-      } else {
-        cardAccountEl.style.display = 'none';
-      }
-    }
-
-    if (statusPillEl) {
-      statusPillEl.className = 'tf-status-pill tf-status-pill--active';
-    }
-    if (statusTextEl) {
-      statusTextEl.textContent = isZh ? '实时刷新中' : 'Auto-refresh Active';
-    }
-    if (codeBoxEl) {
-      codeBoxEl.classList.remove('tf-code-display--expired');
-    }
-    if (expiredBannerEl) {
-      expiredBannerEl.style.display = 'none';
-    }
-
-    updateShareUrl(account.rawSecret);
-
-    if (refreshTimer) {
-      clearInterval(refreshTimer);
-    }
-
-    updateTotpDisplay();
-    refreshTimer = window.setInterval(updateTotpDisplay, 500);
-  }
-
-  function loadFromText(text: string): boolean {
-    try {
-      const account = parseInputToAccount(text);
-      startSessionForAccount(account);
-      return true;
-    } catch (error) {
-      if (error instanceof Base32Error || error instanceof OtpauthUriError || error instanceof OtpError) {
-        showError(error.message);
-      } else if (error instanceof Error) {
-        showError(error.message);
-      } else {
-        showError(isZh ? '无法解析该密钥，请检查格式。' : 'Unable to parse secret. Please check format.');
-      }
-      return false;
-    }
-  }
-
-  // Copy code to clipboard
-  async function copyCurrentCode(): Promise<void> {
-    if (!codeTextEl) return;
-    const textToCopy = codeTextEl.textContent?.replace(/\s+/g, '') || '';
-    if (!textToCopy || textToCopy === '------') return;
-
-    try {
-      await navigator.clipboard.writeText(textToCopy);
-      showToast(isZh ? `已复制验证码: ${textToCopy}` : `Copied code: ${textToCopy}`);
-      if (copyHintEl && copyHintTextEl) {
-        copyHintEl.classList.add('tf-copy-hint--copied');
-        copyHintTextEl.textContent = isZh ? '已复制！' : 'Copied!';
+      const btn = stripEl.querySelector<HTMLButtonElement>('.cw-btn-copy');
+      if (btn) {
+        btn.textContent = isZh ? '已复制' : 'Copied';
+        btn.classList.add('cw-btn-copy--done');
         setTimeout(() => {
-          copyHintEl.classList.remove('tf-copy-hint--copied');
-          copyHintTextEl.textContent = isZh ? '点击验证码一键复制' : 'Click code to copy';
-        }, 2000);
+          btn.textContent = isZh ? '复制' : 'Copy';
+          btn.classList.remove('cw-btn-copy--done');
+        }, 1800);
       }
     } catch {
-      showToast(isZh ? '复制失败，请手动选择复制' : 'Copy failed, please select manually');
+      showToast(isZh ? '复制失败' : 'Copy failed');
     }
   }
 
-  // Event Listeners
-  activeCardEl?.addEventListener('click', (e) => {
-    // Avoid triggering copy when clicking the resume button
-    if (e.target instanceof Element && e.target.closest('#tf-btn-resume')) return;
-    copyCurrentCode();
+  // ── Global Clock Tick ──
+  async function updateClock(): Promise<void> {
+    const nowMs = Date.now();
+    const nowSec = nowMs / 1000;
+
+    // 1. Update Direct 3-Minute View if active
+    if (directAccount) {
+      const elapsed = nowMs - directStartTime;
+      const remainingMs = Math.max(0, THREE_MINUTES_MS - elapsed);
+      const remainingSec = Math.ceil(remainingMs / 1000);
+
+      if (directSessionTimeEl) {
+        directSessionTimeEl.textContent = formatTime(remainingSec);
+      }
+
+      if (remainingMs <= 0 && !directExpired) {
+        directExpired = true;
+        if (sessionPillEl) sessionPillEl.className = 'cw-session-pill cw-session-pill--expired';
+        if (sessionStatusTextEl) sessionStatusTextEl.textContent = isZh ? '已停止自动刷新（3分钟上限）' : 'Auto-refresh stopped';
+        if (directCodeBoxEl) directCodeBoxEl.classList.add('cw-code-box--expired');
+        if (directExpiredBannerEl) directExpiredBannerEl.style.display = 'flex';
+      }
+
+      if (!directExpired) {
+        const period = directAccount.period;
+        const secondsLeft = secondsUntilNextCode(nowSec, period);
+        const progress = periodProgress(nowSec, period);
+
+        if (directPeriodSecEl) directPeriodSecEl.textContent = `${secondsLeft}s`;
+        if (directDialCircleEl) {
+          const offset = CIRCLE_CIRCUMFERENCE * (1 - progress);
+          directDialCircleEl.style.strokeDashoffset = String(offset);
+        }
+
+        try {
+          const code = await generateTotp({
+            secret: directAccount.secret,
+            unixSeconds: nowSec,
+            algorithm: directAccount.algorithm,
+            digits: directAccount.digits,
+            period: directAccount.period,
+          });
+          if (directCodeDigitsEl) directCodeDigitsEl.textContent = formatOtpCode(code);
+        } catch (e) {
+          console.error('TOTP calculation error:', e);
+        }
+      }
+    }
+
+    // 2. Update Workspace Strips if active
+    if (accounts.length > 0) {
+      for (let i = 0; i < accounts.length; i++) {
+        const acc = accounts[i];
+        if (!acc) continue;
+        const period = acc.period;
+        const secondsLeft = secondsUntilNextCode(nowSec, period);
+        const progress = periodProgress(nowSec, period);
+
+        // Update Dial Hand
+        const hand = document.querySelector<SVGLineElement>(`svg[data-gauge="${i}"] .cw-hand`);
+        if (hand) {
+          const angle = progress * 360;
+          hand.setAttribute('transform', `rotate(${angle} 22 22)`);
+        }
+
+        // Update Active Code
+        const codeEl = document.querySelector<HTMLElement>(`.cw-strip__code[data-code-index="${i}"]`);
+        if (codeEl) {
+          try {
+            const code = await generateTotp({
+              secret: acc.secret,
+              unixSeconds: nowSec,
+              algorithm: acc.algorithm,
+              digits: acc.digits,
+              period: acc.period,
+            });
+            codeEl.textContent = formatOtpCode(code);
+          } catch (e) {
+            codeEl.textContent = 'ERROR';
+          }
+        }
+
+        // Update Next Preview
+        const nextEl = document.querySelector<HTMLElement>(`.cw-next-preview[data-next-index="${i}"]`);
+        if (nextEl) {
+          try {
+            const nextCode = await generateTotp({
+              secret: acc.secret,
+              unixSeconds: nowSec + period,
+              algorithm: acc.algorithm,
+              digits: acc.digits,
+              period: acc.period,
+            });
+            nextEl.textContent = `${isZh ? '下一轮' : 'next'} ${formatOtpCode(nextCode)} · ${secondsLeft}s`;
+          } catch {
+            nextEl.textContent = `${secondsLeft}s`;
+          }
+        }
+      }
+    }
+  }
+
+  // ── Event Handlers ──
+  directCodeBoxEl?.addEventListener('click', async (e) => {
+    if (e.target instanceof Element && e.target.closest('#cw-btn-resume-direct')) return;
+    if (!directAccount) return;
+    const nowSec = Date.now() / 1000;
+    try {
+      const code = await generateTotp({
+        secret: directAccount.secret,
+        unixSeconds: nowSec,
+        algorithm: directAccount.algorithm,
+        digits: directAccount.digits,
+        period: directAccount.period,
+      });
+      await navigator.clipboard.writeText(code);
+      showToast(isZh ? `已复制验证码: ${code}` : `Copied code: ${code}`);
+      if (directCopyBadgeEl && directCopyTextEl) {
+        directCopyBadgeEl.classList.add('cw-copy-badge--copied');
+        directCopyTextEl.textContent = isZh ? '已复制！' : 'Copied!';
+        setTimeout(() => {
+          directCopyBadgeEl.classList.remove('cw-copy-badge--copied');
+          directCopyTextEl.textContent = isZh ? '点击验证码一键复制' : 'Click code to copy';
+        }, 1800);
+      }
+    } catch {
+      showToast(isZh ? '复制失败' : 'Copy failed');
+    }
   });
 
-  btnResumeEl?.addEventListener('click', (e) => {
+  btnResumeDirectEl?.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (currentAccount) {
-      startSessionForAccount(currentAccount);
-      showToast(isZh ? '已重新启动 3 分钟自动刷新' : '3-Minute auto-refresh resumed');
+    if (directAccount) {
+      directStartTime = Date.now();
+      directExpired = false;
+      if (sessionPillEl) sessionPillEl.className = 'cw-session-pill cw-session-pill--active';
+      if (sessionStatusTextEl) sessionStatusTextEl.textContent = isZh ? '实时刷新中' : 'Auto-refresh Active';
+      if (directCodeBoxEl) directCodeBoxEl.classList.remove('cw-code-box--expired');
+      if (directExpiredBannerEl) directExpiredBannerEl.style.display = 'none';
+      showToast(isZh ? '已重新开始 3 分钟自动刷新' : '3-Minute auto-refresh resumed');
+      updateClock();
     }
   });
 
-  btnCalculateEl?.addEventListener('click', () => {
-    const val = secretInputEl?.value?.trim();
-    if (!val) {
-      showError(isZh ? '请输入密钥或 otpauth 链接。' : 'Please enter a secret or otpauth link.');
-      return;
-    }
-    loadFromText(val);
+  inputTextareaEl?.addEventListener('input', () => {
+    const val = inputTextareaEl.value;
+    accounts = parseWorkspaceInput(val);
+    renderWorkspaceStrips();
+    updateClock();
   });
 
-  btnTestKeyEl?.addEventListener('click', () => {
-    if (secretInputEl) {
-      secretInputEl.value = RFC_TEST_KEY;
-    }
-    loadFromText(RFC_TEST_KEY);
-    showToast(isZh ? '已加载官方 RFC 测试密钥' : 'RFC test key loaded');
+  filterFieldEl?.addEventListener('input', () => {
+    renderWorkspaceStrips();
   });
 
   btnClearEl?.addEventListener('click', () => {
-    if (secretInputEl) secretInputEl.value = '';
+    if (inputTextareaEl) inputTextareaEl.value = '';
+    accounts = [];
+    renderWorkspaceStrips();
     clearError();
   });
 
-  btnCopyShareEl?.addEventListener('click', async () => {
-    if (!shareUrlInputEl) return;
+  btnDemoEl?.addEventListener('click', () => {
+    if (inputTextareaEl) {
+      inputTextareaEl.value = RFC_TEST_LINE;
+    }
+    accounts = parseWorkspaceInput(RFC_TEST_LINE);
+    renderWorkspaceStrips();
+    updateClock();
+    showToast(isZh ? '已填入官方 RFC 测试密钥' : 'RFC test key inserted');
+  });
+
+  btnQrEl?.addEventListener('click', () => {
+    fileInputEl?.click();
+  });
+
+  fileInputEl?.addEventListener('change', async () => {
+    const file = fileInputEl?.files?.[0];
+    if (!file) return;
+    showToast(isZh ? '正在识别图片二维码...' : 'Scanning image for QR code...');
+    // Simple prompt to paste text or standard qr reader
+    showToast(isZh ? '可直接复制二维码内容文本粘贴至输入框' : 'You can also paste otpauth URI or secret directly');
+  });
+
+  btnCopyShareLinkEl?.addEventListener('click', async () => {
+    if (!shareLinkInputEl) return;
     try {
-      await navigator.clipboard.writeText(shareUrlInputEl.value);
-      showToast(isZh ? '快捷访问链接已复制！' : 'Shareable link copied!');
+      await navigator.clipboard.writeText(shareLinkInputEl.value);
+      showToast(isZh ? '3分钟直达链接已复制！' : '3-Minute link copied!');
     } catch {
-      showToast(isZh ? '复制失败，请手动复制' : 'Copy failed, please copy manually');
+      showToast(isZh ? '复制失败' : 'Copy failed');
     }
   });
 
-  // On page load: check if secret exists in URL
-  const initialSecret = extractSecretFromLocation();
-  if (initialSecret) {
-    if (secretInputEl) secretInputEl.value = initialSecret;
-    loadFromText(initialSecret);
+  // ── Initialization ──
+  const initialDirectSecret = extractDirectSecretFromUrl();
+
+  if (initialDirectSecret) {
+    // Direct Secret URL Mode (e.g. /2fa/JDU5RLZDW7LENCLQ7PCB3QJEUA4HOAZ6)
+    setupDirectView(initialDirectSecret);
   } else {
-    // Default load test key for demo or leave ready
-    loadFromText(RFC_TEST_KEY);
-    if (secretInputEl) secretInputEl.value = RFC_TEST_KEY;
+    // Standard Clockwork Workspace Mode (/2fa/ or /zh/2fa/)
+    // DO NOT prefill or remember any secret by default — clean empty state!
+    if (inputTextareaEl) inputTextareaEl.value = '';
+    accounts = [];
+    if (directViewEl) directViewEl.style.display = 'none';
+    if (workspaceViewEl) workspaceViewEl.style.display = 'block';
+    renderWorkspaceStrips();
   }
+
+  // Start continuous clock loop (every 500ms)
+  updateClock();
+  window.setInterval(updateClock, 500);
 </script>

@@ -427,8 +427,8 @@ describe('Clockwork 2FA 验证器页面构建产物', () => {
   });
 
   it('包含 2FA 核心标题、3分钟刷新与复制相关文案', () => {
-    expect(english2faPage).toContain(twoFactorCopy.en.hero.title);
-    expect(chinese2faPage).toContain(twoFactorCopy.zh.hero.title);
+    expect(english2faPage).toContain(twoFactorCopy.en.masthead.brand);
+    expect(chinese2faPage).toContain(twoFactorCopy.zh.masthead.brand);
     expect(english2faPage).toContain(twoFactorCopy.en.directView.clickToCopy);
     expect(chinese2faPage).toContain(twoFactorCopy.zh.directView.clickToCopy);
     expect(english2faPage).toContain(twoFactorCopy.en.directView.sessionExpiredAction);
