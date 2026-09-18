@@ -1,6 +1,8 @@
 ---
+import BrandMark from './BrandMark.astro';
 import '../styles/two-factor.css';
 import type { Locale } from '../content/site';
+import { siteCopy } from '../content/site';
 import { twoFactorCopy } from '../content/twoFactor';
 
 interface Props {
@@ -9,19 +11,25 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = twoFactorCopy[locale];
-const homeHref = locale === 'zh' ? '/zh/' : '/';
-const langSwitchHref = locale === 'zh' ? '/2fa/' : '/zh/2fa/';
-const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
+const isZh = locale === 'zh';
+const brandName = siteCopy[locale].brandName;
+const homeHref = isZh ? '/zh/' : '/';
+const langSwitchHref = isZh ? '/2fa/' : '/zh/2fa/';
+const langSwitchLabel = isZh ? 'English' : '中文';
 ---
 
 <div class="cw-app" data-locale={locale}>
   <!-- Top Masthead -->
   <header class="cw-masthead">
     <div class="cw-container cw-masthead__inner">
-      <a href={homeHref} class="cw-masthead__brand">
-        <span class="cw-masthead__logo">{copy.masthead.brand}</span>
-        <span class="cw-masthead__clckwrk">CLCKWRK</span>
-      </a>
+      <div class="cw-masthead__branding">
+        <a href={homeHref} class="cw-masthead__brand-link" aria-label={isZh ? `返回${brandName}首页` : 'Back to VastNext Home'}>
+          <BrandMark wordmarkText={brandName} />
+        </a>
+        <span class="cw-masthead__product-badge">
+          Clockwork
+        </span>
+      </div>
       <div class="cw-masthead__spec">{copy.masthead.spec}</div>
       <div class="cw-masthead__nav">
         <div class="cw-masthead__state">
