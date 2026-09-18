@@ -89,7 +89,20 @@
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--cw-ink);
+  text-decoration: none;
   box-shadow: 0.18rem 0.18rem 0 var(--cw-signal);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.cw-masthead__product-badge:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 0.25rem 0.25rem 0 var(--cw-signal);
+}
+
+.cw-masthead__product-badge:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0.08rem 0.08rem 0 var(--cw-signal);
 }
 
 .cw-masthead__spec {
