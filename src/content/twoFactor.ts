@@ -48,7 +48,12 @@ export interface TwoFactorCopy {
     clearBtn: string;
     insertTestKeyBtn: string;
     qrFileBtn: string;
+    pasteQrHint: string;
     formatsSummary: string;
+    storageTitle: string;
+    storageDesc: string;
+    storageCheckboxLabel: string;
+    storageClearBtn: string;
     shareLinkTitle: string;
     shareLinkDesc: string;
     shareLinkCopyBtn: string;
@@ -69,7 +74,7 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
     meta: {
       title: 'Clockwork 2FA Authenticator — VastNext',
       description:
-        'Client-side TOTP two-factor authenticator. Compute RFC 6238 codes offline, share 3-minute temporary view links, and copy with a single tap.',
+        'Client-side TOTP two-factor authenticator. Compute RFC 6238 codes offline, share 3-minute temporary view links, support localStorage & clipboard QR paste.',
     },
     masthead: {
       brand: 'Clockwork',
@@ -80,7 +85,7 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
     },
     vacant: {
       title: 'Ready for input',
-      subtitle: 'Put in a secret, an otpauth link or a QR image — nothing ever leaves this browser.',
+      subtitle: 'Put in a secret, paste an image QR code with Ctrl+V, or drag an image — nothing ever leaves this browser.',
       instructions: 'Enter one secret per line (e.g. GitHub: JBSWY3DPEHPK3PXP or raw Base32 / otpauth:// URL)',
     },
     directView: {
@@ -115,7 +120,12 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
       clearBtn: 'Clear',
       insertTestKeyBtn: 'Insert RFC Test Key',
       qrFileBtn: 'Scan QR / Image',
+      pasteQrHint: 'Tip: Press Ctrl+V anytime to paste QR code images directly from clipboard',
       formatsSummary: 'Supported formats: Name: SECRET, raw Base32, otpauth://totp/..., # comments',
+      storageTitle: 'Browser LocalStorage',
+      storageDesc: 'Optionally remember these tokens in this browser for your next visit.',
+      storageCheckboxLabel: 'Save tokens to browser LocalStorage',
+      storageClearBtn: 'Clear LocalStorage',
       shareLinkTitle: '3-Minute Temporary Direct Link',
       shareLinkDesc: 'Share or bookmark this direct link to view this 2FA code with a 3-minute auto-refresh window:',
       shareLinkCopyBtn: 'Copy Link',
@@ -129,16 +139,16 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
           desc: 'HMAC calculations happen locally in memory via browser Web Crypto API. No secrets ever leave your browser.',
         },
         {
-          title: 'Zero Storage by Default',
-          desc: 'Nothing is stored in localStorage, cookies, or IndexedDB. Close the tab and all secrets are gone.',
+          title: 'Optional Local Storage',
+          desc: 'Opt-in browser localStorage support lets you save keys locally or keep them memory-only.',
         },
         {
           title: '3-Minute Direct Link Safety',
           desc: 'Direct secret links refresh dynamically for 3 minutes before auto-pausing, preventing open screen exposure.',
         },
         {
-          title: 'Full RFC Compliance',
-          desc: 'Verified against all official standard test vectors with SHA-1, SHA-256, and SHA-512 support.',
+          title: 'Clipboard QR Auto-Decode',
+          desc: 'Seamlessly paste screenshot QR images via Ctrl+V or file drag-and-drop for instant offline decoding.',
         },
       ],
     },
@@ -148,18 +158,18 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
     meta: {
       title: 'Clockwork 2FA 验证器 — 瀚海未来',
       description:
-        '纯本地离线 2FA TOTP 双重验证码生成器。支持 RFC 6238 标准、多账户管理、3 分钟临时直达链接与全端一键点击复制。',
+        '纯本地离线 2FA TOTP 双重验证码生成器。支持 RFC 6238 标准、多账户管理、3 分钟临时直达链接、剪贴板 Ctrl+V 扫码与本地持久化存储。',
     },
     masthead: {
       brand: 'Clockwork',
       tagline: 'TOTP 动态验证器',
       spec: 'RFC 6238 · RFC 4226 · RFC 4648',
-      offline: '离线运算 · 零数据存储',
+      offline: '离线运算 · 零数据外传',
       directModeBadge: '3 分钟临时直达模式',
     },
     vacant: {
       title: '等待输入密钥',
-      subtitle: '输入密钥、otpauth 链接或上传二维码图片 — 所有数据纯本地运算，永不离开当前浏览器。',
+      subtitle: '输入密钥、使用 Ctrl+V 粘贴二维码截图或拖放图片 — 所有数据纯本地运算，永不离开当前浏览器。',
       instructions: '每行输入一个账户（例如 GitHub: JBSWY3DPEHPK3PXP 或纯 Base32 / otpauth:// 链接）',
     },
     directView: {
@@ -193,7 +203,12 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
       clearBtn: '清空',
       insertTestKeyBtn: '填入 RFC 测试密钥',
       qrFileBtn: '导入二维码图片',
+      pasteQrHint: '提示：支持直接按 Ctrl+V 粘贴包含二维码的截图或图片',
       formatsSummary: '支持格式：名称: SECRET、纯 Base32、otpauth://totp/...、# 注释行',
+      storageTitle: '本地持久化存储',
+      storageDesc: '可选择将当前 Token 保存在本浏览器的 LocalStorage 中，下次打开自动加载。',
+      storageCheckboxLabel: '保存 Token 到浏览器 LocalStorage',
+      storageClearBtn: '清除已存 Token',
       shareLinkTitle: '3 分钟专属快捷访问链接',
       shareLinkDesc: '打开或分享该链接可直接进入 3 分钟倒计时动态验证码页面：',
       shareLinkCopyBtn: '复制链接',
@@ -207,16 +222,16 @@ export const twoFactorCopy: Record<Locale, TwoFactorCopy> = {
           desc: '所有 HMAC 哈希计算全部在浏览器内存中通过原生 Web Crypto API 完成，没有任何数据外传。',
         },
         {
-          title: '默认零存储',
-          desc: '不使用 localStorage、Cookie 或数据库，关闭标签页后内存数据即刻销毁。',
+          title: '自主可控的本地存储',
+          desc: '支持选择将 Token 仅保存在本机 LocalStorage 中，也可随时一键彻底清空。',
         },
         {
           title: '3 分钟安全刷新时限',
           desc: '直达链接默认仅维护 3 分钟动态刷新，超时后自动暂停，防止屏幕长时间闲置泄露最新验证码。',
         },
         {
-          title: '严格符合 RFC 6238 & 4226',
-          desc: '通过全部官方测试用例，支持 SHA-1、SHA-256、SHA-512 与多种位数/周期配置。',
+          title: '剪贴板直接识别二维码',
+          desc: '截图后直接按 Ctrl+V 即可瞬时离线解析二维码中的 otpauth 链接并自动录入。',
         },
       ],
     },

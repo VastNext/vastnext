@@ -38,6 +38,12 @@
   margin-inline: auto;
 }
 
+/* Dragging overlay hint */
+.cw-dropping {
+  outline: 4px dashed var(--cw-signal);
+  outline-offset: -8px;
+}
+
 /* ── Masthead ── */
 .cw-masthead {
   position: sticky;
@@ -660,6 +666,44 @@
   gap: 0.6rem;
   margin-top: 0.85rem;
   flex-wrap: wrap;
+}
+
+.cw-paste-hint {
+  font-size: 0.8rem;
+  color: var(--cw-ink-3);
+  margin-top: 0.6rem;
+}
+
+/* ── LocalStorage Box ── */
+.cw-storage-box {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--cw-ground);
+  border: 1px solid var(--cw-rule);
+  border-radius: var(--cw-radius-item);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cw-storage-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cw-ink);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cw-checkbox {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--cw-signal);
+  cursor: pointer;
 }
 
 .cw-details {

@@ -150,7 +150,7 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
       </section>
 
       <!-- Zone 2: Input Area -->
-      <section class="cw-zone" style="margin-bottom: 2rem;">
+      <section class="cw-zone" style="margin-bottom: 1.5rem;">
         <div class="cw-zone-header">
           <div class="cw-zone-title">{copy.workspace.inputTitle}</div>
         </div>
@@ -183,6 +183,21 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
                 <rect x="3" y="14" width="7" height="7"></rect>
               </svg>
               {copy.workspace.qrFileBtn}
+            </button>
+          </div>
+
+          <div class="cw-paste-hint">
+            {copy.workspace.pasteQrHint}
+          </div>
+
+          <!-- LocalStorage Persistence Box -->
+          <div class="cw-storage-box">
+            <label class="cw-storage-label" for="cw-storage-toggle">
+              <input type="checkbox" id="cw-storage-toggle" class="cw-checkbox" />
+              <span>{copy.workspace.storageCheckboxLabel}</span>
+            </label>
+            <button type="button" id="cw-btn-clear-storage" class="cw-btn cw-btn--flat" style="font-size: 0.8rem; display: none;">
+              {copy.workspace.storageClearBtn}
             </button>
           </div>
 
@@ -235,10 +250,13 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
 <script>
   import { generateTotp, secondsUntilNextCode, periodProgress } from '../lib/twoFactor/totp';
   import { parseInputToAccount, formatOtpCode, type Account } from '../lib/twoFactor/otpauth';
+  import { decodeQrFromBlob } from '../lib/twoFactor/qrDecode';
 
   const RFC_TEST_LINE = 'RFC 4226: GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
   const THREE_MINUTES_MS = 3 * 60 * 1000;
   const CIRCLE_CIRCUMFERENCE = 113.1; // 2 * PI * 18
+  const STORAGE_KEY = 'vastnext_2fa_vault_secrets';
+  const STORAGE_ENABLED_KEY = 'vastnext_2fa_vault_enabled';
 
   // State
   let accounts: Account[] = [];
@@ -282,6 +300,9 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
   const btnQrEl = document.getElementById('cw-btn-qr');
   const fileInputEl = document.getElementById('cw-file-input') as HTMLInputElement;
 
+  const storageToggleEl = document.getElementById('cw-storage-toggle') as HTMLInputElement;
+  const btnClearStorageEl = document.getElementById('cw-btn-clear-storage') as HTMLButtonElement;
+
   const shareZoneEl = document.getElementById('cw-share-zone');
   const shareLinkInputEl = document.getElementById('cw-share-link-input') as HTMLInputElement;
   const btnCopyShareLinkEl = document.getElementById('cw-btn-copy-share-link');
@@ -304,13 +325,36 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     toastEl.classList.add('cw-toast--visible');
     setTimeout(() => {
       toastEl.classList.remove('cw-toast--visible');
-    }, 2000);
+    }, 2200);
   }
 
   function formatTime(seconds: number): string {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  }
+
+  // Sync with LocalStorage if enabled
+  function syncLocalStorage(): void {
+    if (!storageToggleEl) return;
+    if (storageToggleEl.checked) {
+      const val = inputTextareaEl?.value || '';
+      try {
+        localStorage.setItem(STORAGE_ENABLED_KEY, 'true');
+        localStorage.setItem(STORAGE_KEY, val);
+        if (btnClearStorageEl) btnClearStorageEl.style.display = val.trim() ? 'inline-flex' : 'none';
+      } catch (e) {
+        console.warn('LocalStorage error:', e);
+      }
+    } else {
+      try {
+        localStorage.removeItem(STORAGE_ENABLED_KEY);
+        localStorage.removeItem(STORAGE_KEY);
+        if (btnClearStorageEl) btnClearStorageEl.style.display = 'none';
+      } catch (e) {
+        console.warn('LocalStorage error:', e);
+      }
+    }
   }
 
   // Extract direct secret from URL path or query
@@ -351,6 +395,38 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
       }
     }
     return parsed;
+  }
+
+  // Append secret or otpauth URI to textarea
+  function appendSecretToInput(newSecret: string): void {
+    if (!inputTextareaEl) return;
+    const existing = inputTextareaEl.value.trim();
+    if (!existing) {
+      inputTextareaEl.value = newSecret;
+    } else {
+      inputTextareaEl.value = `${existing}\n${newSecret}`;
+    }
+    accounts = parseWorkspaceInput(inputTextareaEl.value);
+    renderWorkspaceStrips();
+    updateClock();
+    syncLocalStorage();
+    clearError();
+  }
+
+  // Handle QR image file (from clipboard Ctrl+V, drag & drop, or file picker)
+  async function handleImageFile(file: Blob): Promise<void> {
+    showToast(isZh ? '正在识别图片二维码...' : 'Decoding QR code from image...');
+    try {
+      const decodedText = await decodeQrFromBlob(file);
+      if (decodedText) {
+        appendSecretToInput(decodedText);
+        showToast(isZh ? '成功识别二维码并已自动录入！' : 'QR code decoded and added!');
+      } else {
+        showError(isZh ? '未在图片中检测到有效的二维码。' : 'No valid QR code detected in image.');
+      }
+    } catch (err) {
+      showError(isZh ? '二维码解析发生错误，请确认图片清晰度。' : 'Failed to decode QR code from image.');
+    }
   }
 
   // ── Render Direct 3-Minute View ──
@@ -659,6 +735,28 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     accounts = parseWorkspaceInput(val);
     renderWorkspaceStrips();
     updateClock();
+    syncLocalStorage();
+  });
+
+  storageToggleEl?.addEventListener('change', () => {
+    syncLocalStorage();
+    if (storageToggleEl.checked) {
+      showToast(isZh ? '已启用本地存储，Token 将保存在本浏览器' : 'LocalStorage enabled');
+    } else {
+      showToast(isZh ? '已关闭本地存储' : 'LocalStorage disabled');
+    }
+  });
+
+  btnClearStorageEl?.addEventListener('click', () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_ENABLED_KEY);
+      if (storageToggleEl) storageToggleEl.checked = false;
+      if (btnClearStorageEl) btnClearStorageEl.style.display = 'none';
+      showToast(isZh ? '已清空本地存储中的 Token' : 'Tokens cleared from LocalStorage');
+    } catch (e) {
+      console.warn('Clear storage error:', e);
+    }
   });
 
   filterFieldEl?.addEventListener('input', () => {
@@ -670,6 +768,7 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     accounts = [];
     renderWorkspaceStrips();
     clearError();
+    syncLocalStorage();
   });
 
   btnDemoEl?.addEventListener('click', () => {
@@ -679,6 +778,7 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     accounts = parseWorkspaceInput(RFC_TEST_LINE);
     renderWorkspaceStrips();
     updateClock();
+    syncLocalStorage();
     showToast(isZh ? '已填入官方 RFC 测试密钥' : 'RFC test key inserted');
   });
 
@@ -689,9 +789,47 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
   fileInputEl?.addEventListener('change', async () => {
     const file = fileInputEl?.files?.[0];
     if (!file) return;
-    showToast(isZh ? '正在识别图片二维码...' : 'Scanning image for QR code...');
-    // Simple prompt to paste text or standard qr reader
-    showToast(isZh ? '可直接复制二维码内容文本粘贴至输入框' : 'You can also paste otpauth URI or secret directly');
+    await handleImageFile(file);
+    fileInputEl.value = '';
+  });
+
+  // ── Clipboard (Ctrl+V) Image & Drag-Drop Handling ──
+  document.addEventListener('paste', async (event: ClipboardEvent) => {
+    const items = event.clipboardData?.items;
+    if (!items) return;
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item && item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (file) {
+          event.preventDefault();
+          await handleImageFile(file);
+          return;
+        }
+      }
+    }
+  });
+
+  document.addEventListener('dragover', (event: DragEvent) => {
+    if (event.dataTransfer?.types.includes('Files')) {
+      event.preventDefault();
+      document.body.classList.add('cw-dropping');
+    }
+  });
+
+  document.addEventListener('dragleave', (event: DragEvent) => {
+    if (event.relatedTarget === null) {
+      document.body.classList.remove('cw-dropping');
+    }
+  });
+
+  document.addEventListener('drop', async (event: DragEvent) => {
+    document.body.classList.remove('cw-dropping');
+    const file = [...(event.dataTransfer?.files ?? [])].find((f) => f.type.startsWith('image/'));
+    if (file) {
+      event.preventDefault();
+      await handleImageFile(file);
+    }
   });
 
   btnCopyShareLinkEl?.addEventListener('click', async () => {
@@ -712,11 +850,28 @@ const langSwitchLabel = locale === 'zh' ? 'English' : '中文';
     setupDirectView(initialDirectSecret);
   } else {
     // Standard Clockwork Workspace Mode (/2fa/ or /zh/2fa/)
-    // DO NOT prefill or remember any secret by default — clean empty state!
-    if (inputTextareaEl) inputTextareaEl.value = '';
-    accounts = [];
     if (directViewEl) directViewEl.style.display = 'none';
     if (workspaceViewEl) workspaceViewEl.style.display = 'block';
+
+    // Check if user has saved tokens in localStorage
+    try {
+      const storageEnabled = localStorage.getItem(STORAGE_ENABLED_KEY) === 'true';
+      const savedSecrets = localStorage.getItem(STORAGE_KEY);
+      if (storageEnabled && savedSecrets && savedSecrets.trim()) {
+        if (storageToggleEl) storageToggleEl.checked = true;
+        if (btnClearStorageEl) btnClearStorageEl.style.display = 'inline-flex';
+        if (inputTextareaEl) inputTextareaEl.value = savedSecrets;
+        accounts = parseWorkspaceInput(savedSecrets);
+      } else {
+        if (storageToggleEl) storageToggleEl.checked = false;
+        if (inputTextareaEl) inputTextareaEl.value = '';
+        accounts = [];
+      }
+    } catch (e) {
+      if (inputTextareaEl) inputTextareaEl.value = '';
+      accounts = [];
+    }
+
     renderWorkspaceStrips();
   }
 
