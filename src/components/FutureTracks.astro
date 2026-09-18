@@ -21,31 +21,32 @@ const newWindowLabel = locale === 'zh' ? '（在新窗口打开）' : ' (opens i
   <div class="future__tracks">
     {futureTracks.map((trackId) => {
       const track = copy.tracks[trackId];
+      const site = 'site' in track ? track.site : undefined;
       return (
         <article class={`future-track future-track--${trackId}`} data-track={trackId} data-reveal>
           <h3>{track.title}</h3>
           <p>{track.description}</p>
           <p class="future-track__status">{track.status}</p>
 
-          {track.site && (
+          {site && (
             <div class="future-track__site">
               <div class="future-track__site-header">
-                <span class="future-track__site-badge">{track.site.badge}</span>
-                <p class="future-track__site-name">{track.site.name}</p>
+                <span class="future-track__site-badge">{site.badge}</span>
+                <p class="future-track__site-name">{site.name}</p>
               </div>
-              <p class="future-track__site-description">{track.site.description}</p>
+              <p class="future-track__site-description">{site.description}</p>
               <ul class="future-track__site-highlights" aria-label={locale === 'zh' ? '站点亮点' : 'Highlights'}>
-                {track.site.highlights.map((item) => (
+                {site.highlights.map((item: string) => (
                   <li>{item}</li>
                 ))}
               </ul>
               <a
-                href={track.site.url}
+                href={site.url}
                 target="_blank"
                 rel="noreferrer"
                 class="future-track__site-link"
               >
-                <span>{track.site.cta}</span>
+                <span>{site.cta}</span>
                 <ExternalIcon />
                 <span class="sr-only">{newWindowLabel}</span>
               </a>

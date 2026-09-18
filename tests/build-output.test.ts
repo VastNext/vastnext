@@ -13,6 +13,7 @@ import {
 import { lexiLayerFacts, lexiLayerCopy } from '../src/content/lexiLayer';
 import { glanceMdFacts, glanceMdCopy } from '../src/content/glanceMd';
 import { glanceMdUltraFacts, glanceMdUltraCopy } from '../src/content/glanceMdUltra';
+import { twoFactorCopy } from '../src/content/twoFactor';
 import { buildSite, readBuiltPage } from './helpers/build';
 
 let englishPage: string;
@@ -25,6 +26,8 @@ let englishGlanceMdPage: string;
 let chineseGlanceMdPage: string;
 let englishGlanceMdUltraPage: string;
 let chineseGlanceMdUltraPage: string;
+let english2faPage: string;
+let chinese2faPage: string;
 
 const projectRoot = resolve(import.meta.dirname, '..');
 
@@ -114,6 +117,8 @@ beforeAll(() => {
   chineseGlanceMdPage = readBuiltPage('zh/glance-md/index.html');
   englishGlanceMdUltraPage = readBuiltPage('glance-md-ultra/index.html');
   chineseGlanceMdUltraPage = readBuiltPage('zh/glance-md-ultra/index.html');
+  english2faPage = readBuiltPage('2fa/index.html');
+  chinese2faPage = readBuiltPage('zh/2fa/index.html');
 }, 90_000);
 
 describe('品牌页构建产物', () => {
@@ -304,9 +309,13 @@ describe('品牌页构建产物', () => {
       ['/zh/lexi-layer', '/zh/lexi-layer/'],
       ['/zh/glance-md', '/zh/glance-md/'],
       ['/zh/glance-md-ultra', '/zh/glance-md-ultra/'],
+      ['/2fa', '/2fa/'],
+      ['/zh/2fa', '/zh/2fa/'],
     ] as const) {
       expect(redirects).toContain(`${from} ${to} 308`);
     }
+    expect(redirects).toContain('/2fa/* /2fa/ 200');
+    expect(redirects).toContain('/zh/2fa/* /zh/2fa/ 200');
     expect(existsSync(resolve(projectRoot, 'dist/robots.txt'))).toBe(true);
     expect(existsSync(resolve(projectRoot, 'dist/sitemap-index.xml'))).toBe(true);
   });
@@ -405,5 +414,24 @@ describe('GlanceMD Ultra 产品页构建产物', () => {
 
     expect(englishGlanceMdUltraPage).toContain(glanceMdUltraCopy.en.hero.title);
     expect(chineseGlanceMdUltraPage).toContain(glanceMdUltraCopy.zh.hero.title);
+  });
+});
+
+describe('Clockwork 2FA 验证器页面构建产物', () => {
+  it('输出双语元数据与多语言链接', () => {
+    const enUrl = `${siteFacts.siteUrl}/2fa/`;
+    const zhUrl = `${siteFacts.siteUrl}/zh/2fa/`;
+
+    expectLocalizedMetadata(english2faPage, 'en', enUrl, enUrl, zhUrl);
+    expectLocalizedMetadata(chinese2faPage, 'zh-CN', zhUrl, enUrl, zhUrl);
+  });
+
+  it('包含 2FA 核心标题、3分钟刷新与复制相关文案', () => {
+    expect(english2faPage).toContain(twoFactorCopy.en.hero.title);
+    expect(chinese2faPage).toContain(twoFactorCopy.zh.hero.title);
+    expect(english2faPage).toContain(twoFactorCopy.en.directView.clickToCopy);
+    expect(chinese2faPage).toContain(twoFactorCopy.zh.directView.clickToCopy);
+    expect(english2faPage).toContain(twoFactorCopy.en.directView.sessionExpiredAction);
+    expect(chinese2faPage).toContain(twoFactorCopy.zh.directView.sessionExpiredAction);
   });
 });

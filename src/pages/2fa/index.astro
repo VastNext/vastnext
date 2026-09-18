@@ -1,0 +1,17 @@
+---
+import TwoFactorPage from '../../components/TwoFactorPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { twoFactorCopy } from '../../content/twoFactor';
+
+const copy = twoFactorCopy.en;
+---
+
+<BaseLayout
+  locale="en"
+  title={copy.meta.title}
+  description={copy.meta.description}
+  canonicalPath="/2fa/"
+  alternatePath="/zh/2fa/"
+>
+  <TwoFactorPage locale="en" />
+</BaseLayout>
